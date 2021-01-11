@@ -11,10 +11,10 @@ if running_on_RPi:
     SHOW_FULLSCREEN = True
 
 else:
-    from DashBoard.GUI.MainView import MainView
+    from GUI.MainView import MainView
     SHOW_FULLSCREEN = False
 
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
@@ -39,7 +39,10 @@ class DashBoard(QMainWindow):
 
         self.bolide_info = BolideInfo()
         self.main_view = MainView(self)
-
+        
+        self.main_view.label_rpm.setFont(QtGui.QFont('Seven Segment', 20))
+      
+      
         if SHOW_FULLSCREEN:
             self.showFullScreen()
         else:
@@ -71,5 +74,6 @@ if __name__ == '__main__':
         window = DashBoard(width, height)
     else:
         window = DashBoard()
-
+    
+    QtGui.QFontDatabase.addApplicationFont("GUI/SevenSegment.ttf")
     app.exec_()

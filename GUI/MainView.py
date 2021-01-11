@@ -3,7 +3,7 @@ try:
 except:
     from GUI.styles import *
 
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget
 
 
@@ -62,14 +62,15 @@ class MainView(QWidget):
         self.break_progressbar.setValue(80)
         self.break_progressbar.setTextVisible(False)
 
-    def init_rpm_LCD(self, ):
+    def init_rpm_LCD(self):
         self.rpm_LCD.setDigitCount(4)
         self.rpm_LCD.setFixedSize(int(self.width() * 0.35), self.height() * 0.25)
         self.rpm_LCD.move(2 * OFFSET + self.rpm_progressbar.width(), OFFSET)
         self.rpm_LCD.display(9000)
         self.rpm_LCD.setStyleSheet(WHITE_FONT + TRANSPARENT_BACKGROUND)
-
-        self.label_rpm.setText('RPM')
+              
+        self.label_rpm.setText('RPM')       
+        self.label_rpm.serFont(QtGui.QFont('Seven Segment', 20))
         self.label_rpm.setFixedSize(self.width() * 0.15, self.rpm_LCD.height())
         self.label_rpm.move(2 * OFFSET + self.rpm_progressbar.width() + self.rpm_LCD.width(), OFFSET)
         self.label_rpm.setStyleSheet(INFO_LABEL_STYLES)
