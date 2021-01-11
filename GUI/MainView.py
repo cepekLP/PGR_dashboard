@@ -17,36 +17,36 @@ class MainView(QWidget):
         self.gear_LCD = QLabel(main_window)
         self.init_gear_LCD()
 
-        self.rpm_progressbar = QProgressBar(main_window)
+        #self.rpm_progressbar = QProgressBar(main_window)
         #self.init_rpm_progressbar()
 
-        self.break_progressbar = QProgressBar(main_window)
+       # self.break_progressbar = QProgressBar(main_window)
         #self.init_break_progressbar()
 
-        self.rpm_LCD = QLCDNumber(main_window)
+        self.rpm_LCD = QLabel(main_window)
         self.label_rpm = QLabel(main_window)
-        #self.init_rpm_LCD()
+        self.init_rpm_LCD()
 
-        self.speed_LCD = QLCDNumber(main_window)
-        self.label_speed = QLabel(main_window)
+       # self.speed_LCD = QLCDNumber(main_window)
+        #self.label_speed = QLabel(main_window)
         #self.init_speed_LCD()
 
-        self.water_temp_label = QLabel(main_window)
+       #self.water_temp_label = QLabel(main_window)
         #self.init_water_temp()
 
-        self.oil_temp_label = QLabel(main_window)
+        #self.oil_temp_label = QLabel(main_window)
         #self.init_oil_temp()
 
-        self.RTCS_mode_label = QLabel(main_window)
+        #self.RTCS_mode_label = QLabel(main_window)
         #self.init_RTCS_mode()
 
     def init_gear_LCD(self):
         self.gear_LCD.setFixedSize(GEAR_SIZE / 2, GEAR_SIZE)
         self.gear_LCD.move((int(self.width()) - GEAR_SIZE / 2) / 2 , 0)
-        self.gear_LCD.setFont(self.font)       
-        self.gear_LCD.setAlignment(QtCore.Qt.AlignCenter)       
+        self.gear_LCD.setFont(self.font)
+        self.gear_LCD.setAlignment(QtCore.Qt.AlignCenter)
         self.gear_LCD.setStyleSheet(INFO_GEAR)
-        self.gear_LCD.setText('0')
+        self.gear_LCD.setText('n')
 
     def init_rpm_progressbar(self):
         self.rpm_progressbar.setOrientation(QtCore.Qt.Vertical)
@@ -65,17 +65,20 @@ class MainView(QWidget):
         self.break_progressbar.setTextVisible(False)
 
     def init_rpm_LCD(self):
-        self.rpm_LCD.setDigitCount(4)
-        self.rpm_LCD.setFixedSize(int(self.width() * 0.35), self.height() * 0.25)
-        self.rpm_LCD.move(2 * OFFSET + self.rpm_progressbar.width(), OFFSET)
-        self.rpm_LCD.display(9000)
-        self.rpm_LCD.setStyleSheet(WHITE_FONT + TRANSPARENT_BACKGROUND)
-              
-        self.label_rpm.setText('RPM')       
-        self.label_rpm.setFont(QtGui.QFont('Seven Segment', 20))
-        self.label_rpm.setFixedSize(self.width() * 0.15, self.rpm_LCD.height())
-        self.label_rpm.move(2 * OFFSET + self.rpm_progressbar.width() + self.rpm_LCD.width(), OFFSET)
+        self.rpm_LCD.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE / 2)
+        self.rpm_LCD.move(OFFSET * 2,GEAR_SIZE / 4)
+        self.rpm_LCD.setFont(self.font)
+        self.rpm_LCD.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        self.rpm_LCD.setStyleSheet(INFO_RPM)
+        self.rpm_LCD.setText('12000')          
+      
+       
+        self.label_rpm.setFixedSize(GEAR_SIZE/2, self.rpm_LCD.height())
+        self.label_rpm.move(GEAR_SIZE * 1.5 + OFFSET * 2, GEAR_SIZE / 4)
+        self.label_rpm.setFont(self.font)
+        self.label_rpm.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignBottom)
         self.label_rpm.setStyleSheet(INFO_LABEL_STYLES)
+        self.label_rpm.setText('RPM')       
 
     def init_speed_LCD(self):
         self.speed_LCD.setDigitCount(3)

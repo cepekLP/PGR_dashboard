@@ -18,8 +18,8 @@ PROGRESS_BAR_STYLES = """
 
 INFO_LABEL_STYLES = """
     color: white;
-    font-size: 40px;
-    background-color: rgba(0,0,0,0%);
+    font-size: 30px;
+    background-color: rgba(0,128,0,50%);
 """
 
 
@@ -27,6 +27,12 @@ INFO_LABEL_STYLES = """
 INFO_GEAR = """
     color: white;
     font-size: 160px;
+    background-color: rgba(128,0,0,50%);
+"""
+
+INFO_RPM = """
+    color: white;
+    font-size: 80px;
     background-color: rgba(128,0,0,50%);
 """
 
