@@ -38,10 +38,7 @@ class DashBoard(QMainWindow):
         self.setFixedSize(screen_width, screen_height)
 
         self.bolide_info = BolideInfo()
-        self.main_view = MainView(self)
-        
-        self.main_view.label_rpm.setFont(QtGui.QFont('Seven Segment', 20))
-      
+        self.main_view = MainView(self)      
       
         if SHOW_FULLSCREEN:
             self.showFullScreen()

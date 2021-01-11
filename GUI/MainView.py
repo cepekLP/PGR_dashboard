@@ -12,39 +12,41 @@ class MainView(QWidget):
         super(MainView, self).__init__()
 
         self.setFixedSize(main_window.width(), main_window.height())
+        self.font = QtGui.QFont('Seven Segment')
 
-        self.gear_LCD = QLCDNumber(main_window)
+        self.gear_LCD = QLabel(main_window)
         self.init_gear_LCD()
 
         self.rpm_progressbar = QProgressBar(main_window)
-        self.init_rpm_progressbar()
+        #self.init_rpm_progressbar()
 
         self.break_progressbar = QProgressBar(main_window)
-        self.init_break_progressbar()
+        #self.init_break_progressbar()
 
         self.rpm_LCD = QLCDNumber(main_window)
         self.label_rpm = QLabel(main_window)
-        self.init_rpm_LCD()
+        #self.init_rpm_LCD()
 
         self.speed_LCD = QLCDNumber(main_window)
         self.label_speed = QLabel(main_window)
-        self.init_speed_LCD()
+        #self.init_speed_LCD()
 
         self.water_temp_label = QLabel(main_window)
-        self.init_water_temp()
+        #self.init_water_temp()
 
         self.oil_temp_label = QLabel(main_window)
-        self.init_oil_temp()
+        #self.init_oil_temp()
 
         self.RTCS_mode_label = QLabel(main_window)
-        self.init_RTCS_mode()
+        #self.init_RTCS_mode()
 
     def init_gear_LCD(self):
-        self.gear_LCD.setDigitCount(1)
-        self.gear_LCD.setFixedSize(int(self.width() * 0.25), self.height() * 0.625)
-        self.gear_LCD.move(int(self.width() * 0.60), 0)
-        self.gear_LCD.display(0)
-        self.gear_LCD.setStyleSheet(WHITE_FONT)
+        self.gear_LCD.setFixedSize(GEAR_SIZE / 2, GEAR_SIZE)
+        self.gear_LCD.move((int(self.width()) - GEAR_SIZE / 2) / 2 , 0)
+        self.gear_LCD.setFont(self.font)       
+        self.gear_LCD.setAlignment(QtCore.Qt.AlignCenter)       
+        self.gear_LCD.setStyleSheet(INFO_GEAR)
+        self.gear_LCD.setText('0')
 
     def init_rpm_progressbar(self):
         self.rpm_progressbar.setOrientation(QtCore.Qt.Vertical)
@@ -70,7 +72,7 @@ class MainView(QWidget):
         self.rpm_LCD.setStyleSheet(WHITE_FONT + TRANSPARENT_BACKGROUND)
               
         self.label_rpm.setText('RPM')       
-        self.label_rpm.serFont(QtGui.QFont('Seven Segment', 20))
+        self.label_rpm.setFont(QtGui.QFont('Seven Segment', 20))
         self.label_rpm.setFixedSize(self.width() * 0.15, self.rpm_LCD.height())
         self.label_rpm.move(2 * OFFSET + self.rpm_progressbar.width() + self.rpm_LCD.width(), OFFSET)
         self.label_rpm.setStyleSheet(INFO_LABEL_STYLES)

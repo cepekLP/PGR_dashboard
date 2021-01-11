@@ -4,6 +4,7 @@ BORDER = "border: 5px inset gray;"
 
 TRANSPARENT_BACKGROUND = "background-color: rgba(0, 0, 0, 0%);"
 
+
 PROGRESS_BAR_STYLES = """
     QProgressBar{
         border: 3px inset %s;
@@ -21,11 +22,20 @@ INFO_LABEL_STYLES = """
     background-color: rgba(0,0,0,0%);
 """
 
+
+
+INFO_GEAR = """
+    color: white;
+    font-size: 160px;
+    background-color: rgba(128,0,0,50%);
+"""
+
 STATUS_LABEL_STYLES = """
     color: white;
     font-size: %dpx;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0%);
     border: 3px inset %s;
 """
 
 OFFSET = 20
+GEAR_SIZE = 160
