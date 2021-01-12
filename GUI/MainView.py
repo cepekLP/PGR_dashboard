@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QFrame
 
 class MainView(QWidget):
     def __init__(self, main_window):
-        super(MainView, self).__init__()
+        super().__init__()
 
         self.setFixedSize(main_window.width(), main_window.height())
         self.font = QtGui.QFont('Seven Segment')
@@ -25,6 +25,9 @@ class MainView(QWidget):
 
         self.info = Info(main_window)
         self.init_info()
+
+        self.warning = Warning(main_window)
+        self.init_warning()
 
 
     def init_gear_LCD(self):
@@ -67,11 +70,16 @@ class MainView(QWidget):
 
     def init_info(self):
         self.info.setFixedSize(int(self.width() * 0.45), 200)
-        self.info.move(OFFSET, GEAR_SIZE + OFFSET*2)
+        self.info.move(OFFSET, GEAR_SIZE + OFFSET * 2)
         self.info.water_temp.setText('  100°C')
         self.info.oil_temp.setText('  100°C')
         self.info.break_balance.setText('0')
         self.info.TCS.setText('0')
+
+    
+    def init_warning(self):
+        self.warning.setFixedSize(int(self.width() * 0.45), 200)
+        self.warning.move(int(self.width() * 0.55) - OFFSET, GEAR_SIZE + OFFSET * 2)
 
 
     def update(self, display_info):
@@ -82,6 +90,21 @@ class MainView(QWidget):
         self.info.oil_temp.setText("  {}°C".format(display_info.oil_temp))
         self.info.break_balance.setText(str(display_info.break_balance))
         self.info.TCS.setText(str(display_info.race_tcs_mode))     
+
+
+    def update_warning(self, type, text_info):        
+        if type=="none":
+            self.warning.tekst.setText("")
+            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (0, 0, 0))
+        elif type=="info":
+            self.warning.tekst.setText(text_info)
+            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (0, 192, 0))
+        elif type=="warning":
+            self.warning.tekst.setText(text_info)
+            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 128, 0))
+        elif type=="error":
+            self.warning.tekst.setText(text_info)
+            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 0, 0))
 
 
     def setVisible(self, visibility):
@@ -99,7 +122,7 @@ class MainView(QWidget):
 
 class Wid2(QFrame):
     def __init__(self, parent):
-        super().__init__(parent=parent) 
+        super().__init__(parent = parent) 
         self.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE)
 
         layout = QtWidgets.QVBoxLayout()
@@ -119,7 +142,7 @@ class Wid2(QFrame):
 
 class Info(QFrame):
     def __init__(self, parent):
-        super().__init__(parent=parent)
+        super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
 
         layout2 = QtWidgets.QHBoxLayout()
@@ -165,8 +188,22 @@ class Info(QFrame):
         layout1.addLayout(layout2)
         layout1.addLayout(layout3)
         layout1.addLayout(layout4)
-        layout1.addLayout(layout5)
-        
+        layout1.addLayout(layout5)        
         
         self.setLayout(layout1)
+        self.setStyleSheet(QFRAME_STYLE)
+
+
+class Warning(QFrame):
+    def __init__(self, parent):
+        super().__init__(parent = parent)
+        layout=QtWidgets.QVBoxLayout()
+        
+        self.tekst = QLabel()
+        self.tekst.setStyleSheet(INFO_LABEL_STYLES+"color: black; font-size: 30px;")
+        self.tekst.setAlignment(QtCore.Qt.AlignCenter)
+        self.tekst.setWordWrap(True)
+        layout.addWidget(self.tekst)
+        
+        self.setLayout(layout)
         self.setStyleSheet(QFRAME_STYLE)

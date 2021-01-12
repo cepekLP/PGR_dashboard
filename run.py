@@ -55,6 +55,7 @@ class DashBoard(QMainWindow):
             self.close()
         elif event.key() == QtCore.Qt.Key_W:
             self.main_view.setVisible(True)
+            
         elif event.key() == QtCore.Qt.Key_E:
             self.main_view.setVisible(False)
         else:
@@ -77,6 +78,7 @@ class DashBoard(QMainWindow):
             self.bolide_info.race_tcs_mode = str["value"]
 
         self.main_view.update(self.bolide_info)
+
 
     def worker_error(self):
         pass

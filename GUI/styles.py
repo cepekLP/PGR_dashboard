@@ -21,7 +21,7 @@ INFO_LABEL_STYLES = """
     font-size: 20px;
     background-color: rgba(0,0,0,0%);
     border-width: 0;
-    border-radius: 0;
+    border-radius: 0px;
 """
 
 QFRAME_STYLE = """
@@ -49,6 +49,7 @@ UNIT_RPM = """
     border-width: 0;
     border-radius: 0;
 """
+
 INFO_RPM = """
     color: white;
     font-size: 110px;
@@ -57,11 +58,13 @@ INFO_RPM = """
     border-radius: 0;
 """
 
-STATUS_LABEL_STYLES = """
+WARNING_QFRAME_STYLE = """
     color: white;
-    font-size: %dpx;
-    background-color: rgba(0, 0, 0, 0%);
-    border: 3px inset %s;
+    background-color: rgb(%d, %d, %d);
+    border-color: white;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 30px;
 """
 
 OFFSET = 20
