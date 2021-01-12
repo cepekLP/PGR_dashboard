@@ -32,14 +32,14 @@ class BolideInfo:
 
 class DashBoard(QMainWindow):
     def __init__(self, screen_width=800, screen_height=480):
-        super(DashBoard, self).__init__()
+        super().__init__()
 
         self.setStyleSheet("background-color: black")
         self.setFixedSize(screen_width, screen_height)
 
         self.bolide_info = BolideInfo()
         self.main_view = MainView(self)      
-      
+
         if SHOW_FULLSCREEN:
             self.showFullScreen()
         else:
