@@ -19,7 +19,7 @@ PROGRESS_BAR_STYLES = """
 INFO_LABEL_STYLES = """
     color: white;
     font-size: 30px;
-    background-color: rgba(50,0,0,50%);
+    background-color: rgba(0,0,0,0%);
     border-width: 0;
     border-radius: 0;
 """
@@ -29,7 +29,7 @@ DISPLAY_STYLE = """
     border-color: white;
     border-style: solid;
     border-width: 5px;
-    border-radius: 20px;
+    border-radius: 30px;
     }
    
 
@@ -42,14 +42,14 @@ INFO_GEAR = """
     border-color: white;
     border-style: solid;
     border-width: 10px;
-    border-radius: 20px;
+    border-radius: 30px;
    
 """
 
 INFO_RPM = """
     color: white;
-    font-size: 100px;
-    background-color: rgba(0, 50, 0, 50%);
+    font-size: 110px;
+    background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0;
 """

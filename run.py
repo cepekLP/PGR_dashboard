@@ -3,16 +3,14 @@ import sys
 try:
     import RPi.GPIO as GPIO
     running_on_RPi = True
+    SHOW_FULLSCREEN = True
 except:
     running_on_RPi = False
-
-if running_on_RPi:
-    from GUI.MainView import MainView
-    SHOW_FULLSCREEN = True
-
-else:
-    from GUI.MainView import MainView
     SHOW_FULLSCREEN = False
+
+from GUI.MainView import MainView
+from CAN.CAN_Manager import Worker
+
 
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow
@@ -37,6 +35,12 @@ class DashBoard(QMainWindow):
         self.setStyleSheet("background-color: black")
         self.setFixedSize(screen_width, screen_height)
 
+        self.threadpool = QtCore.QThreadPool()
+        worker = Worker()
+        worker.signals.result.connect(self.update)
+        worker.signals.error.connect(self.worker_error)
+        self.threadpool.start(worker)
+
         self.bolide_info = BolideInfo()
         self.main_view = MainView(self)      
 
@@ -54,6 +58,19 @@ class DashBoard(QMainWindow):
             self.main_view.setVisible(False)
         else:
             pass
+
+    def update(self, str):
+        if str["name"] == "gear":
+            self.bolide_info.gear = str["value"]
+        elif str["name"] == "rpm":
+            self.bolide_info.rpm = str["value"]
+        elif str["name"] == "speed":
+            self.bolide_info.speed = str["value"]
+
+        self.main_view.update(self.bolide_info)
+
+    def worker_error(self):
+        pass
 
 
 if __name__ == '__main__':

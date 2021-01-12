@@ -1,10 +1,10 @@
 try:
-    from DashBoard.GUI.styles import *
-except:
     from GUI.styles import *
+except:
+    from Dashboard.GUI.styles import *
 
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QVBoxLayout, QFrame
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QFrame
 
 
 class MainView(QWidget):
@@ -54,7 +54,7 @@ class MainView(QWidget):
         self.rpm.move(int((self.width() - GEAR_SIZE * 0.65) / 2) - self.rpm.width() + 5, 0)
        
        
-        self.rpm.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE * 0.75)       
+        self.rpm.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE * 0.7)       
         self.rpm.value.move(GEAR_SIZE, 200)
         self.rpm.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.rpm.value.setText('12000')
@@ -69,7 +69,7 @@ class MainView(QWidget):
         self.speed.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE)
         self.speed.move(int((self.width() + GEAR_SIZE * 0.65) / 2) - 5, 0)
         
-        self.speed.value.setFixedSize(GEAR_SIZE , GEAR_SIZE * 0.75)       
+        self.speed.value.setFixedSize(GEAR_SIZE , GEAR_SIZE * 0.7)       
         self.speed.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.speed.value.setText('120')
         self.speed.value.setStyleSheet(INFO_RPM)
@@ -95,15 +95,13 @@ class MainView(QWidget):
         self.oil_temp_label.setAlignment(QtCore.Qt.AlignCenter)
         self.oil_temp_label.setText("OIL:\n100°C")
 
-    def update_main_view(self, display_info):
-        self.gear_LCD.display(display_info.gear)
-        self.rpm_progressbar.setValue(display_info.rpm)
-        self.rpm_LCD.display(display_info.rpm)
-        self.break_progressbar.setValue(display_info.break_balance)
-        self.speed_LCD.display(display_info.speed)
-        self.water_temp_label.setText("WATER:\n{}°C".format(display_info.water_temp))
-        self.oil_temp_label.setText("OIL:\n{}°C".format(display_info.oil_temp))
-        self.RTCS_mode_label.setText("RTCS:\n{}".format(display_info.race_tcs_mode))
+    def update(self, display_info):
+        self.gear_LCD.setText(str(display_info.gear))        
+        self.rpm.value.setText(str(display_info.rpm))  
+        self.speed.value.setText(str(display_info.speed))
+       # self.water_temp_label.setText("WATER:\n{}°C".format(display_info.water_temp))
+       # self.oil_temp_label.setText("OIL:\n{}°C".format(display_info.oil_temp))
+
 
     def setVisible(self, visibility):
         self.gear_LCD.setVisible(visibility)
@@ -120,7 +118,7 @@ class MainView(QWidget):
 class Wid2(QFrame):
     def __init__(self, parent):
         super().__init__(parent=parent) 
-        layout = QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(5)
         self.value = QLabel()
@@ -133,4 +131,3 @@ class Wid2(QFrame):
         layout.addWidget(self.unit, 0, QtCore.Qt.AlignHCenter)
         self.setLayout(layout)
         self.setStyleSheet(DISPLAY_STYLE)
-       
