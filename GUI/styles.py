@@ -1,46 +1,11 @@
-WHITE_FONT = "color: white;"
-
-BORDER = "border: 5px inset gray;"
-
-TRANSPARENT_BACKGROUND = "background-color: rgba(0, 0, 0, 0%);"
-
-
-PROGRESS_BAR_STYLES = """
-    QProgressBar{
-        border: 3px inset %s;
-        background-color: black;
-        text-align: right
-    }
-    QProgressBar::chunk {
-        background-color: %s;
-    }
-"""
-
-INFO_LABEL_STYLES = """
-    color: white;
-    font-size: 20px;
-    background-color: rgba(0,0,0,0%);
-    border-width: 0;
-    border-radius: 0px;
-"""
-
-QFRAME_STYLE = """
-    QFrame{
-    border-color: white;
-    border-style: solid;
-    border-width: 5px;
-    border-radius: 30px;
-    }
-"""
-
 INFO_GEAR = """
-    color: white;
+    color: rgb(255, 219, 19);
     font-size: 160px;
     background-color: rgba(0,0,0,0%);
-    border-color: white;
+    border-color: rgb(174,199,255);
     border-style: solid;
     border-width: 10px;
-    border-radius: 30px;   
+    border-radius: 15px;   
 """
 
 UNIT_RPM = """
@@ -51,11 +16,38 @@ UNIT_RPM = """
 """
 
 INFO_RPM = """
-    color: white;
+    color: rgb(255, 248, 210);
     font-size: 110px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0;
+"""
+
+#rgb(255, 207, 31)
+INFO_LABEL_TEXT = """
+    color: rgb(255, 219, 19);
+    font-size: 23px;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0%);
+    border-width: 0;
+    border-radius: 0px;
+"""
+
+INFO_LABEL_VALUE = """
+    color: white;
+    font-size: 40px;
+    background-color: rgba(0,0,0,0%);
+    border-width: 0;
+    border-radius: 0px;
+"""
+
+QFRAME_STYLE = """
+    QFrame{
+    border-color: rgb(174,199,255);
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    }
 """
 
 WARNING_QFRAME_STYLE = """
