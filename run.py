@@ -36,10 +36,10 @@ class DashBoard(QMainWindow):
         self.setFixedSize(screen_width, screen_height)
 
         self.threadpool = QtCore.QThreadPool()
-        worker = Worker()
-        worker.signals.result.connect(self.update)
-        worker.signals.error.connect(self.worker_error)
-        self.threadpool.start(worker)
+        self.worker = Worker()
+        self.worker.signals.result.connect(self.update)
+        self.worker.signals.error.connect(self.worker_error)
+        self.threadpool.start(self.worker)
 
         self.bolide_info = BolideInfo()
         self.main_view = MainView(self)      
@@ -51,6 +51,7 @@ class DashBoard(QMainWindow):
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Q:
+            self.worker.kill()
             self.close()
         elif event.key() == QtCore.Qt.Key_W:
             self.main_view.setVisible(True)
@@ -66,6 +67,14 @@ class DashBoard(QMainWindow):
             self.bolide_info.rpm = str["value"]
         elif str["name"] == "speed":
             self.bolide_info.speed = str["value"]
+        elif str["name"] == "water_temp":
+            self.bolide_info.water_temp = str["value"]
+        elif str["name"] == "oil_temp":
+            self.bolide_info.oil_temp = str["value"]
+        elif str["name"] == "break_balance":
+            self.bolide_info.break_balance = str["value"]
+        elif str["name"] == "TCS":
+            self.bolide_info.race_tcs_mode = str["value"]
 
         self.main_view.update(self.bolide_info)
 

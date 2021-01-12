@@ -25,14 +25,7 @@ class MainView(QWidget):
 
         self.info = Info(main_window)
         self.init_info()
-       #self.water_temp_label = QLabel(main_window)
-        #self.init_water_temp()
 
-        #self.oil_temp_label = QLabel(main_window)
-        #self.init_oil_temp()
-
-        #self.RTCS_mode_label = QLabel(main_window)
-        #self.init_RTCS_mode()
 
     def init_gear_LCD(self):
         self.gear_LCD.setFixedSize(GEAR_SIZE * 0.65, GEAR_SIZE)
@@ -41,6 +34,7 @@ class MainView(QWidget):
         self.gear_LCD.setAlignment(QtCore.Qt.AlignCenter)
         self.gear_LCD.setStyleSheet(INFO_GEAR)
         self.gear_LCD.setText('n')
+
 
     def init_rpm(self):
         self.rpm.move(int((self.width() - GEAR_SIZE * 0.65) / 2) - self.rpm.width() + 5, OFFSET)       
@@ -56,6 +50,7 @@ class MainView(QWidget):
         self.rpm.unit.setStyleSheet(UNIT_RPM)
         self.rpm.unit.setText('RPM')
 
+
     def init_speed(self):
         self.speed.move(int((self.width() + GEAR_SIZE * 0.65) / 2) - 5, OFFSET)
         
@@ -69,6 +64,7 @@ class MainView(QWidget):
         self.speed.unit.setStyleSheet(UNIT_RPM)
         self.speed.unit.setText('KMPH')
 
+
     def init_info(self):
         self.info.setFixedSize(int(self.width() * 0.45), 200)
         self.info.move(OFFSET, GEAR_SIZE + OFFSET*2)
@@ -77,28 +73,15 @@ class MainView(QWidget):
         self.info.break_balance.setText('0')
         self.info.TCS.setText('0')
 
-    def init_water_temp(self):
-        self.water_temp_label.setFixedSize(self.width() * 0.25, self.height() * 0.3)
-        self.water_temp_label.move(self.rpm_progressbar.width() + 2 * OFFSET,
-                                   self.height() - self.water_temp_label.height() - OFFSET)
-        self.water_temp_label.setStyleSheet(STATUS_LABEL_STYLES % (self.height() / 10, 'blue'))
-        self.water_temp_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.water_temp_label.setText("WATER:\n100°C")
-
-    def init_oil_temp(self):
-        self.oil_temp_label.setFixedSize(self.width() * 0.25, self.height() * 0.3)
-        self.oil_temp_label.move(self.rpm_progressbar.width() + self.water_temp_label.width() + 3 * OFFSET,
-                                 self.height() - self.oil_temp_label.height() - OFFSET)
-        self.oil_temp_label.setStyleSheet(STATUS_LABEL_STYLES % (self.height() / 10, 'darkorange'))
-        self.oil_temp_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.oil_temp_label.setText("OIL:\n100°C")
 
     def update(self, display_info):
         self.gear_LCD.setText(str(display_info.gear))        
         self.rpm.value.setText(str(display_info.rpm))  
         self.speed.value.setText(str(display_info.speed))
-       # self.water_temp_label.setText("WATER:\n{}°C".format(display_info.water_temp))
-       # self.oil_temp_label.setText("OIL:\n{}°C".format(display_info.oil_temp))
+        self.info.water_temp.setText("  {}°C".format(display_info.water_temp))
+        self.info.oil_temp.setText("  {}°C".format(display_info.oil_temp))
+        self.info.break_balance.setText(str(display_info.break_balance))
+        self.info.TCS.setText(str(display_info.race_tcs_mode))     
 
 
     def setVisible(self, visibility):
@@ -112,6 +95,7 @@ class MainView(QWidget):
         self.water_temp_label.setVisible(visibility)
         self.oil_temp_label.setVisible(visibility)
         self.RTCS_mode_label.setVisible(visibility)
+
 
 class Wid2(QFrame):
     def __init__(self, parent):
