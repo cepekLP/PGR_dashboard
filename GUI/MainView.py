@@ -4,7 +4,7 @@ except:
     from GUI.styles import *
 
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QHBoxLayout, QFrame
+from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QVBoxLayout, QFrame
 
 
 class MainView(QWidget):
@@ -49,48 +49,33 @@ class MainView(QWidget):
         self.gear_LCD.setStyleSheet(INFO_GEAR)
         self.gear_LCD.setText('n')
 
-    def init_rpm_progressbar(self):
-        self.rpm_progressbar.setOrientation(QtCore.Qt.Vertical)
-        self.rpm_progressbar.setFixedSize(int(self.width() * 0.05), int(self.height() - 2 * OFFSET))
-        self.rpm_progressbar.move(OFFSET, OFFSET)
-        self.rpm_progressbar.setStyleSheet(PROGRESS_BAR_STYLES % ("white", "white"))
-        self.rpm_progressbar.setValue(80)
-        self.rpm_progressbar.setTextVisible(False)
-
-    def init_break_progressbar(self):
-        self.break_progressbar.setOrientation(QtCore.Qt.Vertical)
-        self.break_progressbar.setFixedSize(int(self.width() * 0.05), int(0.5 * self.height()))
-        self.break_progressbar.move(self.width() - self.break_progressbar.width() - OFFSET, 0.25 * self.height())
-        self.break_progressbar.setStyleSheet(PROGRESS_BAR_STYLES % ("yellow", "yellow"))
-        self.break_progressbar.setValue(80)
-        self.break_progressbar.setTextVisible(False)
-
     def init_rpm(self):
-        self.rpm.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE * 0.75)
-        self.rpm.move(int((self.width() - GEAR_SIZE * 0.65) / 2) - self.rpm.width() + 5, GEAR_SIZE / 8)
-        
-        
-        self.rpm.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE / 2)       
+        self.rpm.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE)
+        self.rpm.move(int((self.width() - GEAR_SIZE * 0.65) / 2) - self.rpm.width() + 5, 0)
+       
+       
+        self.rpm.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE * 0.75)       
+        self.rpm.value.move(GEAR_SIZE, 200)
         self.rpm.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.rpm.value.setText('12000')
         self.rpm.value.setStyleSheet(INFO_RPM)
         
-        self.rpm.unit.setFont(self.font)
-        self.rpm.unit.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.rpm.unit.setFixedWidth(GEAR_SIZE * 1.5)
+        self.rpm.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.rpm.unit.setStyleSheet(INFO_LABEL_STYLES)
         self.rpm.unit.setText('RPM')
 
     def init_speed(self):
-        self.speed.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE * 0.75)
-        self.speed.move(int((self.width() + GEAR_SIZE * 0.65) / 2) - 5, GEAR_SIZE / 8)
+        self.speed.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE)
+        self.speed.move(int((self.width() + GEAR_SIZE * 0.65) / 2) - 5, 0)
         
-        self.speed.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE / 2)       
+        self.speed.value.setFixedSize(GEAR_SIZE , GEAR_SIZE * 0.75)       
         self.speed.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.speed.value.setText('120')
         self.speed.value.setStyleSheet(INFO_RPM)
         
-        self.speed.unit.setFont(self.font)
-        self.speed.unit.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.speed.unit.setFixedWidth(GEAR_SIZE)
+        self.speed.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.speed.unit.setStyleSheet(INFO_LABEL_STYLES)
         self.speed.unit.setText('KMPH')
 
@@ -109,14 +94,6 @@ class MainView(QWidget):
         self.oil_temp_label.setStyleSheet(STATUS_LABEL_STYLES % (self.height() / 10, 'darkorange'))
         self.oil_temp_label.setAlignment(QtCore.Qt.AlignCenter)
         self.oil_temp_label.setText("OIL:\n100°C")
-
-    def init_RTCS_mode(self):
-        self.RTCS_mode_label.setFixedSize(self.width() * 0.25, self.height() * 0.3)
-        self.RTCS_mode_label.move(self.rpm_progressbar.width() + 2 * self.water_temp_label.width() + 4 * OFFSET,
-                                  self.height() - self.oil_temp_label.height() - OFFSET)
-        self.RTCS_mode_label.setStyleSheet(STATUS_LABEL_STYLES % (self.height() / 10, 'yellow'))
-        self.RTCS_mode_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.RTCS_mode_label.setText("RTCS:\n1")
 
     def update_main_view(self, display_info):
         self.gear_LCD.display(display_info.gear)
@@ -140,24 +117,10 @@ class MainView(QWidget):
         self.oil_temp_label.setVisible(visibility)
         self.RTCS_mode_label.setVisible(visibility)
 
-class Wid(QWidget):
-    def __init__(self, parent):
-        super().__init__(parent=parent)
-
-        layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        self.value = QLabel('123')
-        self.unit = QLabel()
-        
-        layout.addWidget(self.value)       
-        layout.addWidget(self.unit)
-
-        self.setLayout(layout)
-
 class Wid2(QFrame):
     def __init__(self, parent):
         super().__init__(parent=parent) 
-        layout = QHBoxLayout()
+        layout = QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(5)
         self.value = QLabel()
@@ -166,8 +129,8 @@ class Wid2(QFrame):
         self.value.setFont(QtGui.QFont('Seven Segment'))
         self.unit.setFont(QtGui.QFont('Seven Segment'))
         
-        layout.addWidget(self.value)       
-        layout.addWidget(self.unit)
-
+        layout.addWidget(self.value, 0, QtCore.Qt.AlignHCenter)       
+        layout.addWidget(self.unit, 0, QtCore.Qt.AlignHCenter)
         self.setLayout(layout)
         self.setStyleSheet(DISPLAY_STYLE)
+       
