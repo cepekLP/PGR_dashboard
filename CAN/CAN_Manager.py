@@ -15,9 +15,11 @@ class Worker(QRunnable):
     @pyqtSlot()
     def run(self):
         i = 0
+        """ 
         while True:
             self.signals.result.emit({"name" : "gear",  "value" : i % 10})     
             self.signals.result.emit({"name" : "rpm",   "value" : i % 19000})
             self.signals.result.emit({"name" : "speed", "value" : i % 200})
             i=i+1
             time.sleep(0.1)
+        """

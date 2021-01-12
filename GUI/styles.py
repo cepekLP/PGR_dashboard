@@ -18,21 +18,19 @@ PROGRESS_BAR_STYLES = """
 
 INFO_LABEL_STYLES = """
     color: white;
-    font-size: 30px;
+    font-size: 20px;
     background-color: rgba(0,0,0,0%);
     border-width: 0;
     border-radius: 0;
 """
 
-DISPLAY_STYLE = """
+QFRAME_STYLE = """
     QFrame{
     border-color: white;
     border-style: solid;
     border-width: 5px;
     border-radius: 30px;
     }
-   
-
 """
 
 INFO_GEAR = """
@@ -42,10 +40,15 @@ INFO_GEAR = """
     border-color: white;
     border-style: solid;
     border-width: 10px;
-    border-radius: 30px;
-   
+    border-radius: 30px;   
 """
 
+UNIT_RPM = """
+    color: white;
+    font-size: 30px;
+    border-width: 0;
+    border-radius: 0;
+"""
 INFO_RPM = """
     color: white;
     font-size: 110px;
