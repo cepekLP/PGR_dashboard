@@ -68,8 +68,7 @@ class MainView(QWidget):
     def init_rpm(self):
         self.rpm.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE * 0.75)
         self.rpm.move(int((self.width() - GEAR_SIZE * 0.65) / 2) - self.rpm.width() + 5, GEAR_SIZE / 8)
-        self.rpm.setFont(self.font)
-        self.rpm.setStyleSheet(DISPLAY_STYLE)
+        
         
         self.rpm.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE / 2)       
         self.rpm.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
@@ -84,8 +83,6 @@ class MainView(QWidget):
     def init_speed(self):
         self.speed.setFixedSize(GEAR_SIZE * 2 + OFFSET, GEAR_SIZE * 0.75)
         self.speed.move(int((self.width() + GEAR_SIZE * 0.65) / 2) - 5, GEAR_SIZE / 8)
-        self.speed.setFont(self.font)
-        self.speed.setStyleSheet(DISPLAY_STYLE)
         
         self.speed.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE / 2)       
         self.speed.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
@@ -159,15 +156,18 @@ class Wid(QWidget):
 
 class Wid2(QFrame):
     def __init__(self, parent):
-        super().__init__(parent=parent)
-
+        super().__init__(parent=parent) 
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(5)
         self.value = QLabel()
         self.unit = QLabel()
+
+        self.value.setFont(QtGui.QFont('Seven Segment'))
+        self.unit.setFont(QtGui.QFont('Seven Segment'))
         
         layout.addWidget(self.value)       
         layout.addWidget(self.unit)
 
         self.setLayout(layout)
+        self.setStyleSheet(DISPLAY_STYLE)
