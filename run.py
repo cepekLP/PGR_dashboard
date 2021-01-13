@@ -16,8 +16,6 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
-
-
 class BolideInfo:
     gear = 0
     rpm = 0
@@ -49,6 +47,7 @@ class DashBoard(QMainWindow):
         else:
             self.show()
 
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Q:
             self.worker.kill()
@@ -60,6 +59,7 @@ class DashBoard(QMainWindow):
             self.main_view.setVisible(False)
         else:
             pass
+
 
     def update(self, str):
         if str["name"] == "gear":
@@ -100,5 +100,7 @@ if __name__ == '__main__':
     else:
         window = DashBoard()
     
-    QtGui.QFontDatabase.addApplicationFont("GUI/SevenSegment.ttf")
+    QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
+    id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
+    #print(QtGui.QFontDatabase.applicationFontFamilies(id))
     app.exec_()
