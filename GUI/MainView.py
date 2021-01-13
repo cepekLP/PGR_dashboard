@@ -70,7 +70,7 @@ class MainView(QWidget):
 
 
     def init_info(self):
-        self.info.setFixedSize(int(self.width()/2), self.height()-GEAR_SIZE)
+        self.info.setFixedSize(int(self.width() / 2), self.height() - GEAR_SIZE)
         self.info.move(0, GEAR_SIZE)
         self.info.water_temp.value.setText('  100°C')
         self.info.oil_temp.value.setText('  100°C')
@@ -79,16 +79,16 @@ class MainView(QWidget):
 
     
     def init_warning(self):
-        self.warning.setFixedSize(int(self.width() /2), int((self.height()-GEAR_SIZE)/2))
-        self.warning.move(int(self.width() /2), GEAR_SIZE)
+        self.warning.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_SIZE) / 2))
+        self.warning.move(int(self.width() / 2), GEAR_SIZE + int((self.height() - GEAR_SIZE) / 2))
 
 
     def update(self, display_info):
         self.gear_LCD.setText(str(display_info.gear))        
         self.rpm.value.setText(str(display_info.rpm))  
         self.speed.value.setText(str(display_info.speed))
-        self.info.water_temp.value.setText("{}°C".format(display_info.water_temp))
-        self.info.oil_temp.value.setText("{}°C".format(display_info.oil_temp))
+        self.info.water_temp.value.setText("\32 \32 {}°C".format(display_info.water_temp))
+        self.info.oil_temp.value.setText("\32 \32 {}°C".format(display_info.oil_temp))
         self.info.break_balance.value.setText(str(display_info.break_balance))
         self.info.TCS.value.setText(str(display_info.race_tcs_mode))     
 
@@ -145,16 +145,25 @@ class Info(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
+        layout1.setContentsMargins(0, 0, 0, 0)
+        layout1.setSpacing(0)
 
-        self.water_temp=Wid(parent, "Water temp", font)
-        self.oil_temp=Wid(parent, "Oil temp", font)
-        self.break_balance =Wid(parent, "Break balance", font)
-        self.TCS =Wid(parent, "TCS", font)
+        self.water_temp = Wid(parent, "Water temp", font)
+        self.oil_temp = Wid(parent, "Oil temp", font)
+        self.break_balance = Wid(parent, "Break balance", font)
+        self.TCS = Wid(parent, "TCS", font)
+        self.info5 = Wid(parent, "info5", font)
+        self.info6 = Wid(parent, "info6", font)
+        self.info7 = Wid(parent, "info7", font)
+
 
         layout1.addWidget(self.water_temp)
         layout1.addWidget(self.oil_temp)
         layout1.addWidget(self.break_balance)
         layout1.addWidget(self.TCS)
+        layout1.addWidget(self.info5)
+        layout1.addWidget(self.info6)
+        layout1.addWidget(self.info7)
         
         self.setLayout(layout1)
         self.setStyleSheet(QFRAME_STYLE)
@@ -165,12 +174,14 @@ class Wid(QWidget):
         super().__init__(parent = parent)
         
         layout = QtWidgets.QHBoxLayout()
-        info=QLabel(tekst)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        info = QLabel(tekst)
         info.setStyleSheet(INFO_LABEL_TEXT)
         info.setAlignment(QtCore.Qt.AlignCenter)
         info.setFont(font)
-        self.value=QLabel()
-        self.value.setStyleSheet(INFO_LABEL_TEXT)
+        self.value = QLabel()
+        self.value.setStyleSheet(INFO_LABEL_VALUE)
         self.value.setAlignment(QtCore.Qt.AlignCenter)
         self.value.setFont(font)
 
