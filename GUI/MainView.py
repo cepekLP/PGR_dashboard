@@ -87,8 +87,8 @@ class MainView(QWidget):
         self.gear_LCD.setText(str(display_info.gear))        
         self.rpm.value.setText(str(display_info.rpm))  
         self.speed.value.setText(str(display_info.speed))
-        self.info.water_temp.value.setText("\32 \32 {}°C".format(display_info.water_temp))
-        self.info.oil_temp.value.setText("\32 \32 {}°C".format(display_info.oil_temp))
+        self.info.water_temp.value.setText("{}°C".format(display_info.water_temp))
+        self.info.oil_temp.value.setText("{}°C".format(display_info.oil_temp))
         self.info.break_balance.value.setText(str(display_info.break_balance))
         self.info.TCS.value.setText(str(display_info.race_tcs_mode))     
 
