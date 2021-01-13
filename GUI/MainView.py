@@ -72,10 +72,10 @@ class MainView(QWidget):
     def init_info(self):
         self.info.setFixedSize(int(self.width()/2), self.height()-GEAR_SIZE)
         self.info.move(0, GEAR_SIZE)
-        self.info.water_temp.setText('  100°C')
-        self.info.oil_temp.setText('  100°C')
-        self.info.break_balance.setText('0')
-        self.info.TCS.setText('0')
+        self.info.water_temp.value.setText('  100°C')
+        self.info.oil_temp.value.setText('  100°C')
+        self.info.break_balance.value.setText('0')
+        self.info.TCS.value.setText('0')
 
     
     def init_warning(self):
@@ -87,10 +87,10 @@ class MainView(QWidget):
         self.gear_LCD.setText(str(display_info.gear))        
         self.rpm.value.setText(str(display_info.rpm))  
         self.speed.value.setText(str(display_info.speed))
-        self.info.water_temp.setText("{}°C".format(display_info.water_temp))
-        self.info.oil_temp.setText("{}°C".format(display_info.oil_temp))
-        self.info.break_balance.setText(str(display_info.break_balance))
-        self.info.TCS.setText(str(display_info.race_tcs_mode))     
+        self.info.water_temp.value.setText("{}°C".format(display_info.water_temp))
+        self.info.oil_temp.value.setText("{}°C".format(display_info.oil_temp))
+        self.info.break_balance.value.setText(str(display_info.break_balance))
+        self.info.TCS.value.setText(str(display_info.race_tcs_mode))     
 
 
     def update_warning(self, type, text_info):        
@@ -146,65 +146,37 @@ class Info(QFrame):
         super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
 
-        layout2 = QtWidgets.QHBoxLayout()
-        water_temp_text = QLabel("Water temp")
-        water_temp_text.setStyleSheet(INFO_LABEL_TEXT)
-        water_temp_text.setAlignment(QtCore.Qt.AlignCenter)
-        water_temp_text.setFont(font)
-        self.water_temp = QLabel()
-        self.water_temp.setStyleSheet(INFO_LABEL_VALUE)
-        self.water_temp.setAlignment(QtCore.Qt.AlignCenter)
-        self.water_temp.setFont(font)
-        layout2.addWidget(water_temp_text)
-        layout2.addWidget(self.water_temp)
+        self.water_temp=Wid(parent, "Water temp", font)
+        self.oil_temp=Wid(parent, "Oil temp", font)
+        self.break_balance =Wid(parent, "Break balance", font)
+        self.TCS =Wid(parent, "TCS", font)
 
-        layout3 = QtWidgets.QHBoxLayout()
-        oil_temp_text = QLabel("Oil temp")
-        oil_temp_text.setStyleSheet(INFO_LABEL_TEXT)
-        oil_temp_text.setAlignment(QtCore.Qt.AlignCenter)
-        oil_temp_text.setFont(font)
-        self.oil_temp = QLabel()
-        self.oil_temp.setStyleSheet(INFO_LABEL_VALUE)
-        self.oil_temp.setAlignment(QtCore.Qt.AlignCenter)
-        self.oil_temp.setFont(font)
-        layout3.addWidget(oil_temp_text)
-        layout3.addWidget(self.oil_temp)
-
-        layout4 = QtWidgets.QHBoxLayout()
-        break_balance_text = QLabel("Break balance")
-        break_balance_text.setStyleSheet(INFO_LABEL_TEXT)
-        break_balance_text.setAlignment(QtCore.Qt.AlignCenter)
-        break_balance_text.setFont(font)
-        self.break_balance = QLabel()
-        self.break_balance.setStyleSheet(INFO_LABEL_VALUE)
-        self.break_balance.setAlignment(QtCore.Qt.AlignCenter)
-        self.break_balance.setFont(font)
-        layout4.addWidget(break_balance_text)
-        layout4.addWidget(self.break_balance)
-
-        layout5 = QtWidgets.QHBoxLayout()
-        TCS_text = QLabel("TCS")
-        TCS_text.setStyleSheet(INFO_LABEL_TEXT)
-        TCS_text.setAlignment(QtCore.Qt.AlignCenter)
-        TCS_text.setFont(font)
-        self.TCS = QLabel()
-        self.TCS.setStyleSheet(INFO_LABEL_VALUE)
-        self.TCS.setAlignment(QtCore.Qt.AlignCenter)
-        self.TCS.setFont(font)
-        layout5.addWidget(TCS_text)
-        layout5.addWidget(self.TCS)
-
-        layout1.addLayout(layout2)
-        layout1.addLayout(layout3)
-        layout1.addLayout(layout4)
-        layout1.addLayout(layout5)        
-        
-          
-        layout1.addChildLayout(layout5)
+        layout1.addWidget(self.water_temp)
+        layout1.addWidget(self.oil_temp)
+        layout1.addWidget(self.break_balance)
+        layout1.addWidget(self.TCS)
         
         self.setLayout(layout1)
         self.setStyleSheet(QFRAME_STYLE)
 
+
+class Wid(QWidget):
+    def __init__(self, parent, tekst, font):
+        super().__init__(parent = parent)
+        
+        layout = QtWidgets.QHBoxLayout()
+        info=QLabel(tekst)
+        info.setStyleSheet(INFO_LABEL_TEXT)
+        info.setAlignment(QtCore.Qt.AlignCenter)
+        info.setFont(font)
+        self.value=QLabel()
+        self.value.setStyleSheet(INFO_LABEL_TEXT)
+        self.value.setAlignment(QtCore.Qt.AlignCenter)
+        self.value.setFont(font)
+
+        layout.addWidget(info)
+        layout.addWidget(self.value)
+        self.setLayout(layout)
 
 class Warning(QFrame):
     def __init__(self, parent, font):
