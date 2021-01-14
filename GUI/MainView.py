@@ -27,8 +27,12 @@ class MainView(QWidget):
         self.info = Info(main_window, self.font2)
         self.init_info()
 
-        self.info2 = Info2(main_window, self.font2)
-        self.init_info2()
+        #self.info2 = Info2(main_window, self.font2)
+        #self.init_info2()
+        
+        self.info2 = Info3(main_window,"Info1", self.font2)
+        self.info3 = Info3(main_window,"Info2", self.font2)
+        self.init_info3()
 
         self.warning = Warning(main_window, self.font2)
         self.init_warning()
@@ -84,12 +88,22 @@ class MainView(QWidget):
 
         
     def init_info2(self):
-        self.info2.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_SIZE)/2))
+        self.info2.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_SIZE) / 2))
         self.info2.move(int(self.width() / 2), GEAR_SIZE)
         self.info2.info1.value.setText('0')
         self.info2.info2.value.setText('0')
         self.info2.info3.value.setText('0')
         self.info2.info4.value.setText('0')
+
+
+    def init_info3(self):
+        self.info2.setFixedSize(int(self.width() / 4), int((self.height() - GEAR_SIZE) / 2))
+        self.info2.move(int(self.width() / 2), GEAR_SIZE)
+        self.info3.setFixedSize(int(self.width() / 4), int((self.height() - GEAR_SIZE) / 2))
+        self.info3.move(int(self.width() *0.75), GEAR_SIZE)
+        
+        self.info2.value.setText('10')
+        self.info3.value.setText('200')
 
     
     def init_warning(self):
@@ -132,7 +146,8 @@ class Wid2(QFrame):
 
         layout = QtWidgets.QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(5)
+        layout.setSpacing(0)
+
         self.value = QLabel()
         self.unit = QLabel()
 
@@ -159,7 +174,6 @@ class Info(QFrame):
         self.info5 = Wid(parent, "info5", font)
         self.info6 = Wid(parent, "info6", font)
         self.info7 = Wid(parent, "info7", font)
-
 
         layout1.addWidget(self.water_temp)
         layout1.addWidget(self.oil_temp)
@@ -191,6 +205,30 @@ class Info2(QFrame):
         layout1.addWidget(self.info4)
         
         self.setLayout(layout1)
+        self.setStyleSheet(QFRAME_STYLE)
+
+
+class Info3(QFrame):
+    def __init__(self, parent, tekst, font):
+        super().__init__(parent = parent)
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        
+        info=QLabel(tekst)
+        info.setStyleSheet(INFO_LABEL_TEXT)        
+        info.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
+        info.setFont(font)
+
+        self.value=QLabel()
+        self.value.setStyleSheet(INFO_LABEL_VALUE_2)
+        self.value.setAlignment(QtCore.Qt.AlignCenter)
+        self.value.setFont(font)
+
+        layout.addWidget(self.value)
+        layout.addWidget(info)
+        self.setLayout(layout)
         self.setStyleSheet(QFRAME_STYLE)
 
 
