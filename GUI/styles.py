@@ -42,6 +42,14 @@ INFO_LABEL_VALUE = """
     border-radius: 0px;
 """
 
+INFO_LABEL_VALUE_2 = """
+    color: white;
+    font-size: 100px;
+    background-color: rgba(0,0,0,0%);
+    border-width: 0;
+    border-radius: 0px;
+"""
+
 QFRAME_STYLE = """
     QFrame{
     border-color: rgb(206,249,255);
