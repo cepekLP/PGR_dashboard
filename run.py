@@ -40,12 +40,9 @@ class DashBoard(QMainWindow):
         self.threadpool.start(self.worker)
 
         self.bolide_info = BolideInfo()
-        self.main_view = MainView(self)      
-
-        if SHOW_FULLSCREEN:
-            self.showFullScreen()
-        else:
-            self.show()
+        self.main_view = MainView(self) 
+        
+        self.main_view.update_warning("info" ,"INFO TEXT")
 
 
     def keyPressEvent(self, event):
@@ -103,4 +100,10 @@ if __name__ == '__main__':
     QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
     id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
     #print(QtGui.QFontDatabase.applicationFontFamilies(id))
+    
+    if SHOW_FULLSCREEN:
+        window.showFullScreen()
+    else:
+        window.show()
+
     app.exec_()
