@@ -61,6 +61,7 @@ QFRAME_STYLE = """
 
 WARNING_QFRAME_STYLE = """
     color: white;
+    font-weight: 900;
     background-color: rgb(%d, %d, %d);
     border-color: rgb(206,249,255);
     border-style: solid;

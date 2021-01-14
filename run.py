@@ -34,32 +34,45 @@ class DashBoard(QMainWindow):
         self.setStyleSheet("background-color: black")
         self.setFixedSize(screen_width, screen_height)
 
+        QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
+        id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
+        #print(QtGui.QFontDatabase.applicationFontFamilies(id))
+
         self.threadpool = QtCore.QThreadPool()
         self.worker = Worker()
         self.worker.signals.result.connect(self.update)
         self.worker.signals.error.connect(self.worker_error)
         self.threadpool.start(self.worker)
-
-        self.bolide_info = BolideInfo()
-        self.main_view = MainView(self) 
         
-        self.main_view.update_warning("info" ,"INFO TEXT")
+        self.bolide_info = BolideInfo()
+        
+        self.main_view=MainView(screen_width, screen_height)
+        self.second_view=SecondView()
+
+        self.layout = QStackedLayout()
+        self.layout.addWidget(self.main_view)
+        self.layout.addWidget(self.second_view)
+        
+        self.layout.setCurrentIndex(0)
+
+        widget = QWidget()
+        widget.setLayout(self.layout)
+        self.setCentralWidget(widget) 
+        
+        #self.main_view.update_warning("error" ,"ERROR TEXT")
 
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Q:
             self.worker.kill()
             self.close()
-        """
         elif event.key() == QtCore.Qt.Key_W:
-            self.main_view.setVisible(True)
-            
+            self.layout.setCurrentIndex(0)  
         elif event.key() == QtCore.Qt.Key_E:
-            self.main_view.setVisible(False)
+            self.layout.setCurrentIndex(1)  
         else:
             pass
-        """
-
+        
 
     def update(self, str):
         if str["name"] == "gear":
@@ -100,9 +113,7 @@ if __name__ == '__main__':
     else:
         window = DashBoard()
     
-    QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
-    id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
-    #print(QtGui.QFontDatabase.applicationFontFamilies(id))
+    
     
     if SHOW_FULLSCREEN:
         window.showFullScreen()

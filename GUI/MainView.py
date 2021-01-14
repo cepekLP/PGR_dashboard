@@ -8,33 +8,33 @@ from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QFrame
 
 
 class MainView(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, width=800, height=480):
         super().__init__()
 
-        self.setFixedSize(main_window.width(), main_window.height())
+        self.setFixedSize(width, height)
         self.font = QtGui.QFont('Digital-7 Mono')
         self.font2 = QtGui.QFont('LEMON MILK')
 
-        self.gear_LCD = QLabel(main_window)
+        self.gear_LCD = QLabel(self)
         self.init_gear_LCD()
        
-        self.rpm = Wid2(main_window, self.font)    
+        self.rpm = Wid2(self, self.font)    
         self.init_rpm()
 
-        self.speed = Wid2(main_window, self.font)        
+        self.speed = Wid2(self, self.font)        
         self.init_speed()
 
-        self.info = Info(main_window, self.font2)
+        self.info = Info(self, self.font2)
         self.init_info()
 
         #self.info2 = Info2(main_window, self.font2)
         #self.init_info2()
         
-        self.info2 = Info3(main_window,"Info1", self.font2)
-        self.info3 = Info3(main_window,"Info2", self.font2)
+        self.info2 = Info3(self,"Info1", self.font2)
+        self.info3 = Info3(self,"Info2", self.font2)
         self.init_info3()
 
-        self.warning = Warning(main_window, self.font2)
+        self.warning = Warning(self, self.font2)
         self.init_warning()
 
 
@@ -103,7 +103,7 @@ class MainView(QWidget):
         self.info3.move(int(self.width() *0.75), GEAR_SIZE)
         
         self.info2.value.setText('10')
-        self.info3.value.setText('200')
+        self.info3.value.setText('10')
 
     
     def init_warning(self):

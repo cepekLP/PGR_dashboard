@@ -8,13 +8,13 @@ from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QFrame
 
 
 class SecondView(QWidget):
-    def __init__(self, main_window):
-        super().__init__(parent=main_window)
+    def __init__(self, width=800, height=480):
+        super().__init__()
 
-        self.setFixedSize(main_window.width(), main_window.height())
+        self.setFixedSize(width, height)
         self.font = QtGui.QFont('Digital-7 Mono')
         self.font2 = QtGui.QFont('LEMON MILK')
-        self.gear_LCD = QLabel(main_window)
+        self.gear_LCD = QLabel(self)
         self.init_gear_LCD()
 
 
