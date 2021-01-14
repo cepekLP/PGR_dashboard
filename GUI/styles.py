@@ -9,7 +9,7 @@ INFO_GEAR = """
 """
 #border-color: rgb(174,199,255);
 UNIT_RPM = """
-    color: white;
+    color:rgb(255, 219, 19);
     font-size: 30px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
@@ -17,7 +17,7 @@ UNIT_RPM = """
 """
 
 INFO_RPM = """
-    color: rgb(255, 248, 210);
+    color: white;
     font-size: 110px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
@@ -54,10 +54,10 @@ QFRAME_STYLE = """
 WARNING_QFRAME_STYLE = """
     color: white;
     background-color: rgb(%d, %d, %d);
-    border-color: white;
+    border-color: rgb(206,249,255);
     border-style: solid;
     border-width: 5px;
-    border-radius: 30px;
+    border-radius: 15px;
 """
 
 OFFSET = 20
