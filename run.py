@@ -9,11 +9,12 @@ except:
     SHOW_FULLSCREEN = False
 
 from GUI.MainView import MainView
+from GUI.SecondView import SecondView
 from CAN.CAN_Manager import Worker
 
 
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
 
 class BolideInfo:
@@ -29,7 +30,7 @@ class BolideInfo:
 class DashBoard(QMainWindow):
     def __init__(self, screen_width=800, screen_height=480):
         super().__init__()
-
+        
         self.setStyleSheet("background-color: black")
         self.setFixedSize(screen_width, screen_height)
 
@@ -49,6 +50,7 @@ class DashBoard(QMainWindow):
         if event.key() == QtCore.Qt.Key_Q:
             self.worker.kill()
             self.close()
+        """
         elif event.key() == QtCore.Qt.Key_W:
             self.main_view.setVisible(True)
             
@@ -56,6 +58,7 @@ class DashBoard(QMainWindow):
             self.main_view.setVisible(False)
         else:
             pass
+        """
 
 
     def update(self, str):
