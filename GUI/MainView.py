@@ -27,6 +27,9 @@ class MainView(QWidget):
         self.info = Info(main_window, self.font2)
         self.init_info()
 
+        self.info2 = Info2(main_window, self.font2)
+        self.init_info2()
+
         self.warning = Warning(main_window, self.font2)
         self.init_warning()
 
@@ -44,7 +47,6 @@ class MainView(QWidget):
         self.rpm.move(int((self.width() - GEAR_SIZE * 0.65) / 2) - self.rpm.width(), 0)       
        
         self.rpm.value.setFixedSize(GEAR_SIZE * 1.5, GEAR_SIZE * 0.7)       
-        self.rpm.value.move(GEAR_SIZE, 200)
         self.rpm.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.rpm.value.setText('12000')
         self.rpm.value.setStyleSheet(INFO_RPM)
@@ -76,6 +78,18 @@ class MainView(QWidget):
         self.info.oil_temp.value.setText('  100°C')
         self.info.break_balance.value.setText('0')
         self.info.TCS.value.setText('0')
+        self.info.info5.value.setText('0')
+        self.info.info6.value.setText('0')
+        self.info.info7.value.setText('0')
+
+        
+    def init_info2(self):
+        self.info2.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_SIZE)/2))
+        self.info2.move(int(self.width() / 2), GEAR_SIZE)
+        self.info2.info1.value.setText('0')
+        self.info2.info2.value.setText('0')
+        self.info2.info3.value.setText('0')
+        self.info2.info4.value.setText('0')
 
     
     def init_warning(self):
@@ -108,17 +122,7 @@ class MainView(QWidget):
             self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 0, 0))
 
 
-    def setVisible(self, visibility):
-        self.gear_LCD.setVisible(visibility)
-        self.rpm_progressbar.setVisible(visibility)
-        self.break_progressbar.setVisible(visibility)
-        self.rpm_LCD.setVisible(visibility)
-        self.speed_LCD.setVisible(visibility)
-        self.label_rpm.setVisible(visibility)
-        self.label_speed.setVisible(visibility)
-        self.water_temp_label.setVisible(visibility)
-        self.oil_temp_label.setVisible(visibility)
-        self.RTCS_mode_label.setVisible(visibility)
+    
 
 
 class Wid2(QFrame):
@@ -169,6 +173,27 @@ class Info(QFrame):
         self.setStyleSheet(QFRAME_STYLE)
 
 
+class Info2(QFrame):
+    def __init__(self, parent, font):
+        super().__init__(parent = parent)
+        layout1 = QtWidgets.QVBoxLayout()
+        layout1.setContentsMargins(0, 0, 0, 0)
+        layout1.setSpacing(0)
+
+        self.info1 = Wid(parent, "Info1", font)
+        self.info2 = Wid(parent, "Info2", font)
+        self.info3 = Wid(parent, "Info3", font)
+        self.info4 = Wid(parent, "Info4", font)
+        
+        layout1.addWidget(self.info1)
+        layout1.addWidget(self.info2)
+        layout1.addWidget(self.info3)
+        layout1.addWidget(self.info4)
+        
+        self.setLayout(layout1)
+        self.setStyleSheet(QFRAME_STYLE)
+
+
 class Wid(QWidget):
     def __init__(self, parent, tekst, font):
         super().__init__(parent = parent)
@@ -195,7 +220,7 @@ class Warning(QFrame):
         layout = QtWidgets.QVBoxLayout()
         
         self.tekst = QLabel()
-        self.tekst.setStyleSheet(INFO_LABEL_VALUE + "color: black; font-size: 30px;")
+        self.tekst.setStyleSheet(INFO_LABEL_VALUE)
         self.tekst.setAlignment(QtCore.Qt.AlignCenter)
         self.tekst.setWordWrap(True)
         self.tekst.setFont(font)
