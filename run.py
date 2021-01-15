@@ -16,6 +16,8 @@ from CAN.CAN_Manager import Worker
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
+NUMBER_OF_VIEWS = 2
+
 
 class BolideInfo:
     gear = 0
@@ -46,14 +48,15 @@ class DashBoard(QMainWindow):
         
         self.bolide_info = BolideInfo()
         
-        self.main_view=MainView(screen_width, screen_height)
-        self.second_view=SecondView()
+        self.main_view = MainView(screen_width, screen_height)
+        self.second_view = SecondView()
 
         self.layout = QStackedLayout()
         self.layout.addWidget(self.main_view)
         self.layout.addWidget(self.second_view)
         
-        self.layout.setCurrentIndex(0)
+        self.i = 0
+        self.layout.setCurrentIndex(self.i)
 
         widget = QWidget()
         widget.setLayout(self.layout)
@@ -67,11 +70,12 @@ class DashBoard(QMainWindow):
             self.worker.kill()
             self.close()
         elif event.key() == QtCore.Qt.Key_W:
-            self.layout.setCurrentIndex(0)  
+            self.i = (self.i - 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_E:
-            self.layout.setCurrentIndex(1)  
+            self.i = (self.i + 1) % NUMBER_OF_VIEWS
         else:
             pass
+        self.layout.setCurrentIndex(self.i)
         
 
     def update(self, str):
