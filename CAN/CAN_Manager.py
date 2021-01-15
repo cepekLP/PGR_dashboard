@@ -4,7 +4,8 @@ from PyQt5.QtCore import QObject, QRunnable, pyqtSignal, pyqtSlot
 
 class WorkerSignals(QObject):
     error = pyqtSignal(str)
-    result = pyqtSignal(dict)
+    warning = pyqtSignal(list)
+    result = pyqtSignal(list)
 
 class Worker(QRunnable):
     def __init__(self):
@@ -16,15 +17,23 @@ class Worker(QRunnable):
     def run(self):
         i = 0    
         while True:
-            self.signals.result.emit({"name" : "gear",          "value" : i % 10})     
-            self.signals.result.emit({"name" : "rpm",           "value" : i * 11 % 19000})
-            self.signals.result.emit({"name" : "speed",         "value" : i % 200})
-            self.signals.result.emit({"name" : "water_temp",    "value" : i % 200})
-            self.signals.result.emit({"name" : "oil_temp",      "value" : i % 200})
-            self.signals.result.emit({"name" : "break_balance", "value" : i % 100})
-            self.signals.result.emit({"name" : "TCS",           "value" : i % 20})
+            self.signals.result.emit(["gear",           int(i/10) % 10])     
+            self.signals.result.emit(["rpm",            i * 11 % 19000])
+            self.signals.result.emit(["speed",          i % 200])
+            self.signals.result.emit(["water_temp",     i % 200])
+            self.signals.result.emit(["oil_temp",       i % 200])
+            self.signals.result.emit(["break_balance",  i % 100])
+            self.signals.result.emit(["TCS",            i % 20])
             i = i + 1
-            time.sleep(0.1)
+            time.sleep(0.05)
+            if i % 200 == 0:
+                self.signals.warning.emit(["error", "ERROR TEXT"]) 
+            elif i % 150 == 0:
+                self.signals.warning.emit(["warning", "WARNING TEXT"])
+            elif i % 100 == 0:
+                self.signals.warning.emit(["info", "INFO TEXT"])
+            elif i % 50 == 0:
+                self.signals.warning.emit(["none", ""] ) #tymczasowo
 
             if self.is_killed:
                 return

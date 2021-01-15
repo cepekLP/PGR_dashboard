@@ -43,6 +43,7 @@ class DashBoard(QMainWindow):
         self.threadpool = QtCore.QThreadPool()
         self.worker = Worker()
         self.worker.signals.result.connect(self.update)
+        self.worker.signals.warning.connect(self.update_warning)
         self.worker.signals.error.connect(self.worker_error)
         self.threadpool.start(self.worker)
         
@@ -79,23 +80,25 @@ class DashBoard(QMainWindow):
         
 
     def update(self, str):
-        if str["name"] == "gear":
-            self.bolide_info.gear = str["value"]
-        elif str["name"] == "rpm":
-            self.bolide_info.rpm = str["value"]
-        elif str["name"] == "speed":
-            self.bolide_info.speed = str["value"]
-        elif str["name"] == "water_temp":
-            self.bolide_info.water_temp = str["value"]
-        elif str["name"] == "oil_temp":
-            self.bolide_info.oil_temp = str["value"]
-        elif str["name"] == "break_balance":
-            self.bolide_info.break_balance = str["value"]
-        elif str["name"] == "TCS":
-            self.bolide_info.race_tcs_mode = str["value"]
+        if str[0] == "gear":
+            self.bolide_info.gear = str[1]
+        elif str[0] == "rpm":
+            self.bolide_info.rpm = str[1]
+        elif str[0] == "speed":
+            self.bolide_info.speed = str[1]
+        elif str[0] == "water_temp":
+            self.bolide_info.water_temp = str[1]
+        elif str[0] == "oil_temp":
+            self.bolide_info.oil_temp = str[1]
+        elif str[0] == "break_balance":
+            self.bolide_info.break_balance = str[1]
+        elif str[0] == "TCS":
+            self.bolide_info.race_tcs_mode = str[1]
 
         self.main_view.update(self.bolide_info)
 
+    def update_warning(self, str):
+        self.main_view.update_warning(str[0], str[1])
 
     def worker_error(self):
         pass

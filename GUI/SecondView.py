@@ -19,8 +19,8 @@ class SecondView(QWidget):
 
 
     def init_gear_LCD(self):
-        self.gear_LCD.setFixedSize(GEAR_SIZE * 0.65, GEAR_SIZE)
-        self.gear_LCD.move((int(self.width()) - GEAR_SIZE * 0.65) / 2 , 0)
+        self.gear_LCD.setFixedSize(GEAR_WIDTH, GEAR_HEIGHT)
+        self.gear_LCD.move((int(self.width()) - GEAR_WIDTH) / 2 , 0)
         self.gear_LCD.setFont(self.font)
         self.gear_LCD.setAlignment(QtCore.Qt.AlignCenter)
         self.gear_LCD.setStyleSheet(INFO_GEAR)
