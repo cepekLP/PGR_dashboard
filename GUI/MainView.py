@@ -35,6 +35,7 @@ class MainView(QWidget):
         self.info4 = Info3(self,"Info3", self.font2)
         self.init_info3()
 
+        self.warning_list = []
         self.warning = Warning(self, self.font2)
         self.init_warning()
 
@@ -101,9 +102,9 @@ class MainView(QWidget):
         self.info2.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
         self.info2.move(int(self.width() / 2), GEAR_HEIGHT)
         self.info3.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info3.move(int(self.width() *2/3), GEAR_HEIGHT)
+        self.info3.move(int(self.width() * 2 / 3), GEAR_HEIGHT)
         self.info4.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info4.move(int(self.width() * 5/6), GEAR_HEIGHT)
+        self.info4.move(int(self.width() * 5 / 6), GEAR_HEIGHT)
         
         self.info2.value.setText('10')
         self.info3.value.setText('0')
@@ -125,22 +126,39 @@ class MainView(QWidget):
         self.info.TCS.value.setText(str(display_info.race_tcs_mode))     
 
 
-    def update_warning(self, type, text_info):        
-        if type == "none":
+    def update_warning(self):        
+        if len(self.warning_list) == 0:
             self.warning.tekst.setText("")
             self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (0, 0, 0))
-        elif type == "info":
-            self.warning.tekst.setText(text_info)
-            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (0, 192, 0))
-        elif type == "warning":
-            self.warning.tekst.setText(text_info)
-            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 128, 0))
-        elif type == "error":
-            self.warning.tekst.setText(text_info)
-            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 0, 0))
+        else:
+            if self.warning_list[0][0] == 0:
+                self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 0, 0))
+            elif self.warning_list[0][0] == 1:
+                self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 128, 0))
+            elif self.warning_list[0][0] == 2:
+                self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (0, 192, 0))
+            
+            self.warning.tekst.setText(self.warning_list[0][1])
+        
+
+    def add_warning(self, list):       
+        if list[0] == "error":
+            self.warning_list.append([0, list[1]])
+        elif list[0] == "warning":
+             self.warning_list.append([1, list[1]])
+        elif list[0] == "info":
+             self.warning_list.append([2, list[1]])
+
+        self.warning_list.sort()
+        self.update_warning()
 
 
-    
+    def delete_warning(self):
+        if len(self.warning_list) > 0:
+            del self.warning_list[0]
+            self.update_warning()            
+        else: 
+            pass    
 
 
 class Wid2(QFrame):

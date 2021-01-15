@@ -74,6 +74,8 @@ class DashBoard(QMainWindow):
             self.i = (self.i - 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_E:
             self.i = (self.i + 1) % NUMBER_OF_VIEWS
+        elif event.key() == QtCore.Qt.Key_R:
+            self.main_view.delete_warning()
         else:
             pass
         self.layout.setCurrentIndex(self.i)
@@ -98,7 +100,7 @@ class DashBoard(QMainWindow):
         self.main_view.update(self.bolide_info)
 
     def update_warning(self, str):
-        self.main_view.update_warning(str[0], str[1])
+        self.main_view.add_warning(str)
 
     def worker_error(self):
         pass

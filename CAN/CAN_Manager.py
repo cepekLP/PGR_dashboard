@@ -13,6 +13,7 @@ class Worker(QRunnable):
         self.signals = WorkerSignals()
         self.is_killed = False
 
+
     @pyqtSlot()
     def run(self):
         i = 0    
@@ -26,18 +27,17 @@ class Worker(QRunnable):
             self.signals.result.emit(["TCS",            i % 20])
             i = i + 1
             time.sleep(0.05)
-            if i % 200 == 0:
+            if i % 150 == 0:
                 self.signals.warning.emit(["error", "ERROR TEXT"]) 
-            elif i % 150 == 0:
+            elif (i+50) % 150 == 0:
                 self.signals.warning.emit(["warning", "WARNING TEXT"])
-            elif i % 100 == 0:
-                self.signals.warning.emit(["info", "INFO TEXT"])
-            elif i % 50 == 0:
-                self.signals.warning.emit(["none", ""] ) #tymczasowo
+            elif (i+100) % 150 == 0:
+                self.signals.warning.emit(["info",  "INFO TEXT"])
 
             if self.is_killed:
                 return
         
+
     def kill(self):
         self.is_killed = True
 
