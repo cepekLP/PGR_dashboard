@@ -75,7 +75,8 @@ class DashBoard(QMainWindow):
         elif event.key() == QtCore.Qt.Key_E:
             self.i = (self.i + 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_R:
-            self.main_view.warning.delete()
+                self.main_view.warning.delete()
+                self.second_view.warning.delete()
         else:
             pass
         self.layout.setCurrentIndex(self.i)
@@ -96,11 +97,17 @@ class DashBoard(QMainWindow):
             self.bolide_info.break_balance = str[1]
         elif str[0] == "TCS":
             self.bolide_info.race_tcs_mode = str[1]
+        
+        if self.i == 0:
+            self.main_view.update(self.bolide_info)
+        elif self.i == 1:
+            self.second_view.update(self.bolide_info)
 
-        self.main_view.update(self.bolide_info)
 
     def update_warning(self, str):
-        self.main_view.warning.add(str)
+            self.main_view.warning.add(str)  #ostrzeżenia są przypisane do danego ekranu
+            self.second_view.warning.add(str)
+
 
     def worker_error(self):
         pass

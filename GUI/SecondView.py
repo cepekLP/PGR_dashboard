@@ -31,7 +31,7 @@ class SecondView(QWidget):
         self.info2 = Info_type_2(self, self.font2)
         self.init_info2()        
         
-        self.info3 = Info_type_3(self, "Info1", self.font2)
+        self.TCS = Info_type_3(self, "TCS", self.font2)
         self.info4 = Info_type_3(self, "Info2", self.font2)
         self.info5 = Info_type_3(self, "Info3", self.font2)
         self.init_info3()
@@ -81,8 +81,8 @@ class SecondView(QWidget):
         self.info1.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), int((self.height() - GEAR_HEIGHT) / 2))
         self.info1.move(0, GEAR_HEIGHT)
  
-        self.info1.info1.value.setText('0')
-        self.info1.info2.value.setText('0')
+        self.info1.water_temp.value.setText('0')
+        self.info1.oil_temp.value.setText('0')
         self.info1.info3.value.setText('0')
         self.info1.info4.value.setText('0')
 
@@ -90,21 +90,21 @@ class SecondView(QWidget):
     def init_info2(self):
         self.info2.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), int((self.height() - GEAR_HEIGHT) / 2))
         self.info2.move(int((self.width() + GEAR_WIDTH) / 2), GEAR_HEIGHT)
-        self.info2.info1.value.setText('5')
+        self.info2.break_balance.value.setText('0')
         self.info2.info2.value.setText('0')
         self.info2.info3.value.setText('0')
         self.info2.info4.value.setText('0')
 
 
     def init_info3(self):
-        self.info3.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info3.move(0, GEAR_HEIGHT * 2)
+        self.TCS.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
+        self.TCS.move(0, GEAR_HEIGHT * 2)
         self.info4.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
         self.info4.move(int(self.width() / 6), GEAR_HEIGHT * 2)
         self.info5.setFixedSize(int((self.width()) / 6), int((self.height() - GEAR_HEIGHT) / 2))
         self.info5.move(int(self.width() / 3), GEAR_HEIGHT * 2)
         
-        self.info3.value.setText('0')
+        self.TCS.value.setText('0')
         self.info4.value.setText('0')
         self.info5.value.setText('10')
 
@@ -114,6 +114,16 @@ class SecondView(QWidget):
         self.warning.move(int(self.width()  / 2), GEAR_HEIGHT + int((self.height() - GEAR_HEIGHT) / 2))
 
 
+    def update(self, display_info):
+        self.gear_LCD.setText(str(display_info.gear))        
+        self.rpm.value.setText(str(display_info.rpm))  
+        self.speed.value.setText(str(display_info.speed))
+        self.info1.water_temp.value.setText("   {}°C".format(display_info.water_temp))
+        self.info1.oil_temp.value.setText("   {}°C".format(display_info.oil_temp))
+        self.info2.break_balance.value.setText(str(display_info.break_balance))
+        self.TCS.value.setText(str(display_info.race_tcs_mode))        
+
+
 class Info_type_1(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
@@ -121,13 +131,13 @@ class Info_type_1(QFrame):
         layout1.setContentsMargins(0, 0, 0, 0)
         layout1.setSpacing(0)
 
-        self.info1 = Wid(parent, "Info1", font)
-        self.info2 = Wid(parent, "Info2", font)
+        self.water_temp = Wid(parent, "Water temp", font)
+        self.oil_temp = Wid(parent, "Oil temp", font)
         self.info3 = Wid(parent, "Info3", font)
         self.info4 = Wid(parent, "Info4", font)
         
-        layout1.addWidget(self.info1)
-        layout1.addWidget(self.info2)
+        layout1.addWidget(self.water_temp)
+        layout1.addWidget(self.oil_temp)
         layout1.addWidget(self.info3)
         layout1.addWidget(self.info4)
         
@@ -142,12 +152,12 @@ class Info_type_2(QFrame):
         layout1.setContentsMargins(0, 0, 0, 0)
         layout1.setSpacing(0)
 
-        self.info1 = Wid(parent, "Info1", font)
+        self.break_balance = Wid(parent, "Brk balance", font)
         self.info2 = Wid(parent, "Info2", font)
         self.info3 = Wid(parent, "Info3", font)
         self.info4 = Wid(parent, "Info4", font)
         
-        layout1.addWidget(self.info1)
+        layout1.addWidget(self.break_balance)
         layout1.addWidget(self.info2)
         layout1.addWidget(self.info3)
         layout1.addWidget(self.info4)
