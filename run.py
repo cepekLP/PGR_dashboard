@@ -1,4 +1,5 @@
 import sys
+import logging
 
 try:
     import RPi.GPIO as GPIO
@@ -63,6 +64,13 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget) 
         
+        logging.basicConfig(format='%(asctime)s | %(levelname)s: %(message)s', filename='info.log', level=logging.INFO)
+        logging.info('Started')
+
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(250)
+        self.timer.timeout.connect(self.logger)
+        self.timer.start()
         #self.main_view.warning.add("error" ,"ERROR TEXT")
 
 
@@ -101,17 +109,26 @@ class DashBoard(QMainWindow):
         if self.i == 0:
             self.main_view.update(self.bolide_info)
         elif self.i == 1:
-            self.second_view.update(self.bolide_info)
+            self.second_view.update(self.bolide_info)       
 
 
-    def update_warning(self, str):
-            self.main_view.warning.add(str)  #ostrzeżenia są przypisane do danego ekranu
-            self.second_view.warning.add(str)
+    def update_warning(self, info):
+        self.main_view.warning.add(info)
+        self.second_view.warning.add(info)
+        if info[0] == "error":
+            logging.error(info[1])
+        elif info[0] == "warning":
+            logging.warning(info[1])
+        elif info[0] == "info":
+            logging.info(info[1])
 
 
     def worker_error(self):
         pass
 
+
+    def logger(self):
+        logging.info(self.bolide_info.__dict__)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
