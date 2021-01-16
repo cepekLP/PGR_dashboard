@@ -2,6 +2,7 @@
 
 from PyQt5.QtCore import QObject, QRunnable, pyqtSignal, pyqtSlot
 
+#komunikacja z głównym procesem
 class WorkerSignals(QObject):
     error = pyqtSignal(str)
     warning = pyqtSignal(list)
@@ -33,12 +34,12 @@ class Worker(QRunnable):
             elif (i + 50) % 150 == 0:
                 self.signals.warning.emit(["warning", "WARNING TEXT"])
             elif (i + 100) % 150 == 0:
-                self.signals.warning.emit(["info",  "INFO TEXT"])
+                self.signals.warning.emit(["info", "INFO TEXT"])
 
             if self.is_killed:
                 return
         
-
+    #zatrzymanie wątku
     def kill(self):
         self.is_killed = True
 
