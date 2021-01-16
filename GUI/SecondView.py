@@ -31,9 +31,7 @@ class SecondView(QWidget):
         self.info2 = Info_type_2(self, self.font2)
         self.init_info2()        
         
-        self.TCS = Info_type_3(self, "TCS", self.font2)
-        self.info4 = Info_type_3(self, "Info2", self.font2)
-        self.info5 = Info_type_3(self, "Info3", self.font2)
+        self.info3 = QWidget(self)
         self.init_info3()
         
 
@@ -97,21 +95,28 @@ class SecondView(QWidget):
 
 
     def init_info3(self):
-        self.TCS.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.TCS.move(0, GEAR_HEIGHT * 2)
-        self.info4.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info4.move(int(self.width() / 6), GEAR_HEIGHT * 2)
-        self.info5.setFixedSize(int((self.width()) / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info5.move(int(self.width() / 3), GEAR_HEIGHT * 2)
-        
-        self.TCS.value.setText('0')
-        self.info4.value.setText('0')
-        self.info5.value.setText('10')
+        layout = QtWidgets.QHBoxLayout()
+        layout.setSpacing(0)
+        layout.setContentsMargins(0, 0, 0, 0)
+        self.info3.TCS = Info_type_3(self, "TCS", self.font2)
+        self.info3.info4 = Info_type_3(self, "Info2", self.font2)
+        self.info3.info5 = Info_type_3(self, "Info3", self.font2)
+        layout.addWidget(self.info3.TCS)
+        layout.addWidget(self.info3.info4)
+        layout.addWidget(self.info3.info5)
 
+        self.info3.setLayout(layout)
+        self.info3.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
+        self.info3.move(0, GEAR_HEIGHT * 2)
+
+        self.info3.TCS.value.setText('0')
+        self.info3.info4.value.setText('0')
+        self.info3.info5.value.setText('10')
+        
 
     def init_warning(self):
-        self.warning.setFixedSize(int(self.width()  / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.warning.move(int(self.width()  / 2), GEAR_HEIGHT + int((self.height() - GEAR_HEIGHT) / 2))
+        self.warning.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
+        self.warning.move(int(self.width() / 2), GEAR_HEIGHT + int((self.height() - GEAR_HEIGHT) / 2))
 
 
     def update(self, display_info):
@@ -121,7 +126,7 @@ class SecondView(QWidget):
         self.info1.water_temp.value.setText("   {}°C".format(display_info.water_temp))
         self.info1.oil_temp.value.setText("   {}°C".format(display_info.oil_temp))
         self.info2.break_balance.value.setText(str(display_info.break_balance))
-        self.TCS.value.setText(str(display_info.race_tcs_mode))        
+        self.info3.TCS.value.setText(str(display_info.race_tcs_mode))        
 
 
 class Info_type_1(QFrame):

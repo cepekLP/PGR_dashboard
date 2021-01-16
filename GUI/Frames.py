@@ -1,4 +1,6 @@
-﻿from PyQt5 import QtCore, QtWidgets
+﻿import logging
+
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QLabel, QWidget, QFrame
 
 from GUI.styles import *
@@ -39,7 +41,7 @@ class Warning(QFrame):
         self.setStyleSheet(WARNING_QFRAME_STYLE % (0, 0, 0))
 
         self.list = []
-
+        
 
     def update(self):        
         if len(self.list) == 0:

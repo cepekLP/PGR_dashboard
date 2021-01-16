@@ -27,9 +27,7 @@ class MainView(QWidget):
         #self.info2 = Info_type_2(main_window, self.font2)
         #self.init_info2()
         
-        self.info2 = Info_type_3(self,"Info1", self.font2)
-        self.info3 = Info_type_3(self,"Info2", self.font2)
-        self.info4 = Info_type_3(self,"Info3", self.font2)
+        self.info3 = QWidget(self)
         self.init_info3()
 
         self.warning = Warning(self, self.font2)
@@ -97,17 +95,23 @@ class MainView(QWidget):
 
 
     def init_info3(self):
-        self.info2.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info2.move(int(self.width() / 2), GEAR_HEIGHT)
-        self.info3.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info3.move(int(self.width() * 2 / 3), GEAR_HEIGHT)
-        self.info4.setFixedSize(int(self.width() / 6), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info4.move(int(self.width() * 5 / 6), GEAR_HEIGHT)
-        
-        self.info2.value.setText('10')
-        self.info3.value.setText('0')
-        self.info4.value.setText('0')
+        layout = QtWidgets.QHBoxLayout()
+        layout.setSpacing(0)
+        layout.setContentsMargins(0, 0, 0, 0)
+        self.info3.info3 = Info_type_3(self, "Info1", self.font2)
+        self.info3.info4 = Info_type_3(self, "Info2", self.font2)
+        self.info3.info5 = Info_type_3(self, "Info3", self.font2)
+        layout.addWidget(self.info3.info3)
+        layout.addWidget(self.info3.info4)
+        layout.addWidget(self.info3.info5)
 
+        self.info3.setLayout(layout)
+        self.info3.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
+        self.info3.move(int(self.width() / 2), GEAR_HEIGHT)
+
+        self.info3.info3.value.setText('0')
+        self.info3.info4.value.setText('0')
+        self.info3.info5.value.setText('10')
     
     def init_warning(self):
         self.warning.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
