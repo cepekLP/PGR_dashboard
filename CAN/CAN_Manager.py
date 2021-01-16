@@ -16,9 +16,10 @@ class Worker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        i = 0    
+        i = 0
+        #test Wyświetlacza
         while True:
-            self.signals.result.emit(["gear",           int(i/10) % 10])     
+            self.signals.result.emit(["gear",           int(i / 10) % 10])     
             self.signals.result.emit(["rpm",            i * 11 % 19000])
             self.signals.result.emit(["speed",          i % 200])
             self.signals.result.emit(["water_temp",     i % 200])
@@ -29,9 +30,9 @@ class Worker(QRunnable):
             time.sleep(0.05)
             if i % 150 == 0:
                 self.signals.warning.emit(["error", "ERROR TEXT"]) 
-            elif (i+50) % 150 == 0:
+            elif (i + 50) % 150 == 0:
                 self.signals.warning.emit(["warning", "WARNING TEXT"])
-            elif (i+100) % 150 == 0:
+            elif (i + 100) % 150 == 0:
                 self.signals.warning.emit(["info",  "INFO TEXT"])
 
             if self.is_killed:

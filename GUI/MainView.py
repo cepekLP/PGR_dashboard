@@ -1,10 +1,7 @@
-try:
-    from GUI.styles import *
-except:
-    from Dashboard.GUI.styles import *
+from GUI.styles import *
+from GUI.Frames import *
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QLCDNumber, QLabel, QProgressBar, QWidget, QFrame
+from PyQt5 import QtCore, QtGui
 
 
 class MainView(QWidget):
@@ -18,24 +15,23 @@ class MainView(QWidget):
         self.gear_LCD = QLabel(self)
         self.init_gear_LCD()
        
-        self.rpm = Wid2(self, self.font)    
+        self.rpm = LCD_Display(self, self.font)    
         self.init_rpm()
 
-        self.speed = Wid2(self, self.font)        
+        self.speed = LCD_Display(self, self.font)        
         self.init_speed()
 
-        self.info = Info(self, self.font2)
+        self.info = Info_type_1(self, self.font2)
         self.init_info()
 
-        #self.info2 = Info2(main_window, self.font2)
+        #self.info2 = Info_type_2(main_window, self.font2)
         #self.init_info2()
         
-        self.info2 = Info3(self,"Info1", self.font2)
-        self.info3 = Info3(self,"Info2", self.font2)
-        self.info4 = Info3(self,"Info3", self.font2)
+        self.info2 = Info_type_3(self,"Info1", self.font2)
+        self.info3 = Info_type_3(self,"Info2", self.font2)
+        self.info4 = Info_type_3(self,"Info3", self.font2)
         self.init_info3()
 
-        self.warning_list = []
         self.warning = Warning(self, self.font2)
         self.init_warning()
 
@@ -50,28 +46,30 @@ class MainView(QWidget):
 
 
     def init_rpm(self):
+        self.rpm.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), GEAR_HEIGHT)
         self.rpm.move(int((self.width() - GEAR_WIDTH) / 2) - self.rpm.width(), 0)       
        
-        self.rpm.value.setFixedSize(GEAR_WIDTH * 2.25, GEAR_HEIGHT * 0.7)       
+        self.rpm.value.setFixedSize(GEAR_WIDTH * 2.75, GEAR_HEIGHT * 0.75)       
         self.rpm.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.rpm.value.setText('22000')
         self.rpm.value.setStyleSheet(INFO_RPM)
         
-        self.rpm.unit.setFixedWidth(GEAR_WIDTH * 2.25)
+        self.rpm.unit.setFixedWidth(GEAR_WIDTH * 2.75)
         self.rpm.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.rpm.unit.setStyleSheet(UNIT_RPM)
         self.rpm.unit.setText('RPM')
 
 
     def init_speed(self):
+        self.speed.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), GEAR_HEIGHT)
         self.speed.move(int((self.width() + GEAR_WIDTH) / 2), 0)
         
-        self.speed.value.setFixedSize(int(GEAR_WIDTH * 1.4), GEAR_HEIGHT * 0.7)       
+        self.speed.value.setFixedSize(int(GEAR_WIDTH * 1.6), GEAR_HEIGHT * 0.75)
         self.speed.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.speed.value.setText('220')
         self.speed.value.setStyleSheet(INFO_RPM)
         
-        self.speed.unit.setFixedWidth(int(GEAR_WIDTH * 1.4))
+        self.speed.unit.setFixedWidth(int(GEAR_WIDTH * 1.6))
         self.speed.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.speed.unit.setStyleSheet(UNIT_RPM)
         self.speed.unit.setText('KMPH')
@@ -120,69 +118,13 @@ class MainView(QWidget):
         self.gear_LCD.setText(str(display_info.gear))        
         self.rpm.value.setText(str(display_info.rpm))  
         self.speed.value.setText(str(display_info.speed))
-        self.info.water_temp.value.setText("{}°C".format(display_info.water_temp))
-        self.info.oil_temp.value.setText("{}°C".format(display_info.oil_temp))
+        self.info.water_temp.value.setText("   {}°C".format(display_info.water_temp))
+        self.info.oil_temp.value.setText("   {}°C".format(display_info.oil_temp))
         self.info.break_balance.value.setText(str(display_info.break_balance))
-        self.info.TCS.value.setText(str(display_info.race_tcs_mode))     
+        self.info.TCS.value.setText(str(display_info.race_tcs_mode))         
 
 
-    def update_warning(self):        
-        if len(self.warning_list) == 0:
-            self.warning.tekst.setText("")
-            self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (0, 0, 0))
-        else:
-            if self.warning_list[0][0] == 0:
-                self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 0, 0))
-            elif self.warning_list[0][0] == 1:
-                self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (255, 128, 0))
-            elif self.warning_list[0][0] == 2:
-                self.warning.setStyleSheet(WARNING_QFRAME_STYLE % (0, 192, 0))
-            
-            self.warning.tekst.setText(self.warning_list[0][1])
-        
-
-    def add_warning(self, list):       
-        if list[0] == "error":
-            self.warning_list.append([0, list[1]])
-        elif list[0] == "warning":
-             self.warning_list.append([1, list[1]])
-        elif list[0] == "info":
-             self.warning_list.append([2, list[1]])
-
-        self.warning_list.sort()
-        self.update_warning()
-
-
-    def delete_warning(self):
-        if len(self.warning_list) > 0:
-            del self.warning_list[0]
-            self.update_warning()            
-        else: 
-            pass    
-
-
-class Wid2(QFrame):
-    def __init__(self, parent, font):
-        super().__init__(parent = parent) 
-        self.setFixedSize(int((parent.width() - GEAR_WIDTH) / 2), GEAR_HEIGHT)
-
-        layout = QtWidgets.QVBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-
-        self.value = QLabel()
-        self.unit = QLabel()
-
-        self.value.setFont(font)
-        self.unit.setFont(font)
-        
-        layout.addWidget(self.value, 0, QtCore.Qt.AlignHCenter)       
-        layout.addWidget(self.unit, 0, QtCore.Qt.AlignHCenter)
-        self.setLayout(layout)
-        self.setStyleSheet(QFRAME_STYLE)
-
-
-class Info(QFrame):
+class Info_type_1(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
@@ -209,7 +151,7 @@ class Info(QFrame):
         self.setStyleSheet(QFRAME_STYLE)
 
 
-class Info2(QFrame):
+class Info_type_2(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
@@ -230,7 +172,7 @@ class Info2(QFrame):
         self.setStyleSheet(QFRAME_STYLE)
 
 
-class Info3(QFrame):
+class Info_type_3(QFrame):
     def __init__(self, parent, tekst, font):
         super().__init__(parent = parent)
 
@@ -250,41 +192,5 @@ class Info3(QFrame):
 
         layout.addWidget(self.value)
         layout.addWidget(info)
-        self.setLayout(layout)
-        self.setStyleSheet(QFRAME_STYLE)
-
-
-class Wid(QWidget):
-    def __init__(self, parent, tekst, font):
-        super().__init__(parent = parent)
-        
-        layout = QtWidgets.QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-        info = QLabel(tekst)
-        info.setStyleSheet(INFO_LABEL_TEXT)
-        info.setAlignment(QtCore.Qt.AlignCenter)
-        info.setFont(font)
-        self.value = QLabel()
-        self.value.setStyleSheet(INFO_LABEL_VALUE)
-        self.value.setAlignment(QtCore.Qt.AlignCenter)
-        self.value.setFont(font)
-
-        layout.addWidget(info)
-        layout.addWidget(self.value)
-        self.setLayout(layout)
-
-class Warning(QFrame):
-    def __init__(self, parent, font):
-        super().__init__(parent = parent)
-        layout = QtWidgets.QVBoxLayout()
-        
-        self.tekst = QLabel()
-        self.tekst.setStyleSheet(INFO_LABEL_VALUE)
-        self.tekst.setAlignment(QtCore.Qt.AlignCenter)
-        self.tekst.setWordWrap(True)
-        self.tekst.setFont(font)
-        layout.addWidget(self.tekst)
-        
         self.setLayout(layout)
         self.setStyleSheet(QFRAME_STYLE)

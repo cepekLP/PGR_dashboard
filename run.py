@@ -63,7 +63,7 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget) 
         
-        #self.main_view.update_warning("error" ,"ERROR TEXT")
+        #self.main_view.warning.add("error" ,"ERROR TEXT")
 
 
     def keyPressEvent(self, event):
@@ -75,7 +75,7 @@ class DashBoard(QMainWindow):
         elif event.key() == QtCore.Qt.Key_E:
             self.i = (self.i + 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_R:
-            self.main_view.delete_warning()
+            self.main_view.warning.delete()
         else:
             pass
         self.layout.setCurrentIndex(self.i)
@@ -100,7 +100,7 @@ class DashBoard(QMainWindow):
         self.main_view.update(self.bolide_info)
 
     def update_warning(self, str):
-        self.main_view.add_warning(str)
+        self.main_view.warning.add(str)
 
     def worker_error(self):
         pass
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     if running_on_RPi:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(21, GPIO.OUT)
+        GPIO.setup(21, GPIO.OUT)        #po co?
         GPIO.output(21, GPIO.HIGH)
 
     if SHOW_FULLSCREEN:

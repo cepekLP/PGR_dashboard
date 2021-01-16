@@ -10,7 +10,7 @@ INFO_GEAR = """
 #border-color: rgb(174,199,255);
 UNIT_RPM = """
     color:rgb(255, 219, 19);
-    font-size: 30px;
+    font-size: 40px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0;
@@ -18,7 +18,15 @@ UNIT_RPM = """
 
 INFO_RPM = """
     color: white;
-    font-size: 110px;
+    font-size: 130px;
+    background-color: rgba(0, 0, 0, 0%);
+    border-width: 0;
+    border-radius: 0;
+"""
+
+INFO_RPM_2 = """
+    color: white;
+    font-size: 150px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0;
