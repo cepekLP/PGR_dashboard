@@ -1,8 +1,9 @@
 import sys
 import logging
+from time import gmtime, strftime
 
 try:
-    import RPi.GPIO as GPIO
+    import RPi.GPIO as GPIO #zmiana na gpiozero ??
     running_on_RPi = True
     SHOW_FULLSCREEN = True
 except:
@@ -64,8 +65,9 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget) 
         
-        logging.basicConfig(format='%(asctime)s | %(levelname)s: %(message)s', filename='info.log', level=logging.INFO)
-        logging.info('Started')
+        logging.basicConfig(format="%(asctime)s | %(levelname)s: %(message)s",
+                            filename="log/" + strftime("%d.%m.%y %H-%M-%S", gmtime()) + ".log", level=logging.INFO)
+        logging.info("Started")
 
         self.timer = QtCore.QTimer()
         self.timer.setInterval(250)
@@ -123,12 +125,13 @@ class DashBoard(QMainWindow):
             logging.info(info[1])
 
 
-    def worker_error(self):
-        pass
+    def worker_error(self, error):
+        logging.critical(error)
 
 
     def logger(self):
         logging.info(self.bolide_info.__dict__)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -145,8 +148,6 @@ if __name__ == '__main__':
         window = DashBoard(width, height)
     else:
         window = DashBoard()
-    
-    
     
     if SHOW_FULLSCREEN:
         window.showFullScreen()
