@@ -31,6 +31,15 @@ class BolideInfo:
     race_tcs_mode = 0
 
 
+class ExtendedBolideInfo:
+    wheel_temp_1 = 0
+    wheel_temp_2 = 0
+    wheel_temp_3 = 0
+    wheel_temp_4 = 0
+    voltage = 0
+    oil_pres =0
+
+
 class DashBoard(QMainWindow):
     def __init__(self, screen_width=800, screen_height=480):
         super().__init__()
@@ -77,7 +86,6 @@ class DashBoard(QMainWindow):
         self.timer.setInterval(250)
         self.timer.timeout.connect(self.logger)
         self.timer.start()
-        #self.main_view.warning.add("error" ,"ERROR TEXT")
 
 
     def keyPressEvent(self, event):
@@ -120,14 +128,18 @@ class DashBoard(QMainWindow):
 
     #dodanie ostrzeżenia
     def update_warning(self, info):
-        self.main_view.warning.add(info)
-        self.second_view.warning.add(info)
-        if info[0] == "error":
-            logging.error(info[1])
-        elif info[0] == "warning":
-            logging.warning(info[1])
-        elif info[0] == "info":
-            logging.info(info[1])
+        if info[0]=="ACK":
+            self.main_view.warning.delete()
+            self.second_view.warning.delete()
+        else:
+            self.main_view.warning.add(info)
+            self.second_view.warning.add(info)
+            if info[0] == "error":
+                logging.error(info[1])
+            elif info[0] == "warning":
+                logging.warning(info[1])
+            elif info[0] == "info":
+                logging.info(info[1])
 
 
     def worker_error(self, error):
@@ -136,7 +148,6 @@ class DashBoard(QMainWindow):
 
     def logger(self):
         logging.info(self.bolide_info.__dict__)     #zapis do logu informacji w formie słownika
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
