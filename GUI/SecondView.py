@@ -21,7 +21,6 @@ class SecondView(QWidget):
         self.speed = LCD_Display(self, self.font)        
         self.init_speed()
 
-        self.warning_list = []
         self.warning = Warning(self, self.font2)
         self.init_warning()
 
@@ -34,7 +33,6 @@ class SecondView(QWidget):
         self.info3 = QWidget(self)
         self.init_info3()
         
-
 
     def init_gear_LCD(self):
         self.gear_LCD.setFixedSize(GEAR_WIDTH, GEAR_HEIGHT)
@@ -117,6 +115,8 @@ class SecondView(QWidget):
     def init_warning(self):
         self.warning.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
         self.warning.move(int(self.width() / 2), GEAR_HEIGHT + int((self.height() - GEAR_HEIGHT) / 2))
+        
+        self.warning_list = []
 
 
     def update(self, display_info):

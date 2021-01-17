@@ -113,6 +113,7 @@ class MainView(QWidget):
         self.info3.info4.value.setText('0')
         self.info3.info5.value.setText('10')
     
+
     def init_warning(self):
         self.warning.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
         self.warning.move(int(self.width() / 2), GEAR_HEIGHT + int((self.height() - GEAR_HEIGHT) / 2))
@@ -126,6 +127,7 @@ class MainView(QWidget):
         self.info.oil_temp.value.setText("   {}°C".format(display_info.oil_temp))
         self.info.break_balance.value.setText(str(display_info.break_balance))
         self.info.TCS.value.setText(str(display_info.race_tcs_mode))         
+
 
 
 class Info_type_1(QFrame):
@@ -155,6 +157,7 @@ class Info_type_1(QFrame):
         self.setStyleSheet(QFRAME_STYLE)
 
 
+
 class Info_type_2(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
@@ -174,6 +177,7 @@ class Info_type_2(QFrame):
         
         self.setLayout(layout1)
         self.setStyleSheet(QFRAME_STYLE)
+
 
 
 class Info_type_3(QFrame):

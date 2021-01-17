@@ -5,9 +5,11 @@ from PyQt5.QtWidgets import QLabel, QWidget, QFrame
 
 from GUI.styles import *
 
+
+#wyswietalcz rpm / kmph
 class LCD_Display(QFrame):
     def __init__(self, parent, font):
-        super().__init__(parent = parent) 
+        super().__init__(parent = parent)
 
         layout = QtWidgets.QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
@@ -25,6 +27,8 @@ class LCD_Display(QFrame):
         self.setStyleSheet(QFRAME_STYLE)
 
 
+
+#wyświetlacz ostrzeżeń
 class Warning(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
@@ -42,7 +46,8 @@ class Warning(QFrame):
 
         self.list = []
         
-
+    
+    #aktualizacja wyświetlacza
     def update(self):        
         if len(self.list) == 0:
             self.tekst.setText("")
@@ -57,7 +62,8 @@ class Warning(QFrame):
             
             self.tekst.setText(self.list[0][1])
         
-
+    
+    #dodanie ostrzeżenia do listy
     def add(self, list):       
         if list[0] == "error":
             self.list.append([0, list[1]])
@@ -70,6 +76,7 @@ class Warning(QFrame):
         self.update()
 
 
+    #usuniecie 1 ostrzeżenia z listy
     def delete(self):
         if len(self.list) > 0:
             del self.list[0]
@@ -78,6 +85,9 @@ class Warning(QFrame):
             pass
 
 
+
+#linijka z informacja i wartoscia
+#rozmieszczenie poziome
 class Wid(QWidget):
     def __init__(self, parent, tekst, font):
         super().__init__(parent = parent)
@@ -85,10 +95,12 @@ class Wid(QWidget):
         layout = QtWidgets.QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
+
         info = QLabel(tekst)
         info.setStyleSheet(INFO_LABEL_TEXT)
         info.setAlignment(QtCore.Qt.AlignCenter)
         info.setFont(font)
+
         self.value = QLabel()
         self.value.setStyleSheet(INFO_LABEL_VALUE)
         self.value.setAlignment(QtCore.Qt.AlignCenter)

@@ -38,10 +38,12 @@ class DashBoard(QMainWindow):
         self.setStyleSheet("background-color: black")
         self.setFixedSize(screen_width, screen_height)
 
+        #załadowanie czcionek
         QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
         id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
         #print(QtGui.QFontDatabase.applicationFontFamilies(id))
-
+        
+        #obsługa CAN przez osobny proces
         self.threadpool = QtCore.QThreadPool()
         self.worker = Worker()
         self.worker.signals.result.connect(self.update)
@@ -52,8 +54,9 @@ class DashBoard(QMainWindow):
         self.bolide_info = BolideInfo()
         
         self.main_view = MainView(screen_width, screen_height)
-        self.second_view = SecondView()
+        self.second_view = SecondView(screen_width, screen_height)
 
+        #obłsuga wielu widoków
         self.layout = QStackedLayout()
         self.layout.addWidget(self.main_view)
         self.layout.addWidget(self.second_view)
@@ -65,8 +68,9 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget) 
         
+        #konfig logow
         logging.basicConfig(format="%(asctime)s | %(levelname)s: %(message)s",
-                            filename="log/" + strftime("%d.%m.%y %H-%M-%S", gmtime()) + ".log", level=logging.INFO)
+                            filename="log/" + strftime("%d-%m-%y %H;%M;%S", gmtime()) + ".log", level=logging.INFO)
         logging.info("Started")
 
         self.timer = QtCore.QTimer()
@@ -114,6 +118,7 @@ class DashBoard(QMainWindow):
             self.second_view.update(self.bolide_info)       
 
 
+    #dodanie ostrzeżenia
     def update_warning(self, info):
         self.main_view.warning.add(info)
         self.second_view.warning.add(info)
@@ -130,7 +135,7 @@ class DashBoard(QMainWindow):
 
 
     def logger(self):
-        logging.info(self.bolide_info.__dict__)
+        logging.info(self.bolide_info.__dict__)     #zapis do logu informacji w formie słownika
 
 
 if __name__ == '__main__':

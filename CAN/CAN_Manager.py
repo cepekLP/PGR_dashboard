@@ -39,6 +39,7 @@ class Worker(QRunnable):
             if self.is_killed:
                 return
         
+
     #zatrzymanie wątku
     def kill(self):
         self.is_killed = True
