@@ -1,3 +1,6 @@
+GEAR_HEIGHT = 160
+GEAR_WIDTH = 110
+
 INFO_GEAR = """
     color: rgb(255, 219, 19);
     font-size: 160px;
@@ -7,7 +10,7 @@ INFO_GEAR = """
     border-width: 10px;
     border-radius: 15px;   
 """
-#border-color: rgb(174,199,255);
+
 UNIT_RPM = """
     color:rgb(255, 219, 19);
     font-size: 40px;
@@ -32,7 +35,6 @@ INFO_RPM_2 = """
     border-radius: 0;
 """
 
-#rgb(255, 207, 31)
 INFO_LABEL_TEXT = """
     color: rgb(255, 219, 19);
     font-size: 23px;
@@ -76,7 +78,3 @@ WARNING_QFRAME_STYLE = """
     border-width: 5px;
     border-radius: 15px;
 """
-
-OFFSET = 20
-GEAR_HEIGHT = 160
-GEAR_WIDTH = 110
