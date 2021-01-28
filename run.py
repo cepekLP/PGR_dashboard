@@ -37,7 +37,7 @@ class ExtendedBolideInfo:
     wheel_temp_3 = 0
     wheel_temp_4 = 0
     voltage = 0
-    oil_pres =0
+    oil_press = 0
 
 
 class DashBoard(QMainWindow):
@@ -46,11 +46,12 @@ class DashBoard(QMainWindow):
         
         self.setStyleSheet("background-color: black")
         self.setFixedSize(screen_width, screen_height)
+        self.setCursor(QtCore.Qt.BlankCursor)    
 
         #załadowanie czcionek
         QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
         id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
-        #print(QtGui.QFontDatabase.applicationFontFamilies(id))
+        #print(QtGui.QFontDatabase.applicationFontFamilies(id))     #wyświetla nazwe czcionki
         
         #obsługa CAN przez osobny proces
         self.threadpool = QtCore.QThreadPool()
@@ -65,7 +66,7 @@ class DashBoard(QMainWindow):
         self.main_view = MainView(screen_width, screen_height)
         self.second_view = SecondView(screen_width, screen_height)
 
-        #obłsuga wielu widoków
+        #obsługa wielu widoków
         self.layout = QStackedLayout()
         self.layout.addWidget(self.main_view)
         self.layout.addWidget(self.second_view)
@@ -77,9 +78,9 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget) 
         
-        #konfig logow
+        #config logow
         logging.basicConfig(format="%(asctime)s | %(levelname)s: %(message)s",
-                            filename="log/" + strftime("%d-%m-%y %H;%M;%S", gmtime()) + ".log", level=logging.INFO)
+                            filename="log/" + strftime("%d-%m-%y_%H%M%S", gmtime()) + ".log", level=logging.INFO)
         logging.info("Started")
 
         self.timer = QtCore.QTimer()
@@ -125,10 +126,8 @@ class DashBoard(QMainWindow):
         elif self.i == 1:
             self.second_view.update(self.bolide_info)       
 
-
-    #dodanie ostrzeżenia
     def update_warning(self, info):
-        if info[0]=="ACK":
+        if info[0] == "ACK":
             self.main_view.warning.delete()
             self.second_view.warning.delete()
         else:
@@ -148,7 +147,6 @@ class DashBoard(QMainWindow):
 
     def logger(self):
         logging.info(self.bolide_info.__dict__)     #zapis do logu informacji w formie słownika
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 

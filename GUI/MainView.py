@@ -48,12 +48,10 @@ class MainView(QWidget):
         self.rpm.move(int((self.width() - GEAR_WIDTH) / 2) - self.rpm.width(), 0)       
        
         self.rpm.value.setFixedSize(GEAR_WIDTH * 2.75, GEAR_HEIGHT * 0.75)       
-        self.rpm.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.rpm.value.setText('22000')
         self.rpm.value.setStyleSheet(INFO_RPM)
         
         self.rpm.unit.setFixedWidth(GEAR_WIDTH * 2.75)
-        self.rpm.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.rpm.unit.setStyleSheet(UNIT_RPM)
         self.rpm.unit.setText('RPM')
 

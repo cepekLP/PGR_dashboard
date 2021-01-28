@@ -62,13 +62,11 @@ class SecondView(QWidget):
         self.speed.setFixedSize(int(self.width() / 2), GEAR_HEIGHT)
         self.speed.move(int(self.width() / 2), 0)
         
-        self.speed.value.setFixedSize(int(GEAR_WIDTH * 1.85), GEAR_HEIGHT * 0.75)       
-        self.speed.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        self.speed.value.setFixedSize(int(GEAR_WIDTH * 1.85), GEAR_HEIGHT * 0.75)
         self.speed.value.setText('220')
         self.speed.value.setStyleSheet(INFO_RPM_2)
         
         self.speed.unit.setFixedWidth(int(GEAR_WIDTH * 1.85))
-        self.speed.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.speed.unit.setStyleSheet(UNIT_RPM)
         self.speed.unit.setText('KMPH')
 

@@ -18,7 +18,9 @@ class LCD_Display(QFrame):
         self.value = QLabel()
         self.unit = QLabel()
 
+        self.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.value.setFont(font)
+        self.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.unit.setFont(font)
         
         layout.addWidget(self.value, 0, QtCore.Qt.AlignHCenter)       
