@@ -51,7 +51,8 @@ class DashBoard(QMainWindow):
         #załadowanie czcionek
         QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
         id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
-        #print(QtGui.QFontDatabase.applicationFontFamilies(id))     #wyświetla nazwe czcionki
+        #print(QtGui.QFontDatabase.applicationFontFamilies(id)) #wyświetla
+        #nazwe czcionki
         
         #obsługa CAN przez osobny proces
         self.threadpool = QtCore.QThreadPool()
@@ -104,6 +105,17 @@ class DashBoard(QMainWindow):
             pass
         self.layout.setCurrentIndex(self.i)
         
+
+    def mousePressEvent(self, event):
+        if event.x() > self.width() / 2 and event.y() > self.height() / 3 * 2:
+            self.main_view.warning.delete()
+            self.second_view.warning.delete()
+        elif event.x() < self.width() / 2:
+            self.i = (self.i - 1) % NUMBER_OF_VIEWS
+        else:
+            self.i = (self.i + 1) % NUMBER_OF_VIEWS
+        self.layout.setCurrentIndex(self.i)
+
 
     def update(self, str):
         if str[0] == "gear":
