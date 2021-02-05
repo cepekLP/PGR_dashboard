@@ -52,7 +52,7 @@ INFO_LABEL_VALUE = """
     border-radius: 0px;
 """
 
-INFO_LABEL_VALUE_2 = """
+INFO_LABEL_VALUE_VERTICAL = """
     color: white;
     font-size: 100px;
     background-color: rgba(0,0,0,0%);

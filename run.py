@@ -3,7 +3,7 @@ import logging
 from time import gmtime, strftime
 
 try:
-    import RPi.GPIO as GPIO #zmiana na gpiozero ??
+    import gpiozero as GPIO
     running_on_RPi = True
     SHOW_FULLSCREEN = True
 except:
@@ -136,7 +136,7 @@ class DashBoard(QMainWindow):
         if self.i == 0:
             self.main_view.update(self.bolide_info)
         elif self.i == 1:
-            self.second_view.update(self.bolide_info)       
+            self.second_view.update(self.bolide_info)    
 
     def update_warning(self, info):
         if info[0] == "ACK":
@@ -159,25 +159,18 @@ class DashBoard(QMainWindow):
 
     def logger(self):
         logging.info(self.bolide_info.__dict__)     #zapis do logu informacji w formie słownika
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
-    if running_on_RPi:
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(21, GPIO.OUT)        #po co?
-        GPIO.output(21, GPIO.HIGH)
 
     if SHOW_FULLSCREEN:
         size = app.desktop().screenGeometry()
         width, height = size.width(), size.height()
         window = DashBoard(width, height)
-    else:
-        window = DashBoard()
-    
-    if SHOW_FULLSCREEN:
         window.showFullScreen()
     else:
+        window = DashBoard()
         window.show()
-
+    
     app.exec_()

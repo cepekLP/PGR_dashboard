@@ -88,8 +88,7 @@ class Warning(QFrame):
 
 
 
-#linijka z informacja i wartoscia
-#rozmieszczenie poziome
+#etykieta i wartość
 class Wid(QWidget):
     def __init__(self, parent, tekst, font):
         super().__init__(parent = parent)
@@ -111,3 +110,29 @@ class Wid(QWidget):
         layout.addWidget(info)
         layout.addWidget(self.value)
         self.setLayout(layout)
+
+
+
+#wartość nad etykietą
+class Wid2(QFrame):
+    def __init__(self, parent, tekst, font):
+        super().__init__(parent = parent)
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        
+        info = QLabel(tekst)
+        info.setStyleSheet(INFO_LABEL_TEXT)        
+        info.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
+        info.setFont(font)
+
+        self.value = QLabel()
+        self.value.setStyleSheet(INFO_LABEL_VALUE_VERTICAL)
+        self.value.setAlignment(QtCore.Qt.AlignCenter)
+        self.value.setFont(font)
+
+        layout.addWidget(self.value)
+        layout.addWidget(info)
+        self.setLayout(layout)
+        self.setStyleSheet(QFRAME_STYLE)

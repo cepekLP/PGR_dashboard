@@ -21,14 +21,14 @@ class MainView(QWidget):
         self.speed = LCD_Display(self, self.font)        
         self.init_speed()
 
-        self.info = Info_type_1(self, self.font2)
-        self.init_info()
+        self.info_left = Info_Left(self, self.font2)
+        self.init_info_left()
 
         #self.info2 = Info_type_2(main_window, self.font2)
         #self.init_info2()
         
-        self.info3 = QWidget(self)
-        self.init_info3()
+        self.info_vertical =  Info_3(self, self.font2)
+        self.init_info_vertical()
 
         self.warning = Warning(self, self.font2)
         self.init_warning()
@@ -71,45 +71,34 @@ class MainView(QWidget):
         self.speed.unit.setText('KMPH')
 
 
-    def init_info(self):
-        self.info.setFixedSize(int(self.width() / 2), self.height() - GEAR_HEIGHT)
-        self.info.move(0, GEAR_HEIGHT)
-        self.info.water_temp.value.setText('  100°C')
-        self.info.oil_temp.value.setText('  100°C')
-        self.info.break_balance.value.setText('0')
-        self.info.TCS.value.setText('0')
-        self.info.info5.value.setText('0')
-        self.info.info6.value.setText('0')
-        self.info.info7.value.setText('0')
+    def init_info_left(self):
+        self.info_left.setFixedSize(int(self.width() / 2), self.height() - GEAR_HEIGHT)
+        self.info_left.move(0, GEAR_HEIGHT)
+        self.info_left.water_temp.value.setText('  100°C')
+        self.info_left.oil_temp.value.setText('  100°C')
+        self.info_left.break_balance.value.setText('0')
+        self.info_left.TCS.value.setText('0')
+        self.info_left.info5.value.setText('0')
+        self.info_left.info6.value.setText('0')
+        self.info_left.info7.value.setText('0')
 
         
-    def init_info2(self):
-        self.info2.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info2.move(int(self.width() / 2), GEAR_HEIGHT)
-        self.info2.info1.value.setText('0')
-        self.info2.info2.value.setText('0')
-        self.info2.info3.value.setText('0')
-        self.info2.info4.value.setText('0')
+    def init_info_right(self):
+        self.info_right.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
+        self.info_right.move(int(self.width() / 2), GEAR_HEIGHT)
+        self.info_right.info1.value.setText('0')
+        self.info_right.info2.value.setText('0')
+        self.info_right.info3.value.setText('0')
+        self.info_right.info4.value.setText('0')
 
 
-    def init_info3(self):
-        layout = QtWidgets.QHBoxLayout()
-        layout.setSpacing(0)
-        layout.setContentsMargins(0, 0, 0, 0)
-        self.info3.info3 = Info_type_3(self, "Info1", self.font2)
-        self.info3.info4 = Info_type_3(self, "Info2", self.font2)
-        self.info3.info5 = Info_type_3(self, "Info3", self.font2)
-        layout.addWidget(self.info3.info3)
-        layout.addWidget(self.info3.info4)
-        layout.addWidget(self.info3.info5)
+    def init_info_vertical(self):
+        self.info_vertical.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
+        self.info_vertical.move(int(self.width() / 2), GEAR_HEIGHT)
 
-        self.info3.setLayout(layout)
-        self.info3.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info3.move(int(self.width() / 2), GEAR_HEIGHT)
-
-        self.info3.info3.value.setText('0')
-        self.info3.info4.value.setText('0')
-        self.info3.info5.value.setText('10')
+        self.info_vertical.info1.value.setText('0')
+        self.info_vertical.info2.value.setText('19')
+        self.info_vertical.info3.value.setText('10')
     
 
     def init_warning(self):
@@ -121,14 +110,14 @@ class MainView(QWidget):
         self.gear_LCD.setText(str(display_info.gear))        
         self.rpm.value.setText(str(display_info.rpm))  
         self.speed.value.setText(str(display_info.speed))
-        self.info.water_temp.value.setText("   {}°C".format(display_info.water_temp))
-        self.info.oil_temp.value.setText("   {}°C".format(display_info.oil_temp))
-        self.info.break_balance.value.setText(str(display_info.break_balance))
-        self.info.TCS.value.setText(str(display_info.race_tcs_mode))         
+        self.info_left.water_temp.value.setText("   {}°C".format(display_info.water_temp))
+        self.info_left.oil_temp.value.setText("   {}°C".format(display_info.oil_temp))
+        self.info_left.break_balance.value.setText(str(display_info.break_balance))
+        self.info_left.TCS.value.setText(str(display_info.race_tcs_mode))         
 
 
 
-class Info_type_1(QFrame):
+class Info_Left(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
@@ -156,7 +145,7 @@ class Info_type_1(QFrame):
 
 
 
-class Info_type_2(QFrame):
+class Info_Right(QFrame):
     def __init__(self, parent, font):
         super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
@@ -178,25 +167,20 @@ class Info_type_2(QFrame):
 
 
 
-class Info_type_3(QFrame):
-    def __init__(self, parent, tekst, font):
-        super().__init__(parent = parent)
-
-        layout = QtWidgets.QVBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
+class Info_3(QWidget):
+    def __init__(self, parent, font):
+        super().__init__(parent=parent)
         
-        info = QLabel(tekst)
-        info.setStyleSheet(INFO_LABEL_TEXT)        
-        info.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
-        info.setFont(font)
+        layout = QtWidgets.QHBoxLayout()
+        layout.setSpacing(0)
+        layout.setContentsMargins(0, 0, 0, 0)
 
-        self.value = QLabel()
-        self.value.setStyleSheet(INFO_LABEL_VALUE_2)
-        self.value.setAlignment(QtCore.Qt.AlignCenter)
-        self.value.setFont(font)
+        self.info1 = Wid2(self, "Info1", font)
+        self.info2 = Wid2(self, "Info2", font)
+        self.info3 = Wid2(self, "Info3", font)
 
-        layout.addWidget(self.value)
-        layout.addWidget(info)
+        layout.addWidget(self.info1)
+        layout.addWidget(self.info2)
+        layout.addWidget(self.info3)
+
         self.setLayout(layout)
-        self.setStyleSheet(QFRAME_STYLE)
