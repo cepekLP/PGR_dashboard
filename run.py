@@ -28,6 +28,7 @@ class BolideInfo:
     speed = 0
     water_temp = 0
     oil_temp = 0
+    air_intake_temp = 0
     race_tcs_mode = 0
 
 
@@ -152,7 +153,7 @@ class DashBoard(QMainWindow):
             elif info[0] == "info":
                 logging.info(info[1])
 
-
+           
     def worker_error(self, error):
         logging.critical(error)
 

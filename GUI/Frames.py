@@ -90,7 +90,7 @@ class Warning(QFrame):
 
 #etykieta i wartość
 class Wid(QWidget):
-    def __init__(self, parent, tekst, font):
+    def __init__(self, parent, tekst, font, info_width=None):
         super().__init__(parent = parent)
         
         layout = QtWidgets.QHBoxLayout()
@@ -101,6 +101,9 @@ class Wid(QWidget):
         info.setStyleSheet(INFO_LABEL_TEXT)
         info.setAlignment(QtCore.Qt.AlignCenter)
         info.setFont(font)
+        info.setWordWrap(True)
+        if info_width != None:
+            info.setFixedWidth(info_width)
 
         self.value = QLabel()
         self.value.setStyleSheet(INFO_LABEL_VALUE)

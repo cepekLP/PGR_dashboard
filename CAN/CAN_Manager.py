@@ -7,6 +7,8 @@ class WorkerSignals(QObject):
     error = pyqtSignal(str)
     warning = pyqtSignal(list)
     result = pyqtSignal(list)
+    finish = pyqtSignal()
+
 
 class Worker(QRunnable):
     def __init__(self):

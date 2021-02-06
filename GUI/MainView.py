@@ -21,13 +21,13 @@ class MainView(QWidget):
         self.speed = LCD_Display(self, self.font)        
         self.init_speed()
 
-        self.info_left = Info_Left(self, self.font2)
+        self.info_left = Info_Left(self, self.font2, int((self.width() - GEAR_WIDTH) / 4))
         self.init_info_left()
-
+  
         #self.info2 = Info_type_2(main_window, self.font2)
         #self.init_info2()
         
-        self.info_vertical =  Info_3(self, self.font2)
+        self.info_vertical = Info_3(self, self.font2)
         self.init_info_vertical()
 
         self.warning = Warning(self, self.font2)
@@ -44,41 +44,42 @@ class MainView(QWidget):
 
 
     def init_rpm(self):
-        self.rpm.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), GEAR_HEIGHT)
+        self.rpm.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), RPM_HEIGHT)
         self.rpm.move(int((self.width() - GEAR_WIDTH) / 2) - self.rpm.width(), 0)       
        
-        self.rpm.value.setFixedSize(GEAR_WIDTH * 2.75, GEAR_HEIGHT * 0.75)       
+        self.rpm.value.setFixedSize(int((self.width() - GEAR_WIDTH) / 2 - OFFSET), RPM_HEIGHT * 0.75)   
         self.rpm.value.setText('22000')
         self.rpm.value.setStyleSheet(INFO_RPM)
         
-        self.rpm.unit.setFixedWidth(GEAR_WIDTH * 2.75)
+        self.rpm.unit.setFixedWidth(int((self.width() - GEAR_WIDTH) / 2 - OFFSET * 1.5))
         self.rpm.unit.setStyleSheet(UNIT_RPM)
         self.rpm.unit.setText('RPM')
 
 
     def init_speed(self):
-        self.speed.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), GEAR_HEIGHT)
+        self.speed.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), RPM_HEIGHT)
         self.speed.move(int((self.width() + GEAR_WIDTH) / 2), 0)
         
-        self.speed.value.setFixedSize(int(GEAR_WIDTH * 1.6), GEAR_HEIGHT * 0.75)
+        self.speed.value.setFixedSize(int((self.width() - GEAR_WIDTH) * 0.275), RPM_HEIGHT * 0.75)
         self.speed.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.speed.value.setText('220')
         self.speed.value.setStyleSheet(INFO_RPM)
         
-        self.speed.unit.setFixedWidth(int(GEAR_WIDTH * 1.6))
+        self.speed.unit.setFixedWidth(int((self.width() - GEAR_WIDTH) * 0.275))
         self.speed.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.speed.unit.setStyleSheet(UNIT_RPM)
         self.speed.unit.setText('KMPH')
 
 
     def init_info_left(self):
-        self.info_left.setFixedSize(int(self.width() / 2), self.height() - GEAR_HEIGHT)
-        self.info_left.move(0, GEAR_HEIGHT)
+        self.info_left.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), self.height() - RPM_HEIGHT)
+        self.info_left.move(0, RPM_HEIGHT)
+
         self.info_left.water_temp.value.setText('  100°C')
         self.info_left.oil_temp.value.setText('  100°C')
+        self.info_left.air_intake_temp.value.setText('  100°C')
         self.info_left.break_balance.value.setText('0')
-        self.info_left.TCS.value.setText('0')
-        self.info_left.info5.value.setText('0')
+        self.info_left.TCS.value.setText('0')        
         self.info_left.info6.value.setText('0')
         self.info_left.info7.value.setText('0')
 
@@ -86,6 +87,7 @@ class MainView(QWidget):
     def init_info_right(self):
         self.info_right.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
         self.info_right.move(int(self.width() / 2), GEAR_HEIGHT)
+
         self.info_right.info1.value.setText('0')
         self.info_right.info2.value.setText('0')
         self.info_right.info3.value.setText('0')
@@ -93,17 +95,16 @@ class MainView(QWidget):
 
 
     def init_info_vertical(self):
-        self.info_vertical.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info_vertical.move(int(self.width() / 2), GEAR_HEIGHT)
+        self.info_vertical.setFixedSize(int((self.width()-GEAR_WIDTH) / 2), int((self.height() -RPM_HEIGHT) /2))
+        self.info_vertical.move(int((self.width()+GEAR_WIDTH) / 2), RPM_HEIGHT)
 
         self.info_vertical.info1.value.setText('0')
         self.info_vertical.info2.value.setText('19')
-        self.info_vertical.info3.value.setText('10')
     
 
     def init_warning(self):
-        self.warning.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.warning.move(int(self.width() / 2), GEAR_HEIGHT + int((self.height() - GEAR_HEIGHT) / 2))
+        self.warning.setFixedSize(int((self.width() + GEAR_WIDTH) / 2), int((self.height() -RPM_HEIGHT) / 2))
+        self.warning.move(int((self.width() - GEAR_WIDTH) / 2), RPM_HEIGHT + int((self.height() - RPM_HEIGHT) / 2))
 
 
     def update(self, display_info):
@@ -118,25 +119,25 @@ class MainView(QWidget):
 
 
 class Info_Left(QFrame):
-    def __init__(self, parent, font):
+    def __init__(self, parent, font, width=None):
         super().__init__(parent = parent)
         layout1 = QtWidgets.QVBoxLayout()
         layout1.setContentsMargins(0, 0, 0, 0)
         layout1.setSpacing(0)
 
-        self.water_temp = Wid(parent, "Water temp", font)
-        self.oil_temp = Wid(parent, "Oil temp", font)
-        self.break_balance = Wid(parent, "Break balance", font)
-        self.TCS = Wid(parent, "TCS", font)
-        self.info5 = Wid(parent, "info5", font)
-        self.info6 = Wid(parent, "info6", font)
-        self.info7 = Wid(parent, "info7", font)
+        self.water_temp = Wid(parent, "Water", font, width)
+        self.oil_temp = Wid(parent, "Oil", font, width)
+        self.air_intake_temp = Wid(parent, "Air intake", font, width)
+        self.break_balance = Wid(parent, "Balance", font, width)
+        self.TCS = Wid(parent, "TCS", font, width)        
+        self.info6 = Wid(parent, "info6", font, width)
+        self.info7 = Wid(parent, "info7", font, width)
 
         layout1.addWidget(self.water_temp)
         layout1.addWidget(self.oil_temp)
+        layout1.addWidget(self.air_intake_temp)
         layout1.addWidget(self.break_balance)
-        layout1.addWidget(self.TCS)
-        layout1.addWidget(self.info5)
+        layout1.addWidget(self.TCS)        
         layout1.addWidget(self.info6)
         layout1.addWidget(self.info7)
         
@@ -177,10 +178,8 @@ class Info_3(QWidget):
 
         self.info1 = Wid2(self, "Info1", font)
         self.info2 = Wid2(self, "Info2", font)
-        self.info3 = Wid2(self, "Info3", font)
 
         layout.addWidget(self.info1)
         layout.addWidget(self.info2)
-        layout.addWidget(self.info3)
 
         self.setLayout(layout)

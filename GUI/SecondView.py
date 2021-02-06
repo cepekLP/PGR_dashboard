@@ -36,7 +36,7 @@ class SecondView(QWidget):
 
     def init_gear_LCD(self):
         self.gear_LCD.setFixedSize(GEAR_WIDTH, GEAR_HEIGHT)
-        self.gear_LCD.move((int(self.width()) - GEAR_WIDTH) / 2 , GEAR_HEIGHT)
+        self.gear_LCD.move((int(self.width()) - GEAR_WIDTH) / 2 , RPM_HEIGHT)
         self.gear_LCD.setFont(self.font)
         self.gear_LCD.setAlignment(QtCore.Qt.AlignCenter)
         self.gear_LCD.setStyleSheet(INFO_GEAR)
@@ -44,65 +44,62 @@ class SecondView(QWidget):
 
 
     def init_rpm(self):
-        self.rpm.setFixedSize(int(self.width() / 2), GEAR_HEIGHT)
+        self.rpm.setFixedSize(int(self.width() / 2), RPM_HEIGHT)
         self.rpm.move(0, 0)       
        
-        self.rpm.value.setFixedSize(GEAR_WIDTH * 3.1, GEAR_HEIGHT * 0.75)       
+        self.rpm.value.setFixedSize(int(self.width() / 2 - OFFSET), RPM_HEIGHT * 0.75)       
         self.rpm.value.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.rpm.value.setText('22000')
         self.rpm.value.setStyleSheet(INFO_RPM_2)
         
-        self.rpm.unit.setFixedWidth(GEAR_WIDTH * 3)
+        self.rpm.unit.setFixedWidth(int(self.width() / 2 - OFFSET * 1.5))
         self.rpm.unit.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.rpm.unit.setStyleSheet(UNIT_RPM)
         self.rpm.unit.setText('RPM')
 
 
     def init_speed(self):
-        self.speed.setFixedSize(int(self.width() / 2), GEAR_HEIGHT)
+        self.speed.setFixedSize(int(self.width() / 2), RPM_HEIGHT)
         self.speed.move(int(self.width() / 2), 0)
         
-        self.speed.value.setFixedSize(int(GEAR_WIDTH * 1.85), GEAR_HEIGHT * 0.75)
+        self.speed.value.setFixedSize(int((self.width() - GEAR_WIDTH) * 0.33), RPM_HEIGHT * 0.75)
         self.speed.value.setText('220')
         self.speed.value.setStyleSheet(INFO_RPM_2)
         
-        self.speed.unit.setFixedWidth(int(GEAR_WIDTH * 1.85))
+        self.speed.unit.setFixedWidth(int((self.width() - GEAR_WIDTH) * 0.33))
         self.speed.unit.setStyleSheet(UNIT_RPM)
         self.speed.unit.setText('KMPH')
 
 
     def init_info_left(self):
-        self.info_left.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info_left.move(0, GEAR_HEIGHT)
+        self.info_left.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), int((self.height() - RPM_HEIGHT) / 2))
+        self.info_left.move(0, RPM_HEIGHT)
  
         self.info_left.water_temp.value.setText('0')
         self.info_left.oil_temp.value.setText('0')
-        self.info_left.info3.value.setText('0')
-        self.info_left.info4.value.setText('0')
+        self.info_left.air_intake_temp.value.setText('0')
 
         
     def init_info_right(self):
-        self.info_right.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info_right.move(int((self.width() + GEAR_WIDTH) / 2), GEAR_HEIGHT)
+        self.info_right.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), int((self.height() - RPM_HEIGHT) / 2))
+        self.info_right.move(int((self.width() + GEAR_WIDTH) / 2), RPM_HEIGHT)
 
         self.info_right.break_balance.value.setText('0')
         self.info_right.info2.value.setText('0')
         self.info_right.info3.value.setText('0')
-        self.info_right.info4.value.setText('0')
 
 
     def init_info_vertical(self):
-        self.info_vertical.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.info_vertical.move(0, GEAR_HEIGHT * 2)
+        self.info_vertical.setFixedSize(int((self.width() - GEAR_WIDTH) / 2), int((self.height() - RPM_HEIGHT) / 2))
+        self.info_vertical.move(0, RPM_HEIGHT * 2)
 
         self.info_vertical.TCS.value.setText('0')
         self.info_vertical.info4.value.setText('0')
-        self.info_vertical.info5.value.setText('10')
         
 
     def init_warning(self):
-        self.warning.setFixedSize(int(self.width() / 2), int((self.height() - GEAR_HEIGHT) / 2))
-        self.warning.move(int(self.width() / 2), GEAR_HEIGHT + int((self.height() - GEAR_HEIGHT) / 2))
+        self.warning.setFixedSize(int((self.width()-GEAR_WIDTH) / 2), int((self.height() - RPM_HEIGHT) / 2))
+        self.warning.move(int((self.width()+GEAR_WIDTH) / 2), RPM_HEIGHT + int((self.height() - RPM_HEIGHT) / 2))
         
         self.warning_list = []
 
@@ -124,15 +121,13 @@ class Info_Left(QFrame):
         layout1.setContentsMargins(0, 0, 0, 0)
         layout1.setSpacing(0)
 
-        self.water_temp = Wid(parent, "Water temp", font)
-        self.oil_temp = Wid(parent, "Oil temp", font)
-        self.info3 = Wid(parent, "Info3", font)
-        self.info4 = Wid(parent, "Info4", font)
+        self.water_temp = Wid(parent, "Water", font)
+        self.oil_temp = Wid(parent, "Oil", font)
+        self.air_intake_temp = Wid(parent, "Air intake", font)
         
         layout1.addWidget(self.water_temp)
         layout1.addWidget(self.oil_temp)
-        layout1.addWidget(self.info3)
-        layout1.addWidget(self.info4)
+        layout1.addWidget(self.air_intake_temp)
         
         self.setLayout(layout1)
         self.setStyleSheet(QFRAME_STYLE)
@@ -145,15 +140,13 @@ class Info_Right(QFrame):
         layout1.setContentsMargins(0, 0, 0, 0)
         layout1.setSpacing(0)
 
-        self.break_balance = Wid(parent, "Brk balance", font)
+        self.break_balance = Wid(parent, "Balance", font)
         self.info2 = Wid(parent, "Info2", font)
         self.info3 = Wid(parent, "Info3", font)
-        self.info4 = Wid(parent, "Info4", font)
         
         layout1.addWidget(self.break_balance)
         layout1.addWidget(self.info2)
         layout1.addWidget(self.info3)
-        layout1.addWidget(self.info4)
         
         self.setLayout(layout1)
         self.setStyleSheet(QFRAME_STYLE)
@@ -169,10 +162,8 @@ class Info_3(QWidget):
 
         self.TCS = Wid2(self, "TCS", font)
         self.info4 = Wid2(self, "Info2", font)
-        self.info5 = Wid2(self, "Info3", font)
 
         layout.addWidget(self.TCS)
         layout.addWidget(self.info4)
-        layout.addWidget(self.info5)
 
         self.setLayout(layout)

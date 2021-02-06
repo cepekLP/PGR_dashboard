@@ -1,9 +1,13 @@
-GEAR_HEIGHT = 160
-GEAR_WIDTH = 110
+GEAR_HEIGHT = 240
+GEAR_WIDTH = 165
+
+OFFSET = 30
+RPM_HEIGHT = 160
+
 
 INFO_GEAR = """
     color: rgb(255, 219, 19);
-    font-size: 160px;
+    font-size: 240px;
     background-color: rgba(0, 0, 0, 0%);
     border-color: rgb(206,249,255);
     border-style: solid;
@@ -47,7 +51,7 @@ INFO_LABEL_TEXT = """
 INFO_LABEL_VALUE = """
     color: white;
     font-size: 40px;
-    background-color: rgba(0,0,0,0%);
+    background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0px;
 """
