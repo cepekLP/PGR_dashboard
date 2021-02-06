@@ -12,13 +12,14 @@ except:
 
 from GUI.MainView import MainView
 from GUI.SecondView import SecondView
+from GUI.ThirdView import ThirdView
 from CAN.CAN_Manager import Worker
 
 
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
-NUMBER_OF_VIEWS = 2
+NUMBER_OF_VIEWS = 3
 
 
 class BolideInfo:
@@ -67,11 +68,13 @@ class DashBoard(QMainWindow):
         
         self.main_view = MainView(screen_width, screen_height)
         self.second_view = SecondView(screen_width, screen_height)
+        self.third_view = ThirdView(screen_width, screen_height)
 
         #obsługa wielu widoków
         self.layout = QStackedLayout()
         self.layout.addWidget(self.main_view)
         self.layout.addWidget(self.second_view)
+        self.layout.addWidget(self.third_view)
         
         self.i = 0
         self.layout.setCurrentIndex(self.i)
