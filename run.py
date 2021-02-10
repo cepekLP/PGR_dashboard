@@ -14,6 +14,7 @@ from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
 from CAN.CAN_Manager import Worker
+from server.server import Server
 
 
 from PyQt5 import QtCore, QtGui
@@ -59,10 +60,14 @@ class DashBoard(QMainWindow):
         #obsługa CAN przez osobny proces
         self.threadpool = QtCore.QThreadPool()
         self.worker = Worker()
+        
         self.worker.signals.result.connect(self.update)
         self.worker.signals.warning.connect(self.update_warning)
         self.worker.signals.error.connect(self.worker_error)
         self.threadpool.start(self.worker)
+        
+        self.server = Server()
+        self.threadpool.start(self.server)
         
         self.bolide_info = BolideInfo()
         
@@ -141,6 +146,8 @@ class DashBoard(QMainWindow):
             self.main_view.update(self.bolide_info)
         elif self.i == 1:
             self.second_view.update(self.bolide_info)    
+
+        self.server.update(self.bolide_info)
 
     def update_warning(self, info):
         if info[0] == "ACK":
