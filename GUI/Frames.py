@@ -1,6 +1,4 @@
-﻿import logging
-
-from PyQt5 import QtCore, QtWidgets
+﻿from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QLabel, QWidget, QFrame
 
 from GUI.styles import *

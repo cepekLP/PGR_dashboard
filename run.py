@@ -102,6 +102,7 @@ class DashBoard(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Q:
             self.worker.kill()
+            self.server.kill()
             self.close()
         elif event.key() == QtCore.Qt.Key_W:
             self.i = (self.i - 1) % NUMBER_OF_VIEWS
@@ -148,6 +149,7 @@ class DashBoard(QMainWindow):
             self.second_view.update(self.bolide_info)    
 
         self.server.update(self.bolide_info)
+
 
     def update_warning(self, info):
         if info[0] == "ACK":
