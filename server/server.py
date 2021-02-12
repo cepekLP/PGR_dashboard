@@ -3,6 +3,8 @@ import socket
 
 from PyQt5.QtCore import QObject, QRunnable, pyqtSignal, pyqtSlot
 
+COMMAND = 64
+VALUE = 64
 
 class Server(QRunnable):
     def __init__(self):
@@ -10,14 +12,16 @@ class Server(QRunnable):
         self.info = ""
         self.extended_info = ""
 
+        self.time_sleep = 0.25
+
 
     @pyqtSlot()
     def run(self):
         serverSocket = socket.socket()  
         host = '' 
         port = 8080 
-        serverSocket.bind( ( host, port ) )  
-        serverSocket.listen( 1 )  
+        serverSocket.bind((host, port))  
+        serverSocket.listen(1)  
         
         while True:
             con, addr = serverSocket.accept() 
@@ -25,13 +29,20 @@ class Server(QRunnable):
             
             while True:  
                 try:
-                    con.send( self.info )  
+                    con.send(self.info)  
                                       
-                    message = con.recv( 1024 ).decode( "utf-8" )  
+                    message = con.recv(COMMAND).decode("utf-8")  
                 except:
                     break
-  
-                time.sleep( 0.25 )  
+                message=message.translate({ord(' '): None})
+                if message == "OK": 
+                    pass
+                else:
+                     value = con.recv(VALUE).decode("utf-8")
+                     if message == "TIME":
+                         self.time_sleep = float(value)
+
+                time.sleep(self.time_sleep)  
 
             con.close()                 
             

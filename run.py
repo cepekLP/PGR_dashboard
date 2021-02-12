@@ -138,6 +138,8 @@ class DashBoard(QMainWindow):
             self.bolide_info.water_temp = str[1]
         elif str[0] == "oil_temp":
             self.bolide_info.oil_temp = str[1]
+        elif str[0] == "air_intake_temp":
+            self.bolide_info.oil_temp = str[1]
         elif str[0] == "break_balance":
             self.bolide_info.break_balance = str[1]
         elif str[0] == "TCS":
