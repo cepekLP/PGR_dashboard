@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 NUMBER_OF_VIEWS = 3
 
 
-bolide_info = {
+bolide_info_ = {
     'gear' : 0,
     'rpm' : 0,
     'break_balance' : 0,
@@ -34,14 +34,18 @@ bolide_info = {
     'race_tcs_mode' : 0
     }
 
-extended_bolide_info = {
-    'wheel_temp_1' :0,
+extended_bolide_info_ = {
+    'wheel_temp_1' : 0,
     'wheel_temp_2' : 0,
     'wheel_temp_3' : 0,
     'wheel_temp_4' : 0,
     'voltage' : 0,
     'oil_press' : 0
     }
+
+class MainSignals(QtCore.QObject):
+    kill = QtCore.pyqtSignal()
+    update =QtCore.pyqtSignal(dict)
 
 
 class DashBoard(QMainWindow):
@@ -55,22 +59,14 @@ class DashBoard(QMainWindow):
         #załadowanie czcionek
         QtGui.QFontDatabase.addApplicationFont("GUI/fonts/digital-7 (mono).ttf")
         id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
-        #print(QtGui.QFontDatabase.applicationFontFamilies(id)) #wyświetla
-        #nazwe czcionki
-        
+        #wyświetla nazwe czcionki
+        #print(QtGui.QFontDatabase.applicationFontFamilies(id))
         #obsługa CAN przez osobny proces
         self.threadpool = QtCore.QThreadPool()
-        self.worker = Worker()
+        self.signals = MainSignals()
+        self.start_threads()
         
-        self.worker.signals.result.connect(self.update)
-        self.worker.signals.warning.connect(self.update_warning)
-        self.worker.signals.error.connect(self.worker_error)
-        self.threadpool.start(self.worker)
-        
-        self.server = Server()
-        self.threadpool.start(self.server)
-        
-        self.bolide_info = bolide_info
+        self.bolide_info = bolide_info_
         
         self.main_view = MainView(screen_width, screen_height)
         self.second_view = SecondView(screen_width, screen_height)
@@ -88,7 +84,7 @@ class DashBoard(QMainWindow):
         widget = QWidget()
         widget.setLayout(self.layout)
         self.setCentralWidget(widget) 
-        
+       
         #config logow
         logging.basicConfig(format="%(asctime)s | %(levelname)s: %(message)s",
                             filename="log/" + strftime("%d-%m-%y_%H%M%S", gmtime()) + ".log", level=logging.INFO)
@@ -100,10 +96,24 @@ class DashBoard(QMainWindow):
         self.timer.start()
 
 
+    def start_threads(self):
+        worker=Worker()
+        worker.signals.result.connect(self.update)
+        worker.signals.warning.connect(self.update_warning)
+        worker.signals.error.connect(self.worker_error)
+        self.signals.kill.connect(worker.kill)
+        self.threadpool.start(worker)
+        
+        server = Server()
+        server.signals.warning.connect(self.update_warning)
+        self.signals.kill.connect(server.kill)
+        self.signals.update.connect(server.update)
+        self.threadpool.start(server)
+
+
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Q:
-            self.worker.kill()
-            self.server.kill()
+            self.singals.kill.emit()
             self.close()
         elif event.key() == QtCore.Qt.Key_W:
             self.i = (self.i - 1) % NUMBER_OF_VIEWS
@@ -130,14 +140,14 @@ class DashBoard(QMainWindow):
 
     def update(self, str):
         if str[0] in self.bolide_info:
-            self.bolide_info[str[0]]= str[1]
+            self.bolide_info[str[0]] = str[1]
         
         if self.i == 0:
             self.main_view.update(self.bolide_info)
         elif self.i == 1:
             self.second_view.update(self.bolide_info)    
 
-        self.server.update(self.bolide_info)
+        self.signals.update.emit(self.bolide_info)
 
 
     def update_warning(self, info):
@@ -161,7 +171,6 @@ class DashBoard(QMainWindow):
 
     def logger(self):
         logging.info(self.bolide_info)     #zapis do logu informacji w formie słownika
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
