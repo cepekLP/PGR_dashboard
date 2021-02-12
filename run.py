@@ -45,10 +45,12 @@ extended_bolide_info_ = {
 
 class MainSignals(QtCore.QObject):
     kill = QtCore.pyqtSignal()
-    update =QtCore.pyqtSignal(dict)
+    update = QtCore.pyqtSignal(dict)
 
 
 class DashBoard(QMainWindow):
+    bolide_info = bolide_info_
+    current_layout = 0
     def __init__(self, screen_width=800, screen_height=480):
         super().__init__()
         
@@ -61,12 +63,11 @@ class DashBoard(QMainWindow):
         id = QtGui.QFontDatabase.addApplicationFont("GUI/fonts/LEMONMILK-Regular.otf")
         #wyświetla nazwe czcionki
         #print(QtGui.QFontDatabase.applicationFontFamilies(id))
+        
         #obsługa CAN przez osobny proces
         self.threadpool = QtCore.QThreadPool()
         self.signals = MainSignals()
         self.start_threads()
-        
-        self.bolide_info = bolide_info_
         
         self.main_view = MainView(screen_width, screen_height)
         self.second_view = SecondView(screen_width, screen_height)
@@ -78,8 +79,7 @@ class DashBoard(QMainWindow):
         self.layout.addWidget(self.second_view)
         self.layout.addWidget(self.third_view)
         
-        self.i = 0
-        self.layout.setCurrentIndex(self.i)
+        self.layout.setCurrentIndex(self.current_layout)
 
         widget = QWidget()
         widget.setLayout(self.layout)
@@ -88,7 +88,7 @@ class DashBoard(QMainWindow):
         #config logow
         logging.basicConfig(format="%(asctime)s | %(levelname)s: %(message)s",
                             filename="log/" + strftime("%d-%m-%y_%H%M%S", gmtime()) + ".log", level=logging.INFO)
-        logging.info("Started")
+        logging.info("Started...")
 
         self.timer = QtCore.QTimer()
         self.timer.setInterval(250)
@@ -97,7 +97,7 @@ class DashBoard(QMainWindow):
 
 
     def start_threads(self):
-        worker=Worker()
+        worker = Worker()
         worker.signals.result.connect(self.update)
         worker.signals.warning.connect(self.update_warning)
         worker.signals.error.connect(self.worker_error)
@@ -116,15 +116,15 @@ class DashBoard(QMainWindow):
             self.singals.kill.emit()
             self.close()
         elif event.key() == QtCore.Qt.Key_W:
-            self.i = (self.i - 1) % NUMBER_OF_VIEWS
+            self.i = (self.current_layout - 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_E:
-            self.i = (self.i + 1) % NUMBER_OF_VIEWS
+            self.i = (self.current_layout + 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_R:
                 self.main_view.warning.delete()
                 self.second_view.warning.delete()
         else:
             pass
-        self.layout.setCurrentIndex(self.i)
+        self.layout.setCurrentIndex(self.current_layout)
         
 
     def mousePressEvent(self, event):
@@ -132,19 +132,20 @@ class DashBoard(QMainWindow):
             self.main_view.warning.delete()
             self.second_view.warning.delete()
         elif event.x() < self.width() / 2:
-            self.i = (self.i - 1) % NUMBER_OF_VIEWS
+            self.current_layout = (self.current_layout - 1) % NUMBER_OF_VIEWS
         else:
-            self.i = (self.i + 1) % NUMBER_OF_VIEWS
-        self.layout.setCurrentIndex(self.i)
+            self.current_layout = (self.current_layout + 1) % NUMBER_OF_VIEWS
+        
+        self.layout.setCurrentIndex(self.current_layout)
 
 
     def update(self, str):
         if str[0] in self.bolide_info:
             self.bolide_info[str[0]] = str[1]
         
-        if self.i == 0:
+        if self.current_layout == 0:
             self.main_view.update(self.bolide_info)
-        elif self.i == 1:
+        elif self.current_layout == 1:
             self.second_view.update(self.bolide_info)    
 
         self.signals.update.emit(self.bolide_info)
