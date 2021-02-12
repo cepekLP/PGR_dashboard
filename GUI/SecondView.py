@@ -105,13 +105,13 @@ class SecondView(QWidget):
 
 
     def update(self, display_info):
-        self.gear_LCD.setText(str(display_info.gear))        
-        self.rpm.value.setText(str(display_info.rpm))  
-        self.speed.value.setText(str(display_info.speed))
-        self.info_left.water_temp.value.setText("   {}°C".format(display_info.water_temp))
-        self.info_left.oil_temp.value.setText("   {}°C".format(display_info.oil_temp))
-        self.info_right.break_balance.value.setText(str(display_info.break_balance))
-        self.info_vertical.TCS.value.setText(str(display_info.race_tcs_mode))        
+        self.gear_LCD.setText(str(display_info['gear']))        
+        self.rpm.value.setText(str(display_info['rpm']))  
+        self.speed.value.setText(str(display_info['speed']))
+        self.info_left.water_temp.value.setText("   {}°C".format(display_info['water_temp']))
+        self.info_left.oil_temp.value.setText("   {}°C".format(display_info['oil_temp']))
+        self.info_right.break_balance.value.setText(str(display_info['break_balance']))
+        self.info_vertical.TCS.value.setText(str(display_info['race_tcs_mode']))        
 
 
 class Info_Left(QFrame):

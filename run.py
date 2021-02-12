@@ -23,24 +23,25 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 NUMBER_OF_VIEWS = 3
 
 
-class BolideInfo:
-    gear = 0
-    rpm = 0
-    break_balance = 0
-    speed = 0
-    water_temp = 0
-    oil_temp = 0
-    air_intake_temp = 0
-    race_tcs_mode = 0
+bolide_info = {
+    'gear' : 0,
+    'rpm' : 0,
+    'break_balance' : 0,
+    'speed' : 0,
+    'water_temp' : 0,
+    'oil_temp' : 0,
+    'air_intake_temp' : 0,
+    'race_tcs_mode' : 0
+    }
 
-
-class ExtendedBolideInfo:
-    wheel_temp_1 = 0
-    wheel_temp_2 = 0
-    wheel_temp_3 = 0
-    wheel_temp_4 = 0
-    voltage = 0
-    oil_press = 0
+extended_bolide_info = {
+    'wheel_temp_1' :0,
+    'wheel_temp_2' : 0,
+    'wheel_temp_3' : 0,
+    'wheel_temp_4' : 0,
+    'voltage' : 0,
+    'oil_press' : 0
+    }
 
 
 class DashBoard(QMainWindow):
@@ -69,7 +70,7 @@ class DashBoard(QMainWindow):
         self.server = Server()
         self.threadpool.start(self.server)
         
-        self.bolide_info = BolideInfo()
+        self.bolide_info = bolide_info
         
         self.main_view = MainView(screen_width, screen_height)
         self.second_view = SecondView(screen_width, screen_height)
@@ -128,22 +129,8 @@ class DashBoard(QMainWindow):
 
 
     def update(self, str):
-        if str[0] == "gear":
-            self.bolide_info.gear = str[1]
-        elif str[0] == "rpm":
-            self.bolide_info.rpm = str[1]
-        elif str[0] == "speed":
-            self.bolide_info.speed = str[1]
-        elif str[0] == "water_temp":
-            self.bolide_info.water_temp = str[1]
-        elif str[0] == "oil_temp":
-            self.bolide_info.oil_temp = str[1]
-        elif str[0] == "air_intake_temp":
-            self.bolide_info.oil_temp = str[1]
-        elif str[0] == "break_balance":
-            self.bolide_info.break_balance = str[1]
-        elif str[0] == "TCS":
-            self.bolide_info.race_tcs_mode = str[1]
+        if str[0] in self.bolide_info:
+            self.bolide_info[str[0]]= str[1]
         
         if self.i == 0:
             self.main_view.update(self.bolide_info)
@@ -173,8 +160,7 @@ class DashBoard(QMainWindow):
 
 
     def logger(self):
-        logging.info(self.bolide_info.__dict__)     #zapis do logu informacji w formie słownika
-
+        logging.info(self.bolide_info)     #zapis do logu informacji w formie słownika
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
