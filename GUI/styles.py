@@ -7,7 +7,6 @@ RPM_HEIGHT = 160
 
 INFO_GEAR = """
     color: rgb(255, 219, 19);
-    font-size: 240px;
     background-color: rgba(0, 0, 0, 0%);
     border-color: rgb(206,249,255);
     border-style: solid;
@@ -17,7 +16,6 @@ INFO_GEAR = """
 
 UNIT_RPM = """
     color:rgb(255, 219, 19);
-    font-size: 40px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0;
@@ -41,8 +39,6 @@ INFO_RPM_2 = """
 
 INFO_LABEL_TEXT = """
     color: rgb(255, 219, 19);
-    font-size: 23px;
-    font-weight: bold;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0px;
@@ -50,16 +46,7 @@ INFO_LABEL_TEXT = """
 
 INFO_LABEL_VALUE = """
     color: white;
-    font-size: 40px;
     background-color: rgba(0, 0, 0, 0%);
-    border-width: 0;
-    border-radius: 0px;
-"""
-
-INFO_LABEL_VALUE_VERTICAL = """
-    color: white;
-    font-size: 100px;
-    background-color: rgba(0,0,0,0%);
     border-width: 0;
     border-radius: 0px;
 """
@@ -70,6 +57,7 @@ QFRAME_STYLE = """
     border-style: solid;
     border-width: 5px;
     border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0%)
     }
 """
 

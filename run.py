@@ -10,15 +10,15 @@ except:
     running_on_RPi = False
     SHOW_FULLSCREEN = False
 
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
+
 from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
 from CAN.CAN_Manager import Worker
 from server.server import Server
 
-
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
 NUMBER_OF_VIEWS = 3
 
@@ -31,7 +31,7 @@ bolide_info_ = {
     'water_temp' : 0,
     'oil_temp' : 0,
     'air_intake_temp' : 0,
-    'race_tcs_mode' : 0
+    'TCS' : 0
     }
 
 extended_bolide_info_ = {
@@ -43,9 +43,35 @@ extended_bolide_info_ = {
     'oil_press' : 0
     }
 
+
+
+class WarningList():
+    list = []
+    #dodanie ostrzeżenia do listy
+    def add(self, info):       
+        if info[0] == "error":
+            self.list.append([0, info[1]])
+        elif info[0] == "warning":
+             self.list.append([1, info[1]])
+        elif info[0] == "info":
+             self.list.append([2, info[1]])
+
+        self.list.sort()
+
+
+    #usuniecie 1 ostrzeżenia z listy
+    def delete(self):
+        if len(self.list) > 0:
+            del self.list[0]
+        else: 
+            pass
+
+
+
 class MainSignals(QtCore.QObject):
     kill = QtCore.pyqtSignal()
     update = QtCore.pyqtSignal(dict)
+
 
 
 class DashBoard(QMainWindow):
@@ -73,6 +99,8 @@ class DashBoard(QMainWindow):
         self.second_view = SecondView(screen_width, screen_height)
         self.third_view = ThirdView(screen_width, screen_height)
 
+        self.warning_list = WarningList()
+
         #obsługa wielu widoków
         self.layout = QStackedLayout()
         self.layout.addWidget(self.main_view)
@@ -99,7 +127,7 @@ class DashBoard(QMainWindow):
     def start_threads(self):
         worker = Worker()
         worker.signals.result.connect(self.update)
-        worker.signals.warning.connect(self.update_warning)
+        worker.signals.warning.connect(self.update_warning_list)
         worker.signals.error.connect(self.worker_error)
         self.signals.kill.connect(worker.kill)
         self.threadpool.start(worker)
@@ -113,24 +141,25 @@ class DashBoard(QMainWindow):
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Q:
-            self.singals.kill.emit()
+            self.signals.kill.emit()
             self.close()
         elif event.key() == QtCore.Qt.Key_W:
-            self.i = (self.current_layout - 1) % NUMBER_OF_VIEWS
+            self.current_layout = (self.current_layout - 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_E:
-            self.i = (self.current_layout + 1) % NUMBER_OF_VIEWS
+            self.current_layout = (self.current_layout + 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_R:
-                self.main_view.warning.delete()
-                self.second_view.warning.delete()
+                self.warning_list.delete()
+                self.update_warning()
         else:
             pass
+
         self.layout.setCurrentIndex(self.current_layout)
         
 
     def mousePressEvent(self, event):
         if event.x() > self.width() / 2 and event.y() > self.height() / 3 * 2:
-            self.main_view.warning.delete()
-            self.second_view.warning.delete()
+            self.warning_list.delete()
+            self.update_warning()
         elif event.x() < self.width() / 2:
             self.current_layout = (self.current_layout - 1) % NUMBER_OF_VIEWS
         else:
@@ -151,13 +180,11 @@ class DashBoard(QMainWindow):
         self.signals.update.emit(self.bolide_info)
 
 
-    def update_warning(self, info):
+    def update_warning_list(self, info):
         if info[0] == "ACK":
-            self.main_view.warning.delete()
-            self.second_view.warning.delete()
+           self.warning_list.delete()
         else:
-            self.main_view.warning.add(info)
-            self.second_view.warning.add(info)
+            self.warning_list.add(info)
             if info[0] == "error":
                 logging.error(info[1])
             elif info[0] == "warning":
@@ -165,13 +192,25 @@ class DashBoard(QMainWindow):
             elif info[0] == "info":
                 logging.info(info[1])
 
-           
+        self.update_warning()
+
+
+    def update_warning(self):
+        if self.current_layout == 0:
+            self.main_view.update_warning(self.warning_list.list)
+        elif self.current_layout == 1:
+            self.second_view.update_warning(self.warning_list.list)
+
+
     def worker_error(self, error):
         logging.critical(error)
 
 
     def logger(self):
         logging.info(self.bolide_info)     #zapis do logu informacji w formie słownika
+
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
