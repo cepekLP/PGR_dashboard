@@ -175,7 +175,9 @@ class DashBoard(QMainWindow):
         if self.current_layout == 0:
             self.main_view.update(self.bolide_info)
         elif self.current_layout == 1:
-            self.second_view.update(self.bolide_info)    
+            self.second_view.update(self.bolide_info)  
+        elif self.current_layout == 2:
+            self.third_view.update(self.bolide_info) 
 
         self.signals.update.emit(self.bolide_info)
 
@@ -200,6 +202,8 @@ class DashBoard(QMainWindow):
             self.main_view.update_warning(self.warning_list.list)
         elif self.current_layout == 1:
             self.second_view.update_warning(self.warning_list.list)
+        elif self.current_layout == 2:
+            self.third_view.update_warning(self.warning_list.list)
 
 
     def worker_error(self, error):
