@@ -14,9 +14,9 @@ network={
 	key_mgmt="WPA-PSK"
 }' >> /etc/wpa_supplicant/wpa_supplicant.conf
 
-echo -e "raspberry\npgracing\npgracing" | passwd
+(echo "raspberry"; echo "pgracing"; echo "pgracing") | passwd
 
-echo -e "n\nGDrive\n12\n\n\n1\n\n\ny\nn\ny" | rclone config
+(echo "n"; echo "GDrive"; echo "12"; echo ""; echo ""; echo "1"; echo ""; echo ""; echo "y"; echo "n"; echo "y"; )| rclone config
 
 sudo reboot
 #pi@raspberrypi:~ $ rclone copy Documents/PGR_dashboard/log/ "GDrive:PGRacing/Logi/"
