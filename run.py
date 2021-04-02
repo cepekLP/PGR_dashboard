@@ -9,6 +9,7 @@ from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
 from CAN.CAN_Manager import Worker
+from CAN.LED_Bar import LED_Bar
 
 RUNNING_ON_RPI = True
 SHOW_FULLSCREEN = True
@@ -70,6 +71,7 @@ class DashBoard(QMainWindow):
         self.threadpool = QtCore.QThreadPool()
         self.signals = MainSignals()
         self.start_threads()
+        self.led_bar = LED_Bar()
 
         self.main_view = MainView(screen_width, screen_height)
         self.second_view = SecondView(screen_width, screen_height)
@@ -95,10 +97,10 @@ class DashBoard(QMainWindow):
         )
         logging.info("Started...")
 
-        self.timer = QtCore.QTimer()
-        self.timer.setInterval(250)
-        self.timer.timeout.connect(self.logger)
-        self.timer.start()
+        timer = QtCore.QTimer()
+        timer.setInterval(250)
+        timer.timeout.connect(self.logger)
+        timer.start()
 
     def start_threads(self):
         worker = Worker()
@@ -141,6 +143,8 @@ class DashBoard(QMainWindow):
             self.third_view.update(self.bolide_info)
 
         self.signals.update.emit(self.bolide_info)
+        if str[0] == "rpm":
+            self.led_bar.update(str[1])
 
     def update_warning(self, warning):
         if self.current_layout == 0:

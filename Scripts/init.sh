@@ -3,7 +3,8 @@
 mkdir -p /home/pi/Documents/PGR_dashboard/log
 sudo setfacl -m u:pi:rwx log
 
-sudo apt install -y python3-pyqt5 python3-gpiozero rclone
+sudo apt install -y rclone
+sudo pip install -r requirements.txt
 
 sudo echo '
 @sh /home/pi/Documents/PGR_dashboard/Scripts/start.sh' >> /etc/xdg/lxsession/LXDE-pi/autostart
