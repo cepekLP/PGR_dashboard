@@ -11,7 +11,7 @@ INFO_GEAR = """
     border-color: rgb(206,249,255);
     border-style: solid;
     border-width: 10px;
-    border-radius: 15px;   
+    border-radius: 15px;
 """
 
 UNIT_RPM = """
