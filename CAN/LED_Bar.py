@@ -1,5 +1,6 @@
-import rpi_ws281x as ws
 from time import sleep
+
+import rpi_ws281x as ws
 from PyQt5.QtCore import QTimer
 
 LED_COUNT = 8
@@ -69,7 +70,9 @@ class LED_Bar:
         self.strip.show()
 
     def update_2(self, rpm):
-        active_led = int((rpm - RPM_MIN) / (RPM_MAX - RPM_MIN) * LED_COUNT)
+        active_led = int(
+            (rpm - RPM_MIN) / (RPM_MAX - RPM_MIN) * 0.9 * LED_COUNT
+        )
         if active_led < 0:
             active_led = 0
         if active_led > LED_COUNT:
@@ -77,7 +80,9 @@ class LED_Bar:
             self.timer_work = True
         else:
             if self.timer_work is True:
+                self.timer.stop()
                 self.timer_work = False
+
             for i in range(LED_COUNT):
                 if i < active_led:
                     if i < LED_COUNT * 0.4:

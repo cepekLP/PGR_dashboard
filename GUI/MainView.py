@@ -34,7 +34,7 @@ class MainView(QWidget):
         self.info2_value.setStyleSheet(st.INFO_LABEL_VALUE)
 
         self.verticalLayoutWidget.setStyleSheet(
-            "background-color: rgba(0, 0, 0, 0%)",
+            "background-color: rgba(0, 0, 0, 0%)"
         )
 
         self.TCS_info.setStyleSheet(st.INFO_LABEL_TEXT)
@@ -60,15 +60,15 @@ class MainView(QWidget):
     def update_warning(self, warning):
         if warning[0] == "error":
             self.warning_value.setStyleSheet(
-                st.WARNING_QFRAME_STYLE % (255, 0, 0),
+                st.WARNING_QFRAME_STYLE % (255, 0, 0)
             )
         elif warning[0] == "warning":
             self.warning_value.setStyleSheet(
-                st.WARNING_QFRAME_STYLE % (255, 128, 0),
+                st.WARNING_QFRAME_STYLE % (255, 128, 0)
             )
         elif warning[0] == "info":
             self.warning_value.setStyleSheet(
-                st.WARNING_QFRAME_STYLE % (0, 192, 0),
+                st.WARNING_QFRAME_STYLE % (0, 192, 0)
             )
 
         self.warning_value.setText(warning[1])

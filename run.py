@@ -1,15 +1,15 @@
-import sys
 import logging
+import sys
 from time import gmtime, strftime
 
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
-
+from CAN.CAN_Manager import Worker
+from CAN.LED_Bar import LED_Bar
 from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
-from CAN.CAN_Manager import Worker
-from CAN.LED_Bar import LED_Bar
+
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
 RUNNING_ON_RPI = True
 SHOW_FULLSCREEN = True
@@ -54,10 +54,10 @@ class DashBoard(QMainWindow):
 
         # załadowanie czcionek
         QtGui.QFontDatabase.addApplicationFont(
-            "GUI/fonts/digital-7 (mono).ttf",
+            "GUI/fonts/digital-7 (mono).ttf"
         )
         QtGui.QFontDatabase.addApplicationFont(
-            "GUI/fonts/LEMONMILK-Regular.otf",
+            "GUI/fonts/LEMONMILK-Regular.otf"
         )
 
         """id = QtGui.QFontDatabase.addApplicationFont(
