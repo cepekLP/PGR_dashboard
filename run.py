@@ -45,7 +45,9 @@ class DashBoard(QMainWindow):
     bolide_info = bolide_info_
     current_layout = 0
 
-    def __init__(self, screen_width=800, screen_height=480):
+    def __init__(
+        self, screen_width: int = 800, screen_height: int = 480
+    ) -> None:
         super().__init__()
 
         self.setStyleSheet("background-color: black")
@@ -102,7 +104,7 @@ class DashBoard(QMainWindow):
         timer.timeout.connect(self.logger)
         timer.start()
 
-    def start_threads(self):
+    def start_threads(self) -> None:
         worker = Worker()
         worker.signals.result.connect(self.update)
         worker.signals.warning.connect(self.update_warning)
@@ -110,7 +112,7 @@ class DashBoard(QMainWindow):
         self.signals.kill.connect(worker.kill)
         self.threadpool.start(worker)
 
-    def keyPressEvent(self, event):
+    def keyPressEvent(self, event: QtCore.QEvent) -> None:
         if event.key() == QtCore.Qt.Key_Q:
             self.signals.kill.emit()
             self.close()
@@ -123,7 +125,7 @@ class DashBoard(QMainWindow):
 
         self.layout.setCurrentIndex(self.current_layout)
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(self, event: QtCore.QEvent) -> None:
         if event.x() < self.width() / 2:
             self.current_layout = (self.current_layout - 1) % NUMBER_OF_VIEWS
         else:
@@ -131,9 +133,9 @@ class DashBoard(QMainWindow):
 
         self.layout.setCurrentIndex(self.current_layout)
 
-    def update(self, str):
-        if str[0] in self.bolide_info:
-            self.bolide_info[str[0]] = str[1]
+    def update(self, info):
+        if info[0] in self.bolide_info:
+            self.bolide_info[info[0]] = info[1]
 
         if self.current_layout == 0:
             self.main_view.update(self.bolide_info)
@@ -143,10 +145,10 @@ class DashBoard(QMainWindow):
             self.third_view.update(self.bolide_info)
 
         self.signals.update.emit(self.bolide_info)
-        if str[0] == "rpm":
-            self.led_bar.update(str[1])
+        if info[0] == "rpm":
+            self.led_bar.update(info[1])
 
-    def update_warning(self, warning):
+    def update_warning(self, warning: str) -> None:
         if self.current_layout == 0:
             self.main_view.update_warning(warning)
         elif self.current_layout == 1:
@@ -154,10 +156,10 @@ class DashBoard(QMainWindow):
         elif self.current_layout == 2:
             self.third_view.update_warning(warning)
 
-    def worker_error(self, error):
+    def worker_error(self, error: str) -> None:
         logging.critical(error)
 
-    def logger(self):
+    def logger(self) -> None:
         # zapis do logu informacji w formie słownika
         logging.info(self.bolide_info)
 

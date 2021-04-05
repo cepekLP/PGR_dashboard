@@ -16,7 +16,7 @@ RPM_MAX = 14000
 
 
 class LED_Bar:
-    def __init__(self):
+    def __init__(self) -> None:
         self.strip = ws.PixelStrip(
             LED_COUNT,
             LED_PIN,
@@ -35,7 +35,7 @@ class LED_Bar:
         self.timer_work = False
         self.blink_status = False
 
-    def wave(self):
+    def wave(self) -> None:
         for i in range(3):
             for j in range(LED_COUNT):
                 if i == 0:
@@ -52,7 +52,7 @@ class LED_Bar:
             self.strip.setPixelColor(j, ws.Color(0, 0, 0))
         self.strip.show()
 
-    def update(self, rpm):
+    def update(self, rpm: int) -> None:
         active_led = int((rpm - RPM_MIN) / (RPM_MAX - RPM_MIN) * LED_COUNT)
         if active_led < 0:
             active_led = 0
@@ -69,16 +69,17 @@ class LED_Bar:
 
         self.strip.show()
 
-    def update_2(self, rpm):
+    # this class need to inherit from QRunnable for work update_2
+    def update_2(self, rpm: int) -> None:
         active_led = int(
-            (rpm - RPM_MIN) / (RPM_MAX - RPM_MIN) * 0.9 * LED_COUNT
+            (rpm - RPM_MIN) / ((RPM_MAX - RPM_MIN) * 0.9) * LED_COUNT
         )
         if active_led < 0:
             active_led = 0
-        if active_led > LED_COUNT:
+        elif active_led > LED_COUNT and self.timer_work is False:
             self.timer.start()
             self.timer_work = True
-        else:
+        if active_led <= LED_COUNT:
             if self.timer_work is True:
                 self.timer.stop()
                 self.timer_work = False
@@ -96,7 +97,7 @@ class LED_Bar:
 
             self.strip.show()
 
-    def blink(self):
+    def blink(self) -> None:
         if self.blink_status is True:
             for i in range(LED_COUNT):
                 self.strip.setPixelColor(i, ws.Color(0, 0, 0))

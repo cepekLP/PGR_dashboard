@@ -1,11 +1,12 @@
 ﻿import GUI.styles as st
+from typing import Dict, List
 
 from PyQt5 import QtGui, uic
 from PyQt5.QtWidgets import QWidget
 
 
 class SecondView(QWidget):
-    def __init__(self, width=800, height=480):
+    def __init__(self, width: int = 800, height: int = 480) -> None:
         super().__init__()
 
         self.setFixedSize(width, height)
@@ -45,7 +46,7 @@ class SecondView(QWidget):
 
         self.setStyleSheet(st.QFRAME_STYLE)
 
-    def update(self, display_info):
+    def update(self, display_info: Dict[str, int]) -> None:
         self.gear_value.setText(str(display_info["gear"]))
         self.rpm_value.setText(str(display_info["rpm"]))
         self.speed_value.setText(str(display_info["speed"]))
@@ -56,7 +57,7 @@ class SecondView(QWidget):
         self.break_balance_value.setText(str(display_info["break_balance"]))
         self.TCS_value.setText(str(display_info["TCS"]))
 
-    def update_warning(self, warning):
+    def update_warning(self, warning: List[str]) -> None:
         if warning[0] == "error":
             self.warning_value.setStyleSheet(
                 st.WARNING_QFRAME_STYLE % (255, 0, 0)

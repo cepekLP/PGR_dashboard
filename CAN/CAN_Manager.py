@@ -12,13 +12,13 @@ class WorkerSignals(QObject):
 
 
 class Worker(QRunnable):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.signals = WorkerSignals()
         self.is_killed = False
 
     @pyqtSlot()
-    def run(self):
+    def run(self) -> None:
         i = 0
         # test Wyświetlacza
         while True:
@@ -42,5 +42,5 @@ class Worker(QRunnable):
                 return
 
     # zatrzymanie wątku
-    def kill(self):
+    def kill(self) -> None:
         self.is_killed = True

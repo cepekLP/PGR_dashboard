@@ -1,13 +1,31 @@
 import time
+import json
 from math import sqrt, pow
+from typing import Tuple
 
 
 class LapTimer:
-    def __init__(self, x1, y1, x2, y2):
+    def __init__(
+        self,
+        x1: float = -1.0,
+        y1: float = -1.0,
+        x2: float = -1.0,
+        y2: float = -1.0,
+    ) -> None:
         self.x1 = x1
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
+
+        if (
+            self.x1 == -1.0
+            or self.y1 == -1.0
+            or self.x2 == -1.0
+            or self.y2 == -1.0
+        ):
+            with open("test.json") as read_file:
+                data = json.load(read_file)
+                print(data)
 
         self.time = 0.0
         self.last_time = 0.0
@@ -17,12 +35,12 @@ class LapTimer:
         self.last_x = 0.0
         self.last_y = 0.0
 
-    def init_position(self, x, y):
+    def init_position(self, x: float, y: float) -> None:
         self.last_x = x
         self.last_y = y
 
-    def check(self, x, y):
-        def dist(x1, y1, x2, y2):
+    def check(self, x: float, y: float) -> Tuple[float, float, float, int]:
+        def dist(x1: float, y1: float, x2: float, y2: float) -> float:
             return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2))
 
         cross_x = (
