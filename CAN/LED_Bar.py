@@ -105,3 +105,5 @@ class LED_Bar:
             for i in range(LED_COUNT):
                 self.strip.setPixelColor(i, ws.Color(255, 0, 0))
             self.blink_status = True
+
+        self.strip.show()
