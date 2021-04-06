@@ -1,18 +1,24 @@
 import logging
 import sys
+import os
 from time import gmtime, strftime
 
 from CAN.CAN_Manager import Worker
-from CAN.LED_Bar import LED_Bar
 from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
 
+if os.uname()[4] == "armv7l":
+    RUNNING_ON_RPI = True
+    SHOW_FULLSCREEN = True
+    from CAN.LED_Bar import LED_Bar
+else:
+    RUNNING_ON_RPI = False
+    SHOW_FULLSCREEN = False
+
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
-RUNNING_ON_RPI = True
-SHOW_FULLSCREEN = True
 NUMBER_OF_VIEWS = 3
 
 bolide_info_ = {
@@ -69,12 +75,6 @@ class DashBoard(QMainWindow):
         print(QtGui.QFontDatabase.applicationFontFamilies(id))
         """
 
-        # obsługa CAN przez osobny proces
-        self.threadpool = QtCore.QThreadPool()
-        self.signals = MainSignals()
-        self.start_threads()
-        self.led_bar = LED_Bar()
-
         self.main_view = MainView(screen_width, screen_height)
         self.second_view = SecondView(screen_width, screen_height)
         self.third_view = ThirdView(screen_width, screen_height)
@@ -90,6 +90,13 @@ class DashBoard(QMainWindow):
         widget = QWidget()
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
+
+        # obsługa CAN przez osobny proces
+        self.threadpool = QtCore.QThreadPool()
+        self.signals = MainSignals()
+        self.start_threads()
+        if RUNNING_ON_RPI:
+            self.led_bar = LED_Bar()
 
         # config logow
         logging.basicConfig(
@@ -145,7 +152,7 @@ class DashBoard(QMainWindow):
             self.third_view.update(self.bolide_info)
 
         self.signals.update.emit(self.bolide_info)
-        if info[0] == "rpm":
+        if info[0] == "rpm" and RUNNING_ON_RPI:
             self.led_bar.update(info[1])
 
     def update_warning(self, warning: str) -> None:
