@@ -1,3 +1,5 @@
 #!/bin/bash
 cd /home/pi/Documents/PGR_dashboard
-python3 run.py
+if [ -f /log/Points.json] then
+  cp /log/Points.json /Points.json
+sudo python3 run.py

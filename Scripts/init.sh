@@ -16,8 +16,28 @@ network={
 }' >> /etc/wpa_supplicant/wpa_supplicant.conf
 
 (echo "raspberry"; echo "pgracing"; echo "pgracing") | passwd
+echo "Password changed to pgracing"
 
-(echo "n"; echo "GDrive"; echo "12"; echo ""; echo ""; echo "1"; echo ""; echo ""; echo "y"; echo "n"; echo "y"; )| rclone config
+rclone_config(){
+  rclone config
+  echo "Now add at the end of file:"
+  echo "*/30 * * * * rclone copy Documents/PGR_dashboard/log/ \"<drive_name>:<path>\""
+  echo "Press key to continue"
+  read t
+}
 
+while true; do
+    read -p "Do you wish to congigure rclone?" yn
+    case $yn in
+        [Yy]* ) rclone_config; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+echo "Go to Preferences>Raspberry Pi Configuration>Display"
+echo "Change Screen blanking from enable to disable"
+echo "Press key to continue"
+read t
 sudo reboot
 #pi@raspberrypi:~ $ rclone copy Documents/PGR_dashboard/log/ "GDrive:PGRacing/Logi/"
