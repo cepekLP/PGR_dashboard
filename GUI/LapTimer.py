@@ -23,9 +23,12 @@ class LapTimer:
             or self.x2 == -1.0
             or self.y2 == -1.0
         ):
-            with open("test.json") as read_file:
+            with open("Points.json") as read_file:
                 data = json.load(read_file)
-                print(data)
+                self.x1 = data["finish"]["x1"]
+                self.y1 = data["finish"]["y1"]
+                self.x2 = data["finish"]["x2"]
+                self.y2 = data["finish"]["y2"]
 
         self.time = 0.0
         self.last_time = 0.0
