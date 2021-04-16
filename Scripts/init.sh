@@ -1,21 +1,7 @@
 #!/bin/bash
 
 set_up_autostart(){
-  echo '[Unit]
-Description=My service
-After=network.target
-
-[Service]
-ExecStart=/usr/bin/python3 -u main.py
-WorkingDirectory=/home/pi/myscript
-StandardOutput=inherit
-StandardError=inherit
-Restart=always
-User=pi
-
-[Install]
-WantedBy=graphical.target' > /etc/systemd/system/dashboard.service
-  systemctl enable dashboard.service
+  echo '@sh /home/pi/Documents/PGR_dashboard/Scripts/start.sh' >> /etc/xdg/lxsession/LXDE-pi/autostart
 }
 
 set_up_wifi(){
@@ -43,6 +29,7 @@ main(){
   setfacl -m u:pi:rwx log
 
   apt install -y python3-pyqt5 python3-gpiozero rclone
+  pip3 install rpi_ws281x
 
   set_up_autostart
   set_up_wifi
