@@ -1,0 +1,27 @@
+# For more options and information see
+# http://rpf.io/configtxt
+# Some settings may impact device functionality. See link above for details
+
+
+#uncomment to overclock the arm. 700 MHz is the default.
+#arm_freq=800
+
+
+hdmi_group=2
+hdmi_mode=87
+hdmi_cvt=1024 600 60 6 0 0 0
+
+initial_turbo=30
+boot_delay=0
+disable_splash=1
+
+dtparam=sd_overclock=100
+dtoverlay=gpio-poweroff,gpiopin=5
+
+[pi4]
+
+dtoverlay=vc4-fkms-v3d
+max_framebuffers=2
+
+[all]
+#dtoverlay=vc4-fkms-v3d
