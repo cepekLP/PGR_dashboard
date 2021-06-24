@@ -30,8 +30,6 @@ class SecondView(QWidget):
         self.break_balance_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.info1_info.setStyleSheet(st.INFO_LABEL_TEXT)
         self.info1_value.setStyleSheet(st.INFO_LABEL_VALUE)
-        self.info2_info.setStyleSheet(st.INFO_LABEL_TEXT)
-        self.info2_value.setStyleSheet(st.INFO_LABEL_VALUE)
 
         self.verticalLayoutWidget.setStyleSheet(
             "background-color: rgba(0, 0, 0, 0%)"

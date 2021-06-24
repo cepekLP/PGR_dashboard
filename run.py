@@ -11,7 +11,7 @@ from GUI.ThirdView import ThirdView
 if os.uname()[4] == "armv7l":
     RUNNING_ON_RPI = True
     SHOW_FULLSCREEN = True
-    from CAN.LED_Bar import LED_Bar
+    # from CAN.LED_Bar import LED_Bar
 else:
     RUNNING_ON_RPI = False
     SHOW_FULLSCREEN = False
@@ -52,7 +52,7 @@ class DashBoard(QMainWindow):
     current_layout = 0
 
     def __init__(
-        self, screen_width: int = 800, screen_height: int = 480
+        self, screen_width: int = 1024, screen_height: int = 600
     ) -> None:
         super().__init__()
 
@@ -95,8 +95,8 @@ class DashBoard(QMainWindow):
         self.threadpool = QtCore.QThreadPool()
         self.signals = MainSignals()
         self.start_threads()
-        if RUNNING_ON_RPI:
-            self.led_bar = LED_Bar()
+        # if RUNNING_ON_RPI:
+        #   self.led_bar = LED_Bar()
 
         # config logow
         logging.basicConfig(
@@ -152,8 +152,8 @@ class DashBoard(QMainWindow):
             self.third_view.update(self.bolide_info)
 
         self.signals.update.emit(self.bolide_info)
-        if info[0] == "rpm" and RUNNING_ON_RPI:
-            self.led_bar.update(info[1])
+        # if info[0] == "rpm" and RUNNING_ON_RPI:
+        #    self.led_bar.update(info[1])
 
     def update_warning(self, warning: str) -> None:
         if self.current_layout == 0:

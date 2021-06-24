@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>480</height>
+    <width>1024</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
-     <height>160</height>
+     <width>512</width>
+     <height>210</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -31,16 +31,16 @@
    <widget class="QLabel" name="rpm_value">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>10</x>
       <y>0</y>
-      <width>300</width>
-      <height>110</height>
+      <width>492</width>
+      <height>160</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Digital-7 Mono</family>
-      <pointsize>80</pointsize>
+      <pointsize>120</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -59,9 +59,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>110</y>
-      <width>300</width>
+      <x>10</x>
+      <y>150</y>
+      <width>487</width>
       <height>50</height>
      </rect>
     </property>
@@ -88,10 +88,10 @@
   <widget class="QFrame" name="speed">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>512</x>
      <y>0</y>
-     <width>234</width>
-     <height>160</height>
+     <width>308</width>
+     <height>210</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -103,16 +103,16 @@
    <widget class="QLabel" name="speed_value">
     <property name="geometry">
      <rect>
-      <x>25</x>
+      <x>10</x>
       <y>0</y>
-      <width>184</width>
-      <height>110</height>
+      <width>288</width>
+      <height>160</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Digital-7 Mono</family>
-      <pointsize>80</pointsize>
+      <pointsize>120</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -128,9 +128,9 @@
    <widget class="QLabel" name="speed_unit">
     <property name="geometry">
      <rect>
-      <x>25</x>
-      <y>110</y>
-      <width>184</width>
+      <x>10</x>
+      <y>150</y>
+      <width>283</width>
       <height>50</height>
      </rect>
     </property>
@@ -151,16 +151,16 @@
   <widget class="QLabel" name="gear_value">
    <property name="geometry">
     <rect>
-     <x>634</x>
+     <x>820</x>
      <y>0</y>
-     <width>166</width>
-     <height>240</height>
+     <width>204</width>
+     <height>300</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Digital-7 Mono</family>
-     <pointsize>190</pointsize>
+     <pointsize>230</pointsize>
     </font>
    </property>
    <property name="text">
@@ -170,133 +170,13 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QFrame" name="frame_3">
-   <property name="geometry">
-    <rect>
-     <x>158</x>
-     <y>320</y>
-     <width>159</width>
-     <height>160</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <widget class="QLabel" name="test_value">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>158</width>
-      <height>120</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>LEMON MILK</family>
-      <pointsize>60</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="test_info">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>110</y>
-      <width>158</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>LEMON MILK</family>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Test2</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QFrame" name="frame_2">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>320</y>
-     <width>158</width>
-     <height>160</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <widget class="QLabel" name="TCS_value">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>158</width>
-      <height>120</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>LEMON MILK</family>
-      <pointsize>60</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TCS_info">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>110</y>
-      <width>158</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>LEMON MILK</family>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>TCS</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-  </widget>
   <widget class="QFrame" name="frame_4">
    <property name="geometry">
     <rect>
-     <x>317</x>
-     <y>320</y>
-     <width>483</width>
-     <height>160</height>
+     <x>410</x>
+     <y>420</y>
+     <width>614</width>
+     <height>180</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -310,8 +190,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>483</width>
-      <height>160</height>
+      <width>614</width>
+      <height>180</height>
      </rect>
     </property>
     <property name="font">
@@ -331,9 +211,9 @@
   <widget class="QFrame" name="frame_6">
    <property name="geometry">
     <rect>
-     <x>317</x>
-     <y>160</y>
-     <width>317</width>
+     <x>0</x>
+     <y>210</y>
+     <width>410</width>
      <height>160</height>
     </rect>
    </property>
@@ -348,7 +228,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>317</width>
+      <width>410</width>
       <height>160</height>
      </rect>
     </property>
@@ -357,10 +237,10 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>4</number>
+      <number>6</number>
      </property>
      <property name="bottomMargin">
-      <number>4</number>
+      <number>6</number>
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -381,7 +261,7 @@
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>18</pointsize>
+           <pointsize>24</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -390,7 +270,7 @@
           <string>b. bal</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -399,13 +279,13 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>48</height>
+           <height>64</height>
           </size>
          </property>
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>28</pointsize>
+           <pointsize>38</pointsize>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -433,7 +313,7 @@
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>18</pointsize>
+           <pointsize>24</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -451,13 +331,13 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>48</height>
+           <height>64</height>
           </size>
          </property>
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>28</pointsize>
+           <pointsize>38</pointsize>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -472,68 +352,16 @@
        </item>
       </layout>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <item>
-        <widget class="QLabel" name="info2_info">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>LEMON MILK</family>
-           <pointsize>18</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Info2</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="info2_value">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>LEMON MILK</family>
-           <pointsize>28</pointsize>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
    </widget>
   </widget>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>160</y>
-     <width>317</width>
-     <height>160</height>
+     <x>410</x>
+     <y>210</y>
+     <width>410</width>
+     <height>210</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -547,8 +375,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>317</width>
-      <height>160</height>
+      <width>410</width>
+      <height>210</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -556,10 +384,10 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>4</number>
+      <number>6</number>
      </property>
      <property name="bottomMargin">
-      <number>4</number>
+      <number>6</number>
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -574,7 +402,7 @@
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>18</pointsize>
+           <pointsize>24</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -592,13 +420,13 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>48</height>
+           <height>64</height>
           </size>
          </property>
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>28</pointsize>
+           <pointsize>38</pointsize>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -626,7 +454,7 @@
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>18</pointsize>
+           <pointsize>24</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -644,13 +472,13 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>48</height>
+           <height>64</height>
           </size>
          </property>
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>28</pointsize>
+           <pointsize>38</pointsize>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -678,7 +506,7 @@
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>18</pointsize>
+           <pointsize>24</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -696,13 +524,13 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>48</height>
+           <height>64</height>
           </size>
          </property>
          <property name="font">
           <font>
            <family>LEMON MILK</family>
-           <pointsize>28</pointsize>
+           <pointsize>38</pointsize>
            <weight>50</weight>
            <bold>false</bold>
           </font>
@@ -718,6 +546,126 @@
       </layout>
      </item>
     </layout>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>370</y>
+     <width>205</width>
+     <height>230</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="TCS_value">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>5</y>
+      <width>205</width>
+      <height>170</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>LEMON MILK</family>
+      <pointsize>100</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TCS_info">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>165</y>
+      <width>205</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>LEMON MILK</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>TCS</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_3">
+   <property name="geometry">
+    <rect>
+     <x>205</x>
+     <y>370</y>
+     <width>205</width>
+     <height>230</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="test_value">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>5</y>
+      <width>205</width>
+      <height>170</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>LEMON MILK</family>
+      <pointsize>100</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="test_info">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>165</y>
+      <width>205</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>LEMON MILK</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Test2</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
  </widget>

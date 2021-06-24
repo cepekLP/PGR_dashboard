@@ -27,12 +27,9 @@ class MainView(QWidget):
         self.intake_temp_info.setStyleSheet(st.INFO_LABEL_TEXT)
         self.intake_temp_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.break_balance_info1.setStyleSheet(st.INFO_LABEL_TEXT)
-        self.break_balance_info2.setStyleSheet(st.INFO_LABEL_TEXT)
         self.break_balance_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.info1_info.setStyleSheet(st.INFO_LABEL_TEXT)
         self.info1_value.setStyleSheet(st.INFO_LABEL_VALUE)
-        self.info2_info.setStyleSheet(st.INFO_LABEL_TEXT)
-        self.info2_value.setStyleSheet(st.INFO_LABEL_VALUE)
 
         self.verticalLayoutWidget.setStyleSheet(
             "background-color: rgba(0, 0, 0, 0%)"

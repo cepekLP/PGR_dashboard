@@ -10,8 +10,8 @@ INFO_GEAR = """
     background-color: rgba(0, 0, 0, 0%);
     border-color: rgb(206,249,255);
     border-style: solid;
-    border-width: 10px;
-    border-radius: 15px;
+    border-width: 15px;
+    border-radius: 20px;
 """
 
 UNIT_RPM = """
@@ -23,7 +23,6 @@ UNIT_RPM = """
 
 INFO_RPM = """
     color: white;
-    font-size: 130px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0;
@@ -31,7 +30,6 @@ INFO_RPM = """
 
 INFO_RPM_2 = """
     color: white;
-    font-size: 150px;
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0;
@@ -55,8 +53,8 @@ QFRAME_STYLE = """
     QFrame{
     border-color: rgb(206,249,255);
     border-style: solid;
-    border-width: 5px;
-    border-radius: 15px;
+    border-width: 9px;
+    border-radius: 20px;
     background-color: rgba(0, 0, 0, 0%)
     }
 """
@@ -67,6 +65,6 @@ WARNING_QFRAME_STYLE = """
     background-color: rgb(%d, %d, %d);
     border-color: rgb(206,249,255);
     border-style: solid;
-    border-width: 5px;
-    border-radius: 15px;
+    border-width: 9px;
+    border-radius: 20px;
 """
