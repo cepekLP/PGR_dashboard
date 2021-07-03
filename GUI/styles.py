@@ -1,9 +1,14 @@
-GEAR_HEIGHT = 240
-GEAR_WIDTH = 165
-
-OFFSET = 30
-RPM_HEIGHT = 160
-
+RPM_BAR = """
+    QProgressBar::chunk
+    {
+        border-color: rgb(0, 0, 0);
+        border-width: 3px;
+        border-radius: 7px;
+        background-color: rgb(%d, %d, %d);
+        width: 15px;
+        margin: 3px;
+    }
+"""
 
 INFO_GEAR = """
     color: rgb(255, 219, 19);

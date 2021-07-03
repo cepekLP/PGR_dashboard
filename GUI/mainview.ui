@@ -37,7 +37,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>80</y>
      <width>410</width>
      <height>190</height>
     </rect>
@@ -60,7 +60,7 @@
     <property name="font">
      <font>
       <family>Digital-7 Mono</family>
-      <pointsize>105</pointsize>
+      <pointsize>125</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -80,7 +80,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
+      <y>135</y>
       <width>385</width>
       <height>60</height>
      </rect>
@@ -105,74 +105,11 @@
     </property>
    </widget>
   </widget>
-  <widget class="QFrame" name="speed">
-   <property name="geometry">
-    <rect>
-     <x>614</x>
-     <y>0</y>
-     <width>410</width>
-     <height>190</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <widget class="QLabel" name="speed_value">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>0</y>
-      <width>230</width>
-      <height>140</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Digital-7 Mono</family>
-      <pointsize>105</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>220</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="speed_unit">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>130</y>
-      <width>225</width>
-      <height>60</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Digital-7 Mono</family>
-      <pointsize>35</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>KMPH</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
-    </property>
-   </widget>
-  </widget>
   <widget class="QFrame" name="frame_5">
    <property name="geometry">
     <rect>
      <x>410</x>
-     <y>0</y>
+     <y>80</y>
      <width>204</width>
      <height>300</height>
     </rect>
@@ -210,9 +147,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>190</y>
+     <y>270</y>
      <width>410</width>
-     <height>410</height>
+     <height>330</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -227,7 +164,7 @@
       <x>0</x>
       <y>0</y>
       <width>410</width>
-      <height>410</height>
+      <height>330</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -454,58 +391,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="QLabel" name="info1_info">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>LEMON MILK</family>
-           <pointsize>24</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>test</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="info1_value">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>64</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>LEMON MILK</family>
-           <pointsize>38</pointsize>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
    </widget>
   </widget>
@@ -513,7 +398,7 @@
    <property name="geometry">
     <rect>
      <x>614</x>
-     <y>190</y>
+     <y>80</y>
      <width>205</width>
      <height>230</height>
     </rect>
@@ -611,7 +496,7 @@
    <property name="geometry">
     <rect>
      <x>819</x>
-     <y>190</y>
+     <y>80</y>
      <width>205</width>
      <height>230</height>
     </rect>
@@ -665,6 +550,145 @@
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
+   </widget>
+  </widget>
+  <widget class="QProgressBar" name="rpm_bar_G">
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>0</y>
+     <width>588</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>7000</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="format">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="rpm_bar_Y">
+   <property name="geometry">
+    <rect>
+     <x>596</x>
+     <y>0</y>
+     <width>273</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>3250</number>
+   </property>
+   <property name="value">
+    <number>100</number>
+   </property>
+   <property name="format">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="rpm_bar_R">
+   <property name="geometry">
+    <rect>
+     <x>869</x>
+     <y>0</y>
+     <width>147</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>1750</number>
+   </property>
+   <property name="value">
+    <number>100</number>
+   </property>
+   <property name="format">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_6">
+   <property name="geometry">
+    <rect>
+     <x>614</x>
+     <y>310</y>
+     <width>410</width>
+     <height>110</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>410</width>
+      <height>110</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="info1_info">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>LEMON MILK</family>
+         <pointsize>24</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>test</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="info1_value">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>64</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>LEMON MILK</family>
+         <pointsize>38</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

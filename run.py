@@ -3,7 +3,7 @@ import sys
 import os
 from time import gmtime, strftime
 
-from CAN.CAN_Manager import Worker
+
 from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
@@ -11,6 +11,8 @@ from GUI.ThirdView import ThirdView
 if os.uname()[4] == "armv7l":
     RUNNING_ON_RPI = True
     SHOW_FULLSCREEN = True
+    from CAN.CAN_Manager import Worker
+
     # from CAN.LED_Bar import LED_Bar
 else:
     RUNNING_ON_RPI = False
@@ -112,12 +114,13 @@ class DashBoard(QMainWindow):
         timer.start()
 
     def start_threads(self) -> None:
-        worker = Worker()
-        worker.signals.result.connect(self.update)
-        worker.signals.warning.connect(self.update_warning)
-        worker.signals.error.connect(self.worker_error)
-        self.signals.kill.connect(worker.kill)
-        self.threadpool.start(worker)
+        if RUNNING_ON_RPI is True:
+            worker = Worker()
+            worker.signals.result.connect(self.update)
+            worker.signals.warning.connect(self.update_warning)
+            worker.signals.error.connect(self.worker_error)
+            self.signals.kill.connect(worker.kill)
+            self.threadpool.start(worker)
 
     def keyPressEvent(self, event: QtCore.QEvent) -> None:
         if event.key() == QtCore.Qt.Key_Q:
