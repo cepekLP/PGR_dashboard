@@ -33,6 +33,7 @@ bolide_info_ = {
     "oil_temp": 0,
     "air_intake_temp": 0,
     "TCS": 0,
+    "gear_status": 0,
 }
 
 extended_bolide_info_ = {

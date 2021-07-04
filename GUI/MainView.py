@@ -15,6 +15,7 @@ class MainView(QWidget):
         uic.loadUi("GUI/mainview.ui", self)
 
         self.gear_value.setStyleSheet(st.INFO_GEAR)
+        self.gear_status.setStyleSheet(st.GEAR_STATUS % (0, 0, 0))
 
         self.rpm_bar_G.setStyleSheet(st.RPM_BAR % (0, 255, 0))
         self.rpm_bar_Y.setStyleSheet(st.RPM_BAR % (255, 255, 0))
@@ -48,6 +49,7 @@ class MainView(QWidget):
 
     def update(self, display_info: Dict[str, int]) -> None:
         self.gear_value.setText(str(display_info["gear"]))
+        self.update_gear_status(display_info["gear_status"])
 
         self.rpm_value.setText(str(display_info["rpm"]))
         self.update_bar(display_info["rpm"])
@@ -73,6 +75,16 @@ class MainView(QWidget):
             self.rpm_bar_G.setValue(7000)
             self.rpm_bar_Y.setValue(3250)
             self.rpm_bar_R.setValue(rpm - 10250)
+
+    def update_gear_status(self, status: int) -> None:
+        if status == 0:
+            self.gear_status.setStyleSheet(st.GEAR_STATUS % (0, 0, 0))
+        elif status == 1:
+            self.gear_status.setStyleSheet(st.GEAR_STATUS % (0, 255, 0))
+        elif status == 2:
+            self.gear_status.setStyleSheet(st.GEAR_STATUS % (255, 0, 0))
+        elif status == 3:
+            self.gear_status.setStyleSheet(st.GEAR_STATUS % (64, 64, 64))
 
     def update_warning(self, warning: List[str]) -> None:
         if warning[0] == "error":

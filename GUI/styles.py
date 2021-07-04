@@ -19,6 +19,14 @@ INFO_GEAR = """
     border-radius: 20px;
 """
 
+GEAR_STATUS = """
+    background-color: rgb(%d, %d, %d);
+    border-color: rgb(0, 0, 0);
+    border-style: solid;
+    border-width: 9px;
+    border-radius: 20px;
+"""
+
 UNIT_RPM = """
     color:rgb(255, 219, 19);
     background-color: rgba(0, 0, 0, 0%);

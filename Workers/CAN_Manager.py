@@ -44,8 +44,8 @@ class CAN_Manager(QRunnable):
                 self.signals.result.emit(
                     ["gear", parse_gear(int(msg.data[0]))]
                 )
+                self.signals.result.emit(["gear_status", int(msg.data[1])])
 
-            self.signals.result.emit(["gear", int(i / 10) % 10])
             self.signals.result.emit(["rpm", i * 11 % 19000])
             self.signals.result.emit(["speed", i % 200])
             self.signals.result.emit(["water_temp", i % 200])
