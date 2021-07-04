@@ -11,9 +11,10 @@ from GUI.ThirdView import ThirdView
 if os.uname()[4] == "armv7l":
     RUNNING_ON_RPI = True
     SHOW_FULLSCREEN = True
-    from CAN.CAN_Manager import Worker
+    from Workers.CAN_Manager import CAN_Manager
+    from Workers.SERIAL_Manager import SERIAL_Manager
 
-    # from CAN.LED_Bar import LED_Bar
+    # from Workers.LED_Bar import LED_Bar
 else:
     RUNNING_ON_RPI = False
     SHOW_FULLSCREEN = False
@@ -93,7 +94,7 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
 
-        # obsługa CAN przez osobny proces
+        # obsługa Workers przez osobny proces
         self.threadpool = QtCore.QThreadPool()
         self.signals = MainSignals()
         self.start_threads()
@@ -115,12 +116,18 @@ class DashBoard(QMainWindow):
 
     def start_threads(self) -> None:
         if RUNNING_ON_RPI is True:
-            worker = Worker()
-            worker.signals.result.connect(self.update)
-            worker.signals.warning.connect(self.update_warning)
-            worker.signals.error.connect(self.worker_error)
-            self.signals.kill.connect(worker.kill)
-            self.threadpool.start(worker)
+            CAN = CAN_Manager()
+            CAN.signals.result.connect(self.update)
+            CAN.signals.warning.connect(self.update_warning)
+            CAN.signals.error.connect(self.worker_error)
+            self.signals.kill.connect(CAN.kill)
+            self.threadpool.start(CAN)
+            SERIAL = SERIAL_Manager()
+            SERIAL.signals.result.connect(self.update)
+            SERIAL.signals.warning.connect(self.update_warning)
+            SERIAL.signals.error.connect(self.worker_error)
+            self.signals.kill.connect(SERIAL.kill)
+            self.threadpool.start(SERIAL)
 
     def keyPressEvent(self, event: QtCore.QEvent) -> None:
         if event.key() == QtCore.Qt.Key_Q:
