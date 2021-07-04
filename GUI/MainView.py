@@ -52,7 +52,6 @@ class MainView(QWidget):
         self.rpm_value.setText(str(display_info["rpm"]))
         self.update_bar(display_info["rpm"])
 
-        self.speed_value.setText(str(display_info["speed"]))
         self.water_temp_value.setText(str(display_info["water_temp"]))
         self.oil_temp_value.setText(str(display_info["oil_temp"]))
         # self.intake_temp_value.setText("
