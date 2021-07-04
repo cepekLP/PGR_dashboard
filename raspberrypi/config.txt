@@ -18,6 +18,12 @@ disable_splash=1
 dtparam=sd_overclock=100
 dtoverlay=gpio-poweroff,gpiopin=5
 
+enable_uart=1
+
+dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+dtoverlay=spi0-hw-cs
+
 [pi4]
 
 dtoverlay=vc4-fkms-v3d
