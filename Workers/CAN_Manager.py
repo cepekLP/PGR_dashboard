@@ -1,5 +1,4 @@
-﻿import time
-import os
+﻿import os
 import can
 
 from PyQt5.QtCore import QObject, QRunnable, pyqtSignal, pyqtSlot
@@ -36,29 +35,52 @@ class CAN_Manager(QRunnable):
                 return str(msg - 1)
             return "0"
 
-        i = 0
+        def parse_little_endian_to_dec(num1, num2):
+            binData = f"{num2:08b}" + f"{num1:08b}"
+            return int(binData, 2)
 
         while True:
             msg = self.can0.recv(0.01)
             if msg is not None:
-                self.signals.result.emit(
-                    ["gear", parse_gear(int(msg.data[0]))]
-                )
-                self.signals.result.emit(["gear_status", int(msg.data[1])])
-
-            self.signals.result.emit(["rpm", i * 11 % 19000])
-            self.signals.result.emit(["speed", i % 200])
-            self.signals.result.emit(["water_temp", i % 200])
-            self.signals.result.emit(["oil_temp", i % 200])
-            self.signals.result.emit(["break_balance", i % 100])
-            i = i + 1
-            time.sleep(0.05)
-            if i % 150 == 0:
-                self.signals.warning.emit(["error", "ERROR TEXT"])
-            elif (i + 50) % 150 == 0:
-                self.signals.warning.emit(["warning", "WARNING TEXT"])
-            elif (i + 100) % 150 == 0:
-                self.signals.warning.emit(["info", "INFO TEXT"])
+                if msg.arbitration_id == 1536:
+                    self.signals.result.emit(
+                        [
+                            "rpm",
+                            parse_little_endian_to_dec(
+                                msg.data[0], msg.data[1]
+                            ),
+                        ]
+                    )
+                    self.signals.result.emit(
+                        ["air_intake_temp", int(msg.data[3])]
+                    )
+                elif msg.arbitration_id == 1538:
+                    self.signals.result.emit(["water_temp", int(msg.data[6])])
+                    self.signals.result.emit(
+                        ["oil_temp", msg.data[4] * 0.0625]
+                    )
+                elif msg.arbitration_id == 1540:
+                    self.signals.result.emit(
+                        [
+                            "voltage",
+                            parse_little_endian_to_dec(
+                                msg.data[2], msg.data[3]
+                            )
+                            * 0.027,
+                        ]
+                    )
+                elif msg.arbitration_id == 1:
+                    self.signals.result.emit(
+                        ["gear", parse_gear(int(msg.data[0]))]
+                    )
+                    if int(msg.data[1]) == 0:
+                        self.signals.warning.emit(["info", "READY"])
+                    elif int(msg.data[1]) == 1:
+                        self.signals.warning.emit(["info", "OK"])
+                    elif int(msg.data[1]) == 2:
+                        self.signals.warning.emit(["error", "NOT CHANGED"])
+                    elif int(msg.data[1]) == 3:
+                        self.signals.warning.emit(["warning", "GEAR UNKNOWN"])
 
             if self.is_killed:
                 return
