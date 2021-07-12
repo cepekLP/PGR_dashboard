@@ -1,12 +1,19 @@
 import logging
 import sys
 import os
+import json
 from time import gmtime, strftime
+from typing import List, Dict, Tuple, Union
+from multiprocessing import Process, Pipe
 
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
 from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
+
+import Workers.httpServer as httpServer
 
 if os.uname()[4] == "armv7l":
     RUNNING_ON_RPI = True
@@ -19,30 +26,22 @@ else:
     RUNNING_ON_RPI = False
     SHOW_FULLSCREEN = False
 
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedLayout, QWidget
 
 NUMBER_OF_VIEWS = 3
+DEBUG = True
 
-bolide_info_ = {
+bolide_info_: Dict[str, Union[int, float]] = {
     "gear": 0,
+    "gear_status": 0,
     "rpm": 0,
-    "break_balance": 0,
     "speed": 0,
     "water_temp": 0,
     "oil_temp": 0,
-    "air_intake_temp": 0,
-    "TCS": 0,
-    "gear_status": 0,
-}
-
-extended_bolide_info_ = {
-    "wheel_temp_1": 0,
-    "wheel_temp_2": 0,
-    "wheel_temp_3": 0,
-    "wheel_temp_4": 0,
-    "voltage": 0,
     "oil_press": 0,
+    "air_intake_temp": 0.0,
+    "voltage": 0.0,
+    "TCS": 0,
+    "break_balance": 0.0,
 }
 
 
@@ -52,9 +51,6 @@ class MainSignals(QtCore.QObject):
 
 
 class DashBoard(QMainWindow):
-    bolide_info = bolide_info_
-    current_layout = 0
-
     def __init__(
         self, screen_width: int = 1024, screen_height: int = 600
     ) -> None:
@@ -95,11 +91,22 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
 
+        self.bolide_info: Dict[str, Union[int, float]] = bolide_info_
+        self.current_layout: int = 0
+
         # obsługa Workers przez osobny proces
         self.threadpool = QtCore.QThreadPool()
         self.signals = MainSignals()
-        self.start_threads()
-        # if RUNNING_ON_RPI:
+        if RUNNING_ON_RPI is True:
+            self.start_threads()
+
+        if DEBUG is True:
+            self.pipe, pipe = Pipe()
+            self.httpServer = Process(target=httpServer.main, args=(pipe,))
+            self.httpServer.start()
+            self.pipe.send(json.dumps(self.bolide_info))
+
+        # if RUNNING_ON_RPI:S
         #   self.led_bar = LED_Bar()
 
         # config logow
@@ -116,19 +123,18 @@ class DashBoard(QMainWindow):
         timer.start()
 
     def start_threads(self) -> None:
-        if RUNNING_ON_RPI is True:
-            CAN = CAN_Manager()
-            CAN.signals.result.connect(self.update)
-            CAN.signals.warning.connect(self.update_warning)
-            CAN.signals.error.connect(self.worker_error)
-            self.signals.kill.connect(CAN.kill)
-            self.threadpool.start(CAN)
-            SERIAL = SERIAL_Manager()
-            SERIAL.signals.result.connect(self.update)
-            SERIAL.signals.warning.connect(self.update_warning)
-            SERIAL.signals.error.connect(self.worker_error)
-            self.signals.kill.connect(SERIAL.kill)
-            self.threadpool.start(SERIAL)
+        CAN = CAN_Manager()
+        CAN.signals.result.connect(self.update_info)
+        CAN.signals.warning.connect(self.update_warning)
+        CAN.signals.error.connect(self.worker_error)
+        self.signals.kill.connect(CAN.kill)
+        self.threadpool.start(CAN)
+        SERIAL = SERIAL_Manager()
+        SERIAL.signals.result.connect(self.update_info)
+        SERIAL.signals.warning.connect(self.update_warning)
+        SERIAL.signals.error.connect(self.worker_error)
+        self.signals.kill.connect(SERIAL.kill)
+        self.threadpool.start(SERIAL)
 
     def keyPressEvent(self, event: QtCore.QEvent) -> None:
         if event.key() == QtCore.Qt.Key_Q:
@@ -151,7 +157,7 @@ class DashBoard(QMainWindow):
 
         self.layout.setCurrentIndex(self.current_layout)
 
-    def update(self, info):
+    def update_info(self, info: Tuple[str, Union[float, int]]) -> None:
         if info[0] in self.bolide_info:
             self.bolide_info[info[0]] = info[1]
 
@@ -163,10 +169,12 @@ class DashBoard(QMainWindow):
             self.third_view.update(self.bolide_info)
 
         self.signals.update.emit(self.bolide_info)
+        if DEBUG is True:
+            self.pipe.send(json.dumps(self.bolide_info))
         # if info[0] == "rpm" and RUNNING_ON_RPI:
         #    self.led_bar.update(info[1])
 
-    def update_warning(self, warning: str) -> None:
+    def update_warning(self, warning: List[str]) -> None:
         if self.current_layout == 0:
             self.main_view.update_warning(warning)
         elif self.current_layout == 1:

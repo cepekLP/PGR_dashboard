@@ -7,8 +7,8 @@ from PyQt5.QtCore import QObject, QRunnable, pyqtSignal, pyqtSlot
 # komunikacja z głównym procesem
 class WorkerSignals(QObject):
     error = pyqtSignal(str)
-    warning = pyqtSignal(list)
-    result = pyqtSignal(list)
+    warning = pyqtSignal(tuple)
+    result = pyqtSignal(tuple)
     finish = pyqtSignal()
 
 
@@ -44,43 +44,43 @@ class CAN_Manager(QRunnable):
             if msg is not None:
                 if msg.arbitration_id == 1536:
                     self.signals.result.emit(
-                        [
+                        (
                             "rpm",
                             parse_little_endian_to_dec(
                                 msg.data[0], msg.data[1]
                             ),
-                        ]
+                        )
                     )
                     self.signals.result.emit(
-                        ["air_intake_temp", int(msg.data[3])]
+                        ("air_intake_temp", int(msg.data[3]))
                     )
                 elif msg.arbitration_id == 1538:
-                    self.signals.result.emit(["water_temp", int(msg.data[6])])
+                    self.signals.result.emit(("water_temp", int(msg.data[6])))
                     self.signals.result.emit(
-                        ["oil_temp", msg.data[4] * 0.0625]
+                        ("oil_temp", msg.data[4] * 0.0625)
                     )
                 elif msg.arbitration_id == 1540:
                     self.signals.result.emit(
-                        [
+                        (
                             "voltage",
                             parse_little_endian_to_dec(
                                 msg.data[2], msg.data[3]
                             )
                             * 0.027,
-                        ]
+                        )
                     )
                 elif msg.arbitration_id == 1:
                     self.signals.result.emit(
-                        ["gear", parse_gear(int(msg.data[0]))]
+                        ("gear", parse_gear(int(msg.data[0])))
                     )
                     if int(msg.data[1]) == 0:
-                        self.signals.warning.emit(["info", "READY"])
+                        self.signals.warning.emit(("info", "READY"))
                     elif int(msg.data[1]) == 1:
-                        self.signals.warning.emit(["info", "OK"])
+                        self.signals.warning.emit(("info", "OK"))
                     elif int(msg.data[1]) == 2:
-                        self.signals.warning.emit(["error", "NOT CHANGED"])
+                        self.signals.warning.emit(("error", "NOT CHANGED"))
                     elif int(msg.data[1]) == 3:
-                        self.signals.warning.emit(["warning", "GEAR UNKNOWN"])
+                        self.signals.warning.emit(("warning", "GEAR UNKNOWN"))
 
             if self.is_killed:
                 return

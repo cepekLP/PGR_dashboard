@@ -706,7 +706,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QWidget" name="gear_status" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>
