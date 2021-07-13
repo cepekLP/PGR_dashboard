@@ -1,19 +1,32 @@
 function get_info() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4)  {
+            if (this.status == 200) {
                 parse(this.responseText);
+                get_info();
             }
-        };
-        xmlhttp.open("GET", "/info" , true);
-        xmlhttp.send();
-        setTimeout("get_info()", 1000);
+            else{
+                setTimeout("get_info()", 500)
+            }
+        }
+
+    };
+    xmlhttp.open("GET", "/info" , true);
+    //setTimeout(() => {xmlhttp.send();}, 1000);
+
+    xmlhttp.send();
 }
 
 function parse(data_){
-    console.log(data_)
-    if (data_ != "No new data"){
-        var data = JSON.parse(data_);
-        document.getElementById("rpm").innerHTML= data["rpm"];
+    //console.log(data_)
+    try {
+        if (data_ != "No new data"){
+            var data = JSON.parse(data_);
+            document.getElementById("rpm").innerHTML= data["rpm"];
+        }
+    }
+    catch (error) {
+        console.log(error);
     }
 }

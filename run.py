@@ -1,8 +1,6 @@
-import logging
 import sys
 import os
 import json
-from time import gmtime, strftime
 from typing import List, Dict, Tuple, Union
 from multiprocessing import Process, Pipe
 
@@ -13,6 +11,7 @@ from GUI.MainView import MainView
 from GUI.SecondView import SecondView
 from GUI.ThirdView import ThirdView
 
+from Workers.Logger import Logger
 import Workers.httpServer as httpServer
 
 if os.uname()[4] == "armv7l":
@@ -55,6 +54,9 @@ class DashBoard(QMainWindow):
         self, screen_width: int = 1024, screen_height: int = 600
     ) -> None:
         super().__init__()
+        self.bolide_info: Dict[str, Union[int, float]] = bolide_info_
+        self.current_layout: int = 0
+        self.logger = Logger(self.bolide_info)
 
         self.setStyleSheet("background-color: black")
         self.setFixedSize(screen_width, screen_height)
@@ -91,9 +93,6 @@ class DashBoard(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
 
-        self.bolide_info: Dict[str, Union[int, float]] = bolide_info_
-        self.current_layout: int = 0
-
         # obsługa Workers przez osobny proces
         self.threadpool = QtCore.QThreadPool()
         self.signals = MainSignals()
@@ -104,23 +103,9 @@ class DashBoard(QMainWindow):
             self.pipe, pipe = Pipe()
             self.httpServer = Process(target=httpServer.main, args=(pipe,))
             self.httpServer.start()
-            self.pipe.send(json.dumps(self.bolide_info))
 
         # if RUNNING_ON_RPI:S
-        #   self.led_bar = LED_Bar()
-
-        # config logow
-        logging.basicConfig(
-            format="%(asctime)s | %(levelname)s: %(message)s",
-            filename="log/" + strftime("%d-%m-%y_%H%M%S", gmtime()) + ".log",
-            level=logging.INFO,
-        )
-        logging.info("Started...")
-
-        timer = QtCore.QTimer()
-        timer.setInterval(250)
-        timer.timeout.connect(self.logger)
-        timer.start()
+        #   self.led_bar = LED_Bar(
 
     def start_threads(self) -> None:
         CAN = CAN_Manager()
@@ -144,8 +129,6 @@ class DashBoard(QMainWindow):
             self.current_layout = (self.current_layout - 1) % NUMBER_OF_VIEWS
         elif event.key() == QtCore.Qt.Key_E:
             self.current_layout = (self.current_layout + 1) % NUMBER_OF_VIEWS
-        else:
-            pass
 
         self.layout.setCurrentIndex(self.current_layout)
 
@@ -182,12 +165,7 @@ class DashBoard(QMainWindow):
         elif self.current_layout == 2:
             self.third_view.update_warning(warning)
 
-    def worker_error(self, error: str) -> None:
-        logging.critical(error)
-
-    def logger(self) -> None:
-        # zapis do logu informacji w formie słownika
-        logging.info(self.bolide_info)
+        self.logger.warning_log(warning[1])
 
 
 if __name__ == "__main__":
