@@ -1,33 +1,40 @@
 import can
 import RPi.GPIO as GPIO
 import time
-from datetime import datetime
 
-currentTime = datetime.now().microsecond
+# from datetime import datetime
 
-can0 = can.interface.Bus(channel="can0", bustype="socketcan_ctypes")
 
-msg = can.Message(
-    arbitration_id=2, data=[255, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False
-)
+def main():
+    # currentTime = datetime.now().microsecond
 
-switchGpio = 22
+    can0 = can.interface.Bus(channel="can0", bustype="socketcan_ctypes")
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(switchGpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    msg = can.Message(
+        arbitration_id=2, data=[255, 0, 0, 0, 0, 0, 0, 0], is_extended_id=False
+    )
 
-truthPosition = GPIO.input(switchGpio)
-lastSwitchPosition = GPIO.input(switchGpio)
+    switchGpio = 22
 
-while True:
-    currentState = GPIO.input(switchGpio)
-    if currentState != lastSwitchPosition:
-        print("Change!" + str(currentState))
-        lastSwitchPosition = currentState
-        if currentState == truthPosition:
-            msg.data[0] = 255
-            can0.send(msg)
-        elif currentState != truthPosition:
-            msg.data[0] = 0
-            can0.send(msg)
-    time.sleep(0.1)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(switchGpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+    truthPosition = GPIO.input(switchGpio)
+    lastSwitchPosition = GPIO.input(switchGpio)
+
+    while True:
+        currentState = GPIO.input(switchGpio)
+        if currentState != lastSwitchPosition:
+            print("Change!" + str(currentState))
+            lastSwitchPosition = currentState
+            if currentState == truthPosition:
+                msg.data[0] = 255
+                can0.send(msg)
+            elif currentState != truthPosition:
+                msg.data[0] = 0
+                can0.send(msg)
+        time.sleep(0.1)
+
+
+if __name__ == "__main__":
+    main()
