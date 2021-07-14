@@ -1,5 +1,5 @@
 import GUI.styles as st
-from typing import Dict, List
+from typing import Dict, List, Union, Any
 
 from PyQt5 import QtGui, uic
 from PyQt5.QtWidgets import QWidget
@@ -15,7 +15,6 @@ class MainView(QWidget):
         uic.loadUi("GUI/mainview.ui", self)
 
         self.gear_value.setStyleSheet(st.INFO_GEAR)
-        self.gear_status.setStyleSheet(st.GEAR_STATUS % (0, 0, 0))
 
         self.rpm_bar_G.setStyleSheet(st.RPM_BAR % (0, 255, 0))
         self.rpm_bar_Y.setStyleSheet(st.RPM_BAR % (255, 255, 0))
@@ -29,8 +28,8 @@ class MainView(QWidget):
         self.oil_temp_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.intake_temp_info.setStyleSheet(st.INFO_LABEL_TEXT)
         self.intake_temp_value.setStyleSheet(st.INFO_LABEL_VALUE)
-        self.break_balance_info1.setStyleSheet(st.INFO_LABEL_TEXT)
-        self.break_balance_value.setStyleSheet(st.INFO_LABEL_VALUE)
+        self.voltage_info.setStyleSheet(st.INFO_LABEL_TEXT)
+        self.voltage_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.info1_info.setStyleSheet(st.INFO_LABEL_TEXT)
         self.info1_value.setStyleSheet(st.INFO_LABEL_VALUE)
 
@@ -47,26 +46,26 @@ class MainView(QWidget):
 
         self.setStyleSheet(st.QFRAME_STYLE)
 
-    def update(self, display_info: Dict[str, int]) -> None:
+    def update(self, display_info: Dict[str, Union[int, float]]) -> None:
         self.gear_value.setText(str(display_info["gear"]))
-        self.update_gear_status(display_info["gear_status"])
 
-        self.rpm_value.setText(str(display_info["rpm"]))
+        self.rpm_value.setText(str(int(display_info["rpm"])))
         self.update_bar(display_info["rpm"])
 
+        # self.speed_value.setText(str(display_info["speed"]))
         self.water_temp_value.setText(str(display_info["water_temp"]))
         self.oil_temp_value.setText(str(display_info["oil_temp"]))
         # self.intake_temp_value.setText("
         # {}°C".format(display_info['intake_temp']))
-        self.break_balance_value.setText(str(display_info["break_balance"]))
+        self.intake_temp_value.setText(str(display_info["air_intake_temp"]))
+        self.voltage_value.setText(str(round(display_info["voltage"], 2)))
         self.TCS_value.setText(str(display_info["TCS"]))
 
-    def update_bar(self, rpm: int) -> None:
+    def update_bar(self, rpm: Any) -> None:
         if rpm <= 7000:
             self.rpm_bar_G.setValue(rpm)
             self.rpm_bar_Y.setValue(0)
             self.rpm_bar_R.setValue(0)
-
         elif rpm <= 10250:
             self.rpm_bar_G.setValue(7000)
             self.rpm_bar_Y.setValue(rpm - 7000)
@@ -75,16 +74,6 @@ class MainView(QWidget):
             self.rpm_bar_G.setValue(7000)
             self.rpm_bar_Y.setValue(3250)
             self.rpm_bar_R.setValue(rpm - 10250)
-
-    def update_gear_status(self, status: int) -> None:
-        if status == 0:
-            self.gear_status.setStyleSheet(st.GEAR_STATUS % (0, 0, 0))
-        elif status == 1:
-            self.gear_status.setStyleSheet(st.GEAR_STATUS % (0, 255, 0))
-        elif status == 2:
-            self.gear_status.setStyleSheet(st.GEAR_STATUS % (255, 0, 0))
-        elif status == 3:
-            self.gear_status.setStyleSheet(st.GEAR_STATUS % (64, 64, 64))
 
     def update_warning(self, warning: List[str]) -> None:
         if warning[0] == "error":
@@ -98,6 +87,14 @@ class MainView(QWidget):
         elif warning[0] == "info":
             self.warning_value.setStyleSheet(
                 st.WARNING_QFRAME_STYLE % (0, 192, 0)
+            )
+        elif warning[0] == "default":
+            self.warning_value.setStyleSheet(
+                st.WARNING_QFRAME_STYLE % (0, 0, 0)
+            )
+        elif warning[0] == "disabled":
+            self.warning_value.setStyleSheet(
+                st.WARNING_QFRAME_STYLE % (74, 74, 74)
             )
 
         self.warning_value.setText(warning[1])
