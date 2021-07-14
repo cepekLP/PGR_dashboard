@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #eeeeee;
+  text-align: left;
+  padding: 8px;
+  width:12.5%;
+}
+
+tr:nth-child(even) {
+  background-color: #eeeeee;
+}
+</style>
 <head>
     <meta charset="utf-8" />
     <title>PGR 5</title>
@@ -7,9 +25,28 @@
     <script src="/ajax.js"></script>
 </head>
 <body onload="get_info();">
-<h1>test</h1>
-<h2>rpm</h2>
-<h2 id="rpm">rpm</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>rpm</td>
+            <td id="rpm">0</td>
+            <td>voltage</td>
+            <td id="voltage">0</td>
+        </tr>
+        <tr>
+            <td>water_temp</td>
+            <td id="water_temp">0</td>
+        </tr>
+    </table>
 </body>
 
 

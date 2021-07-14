@@ -24,6 +24,7 @@ function parse(data_){
         if (data_ != "No new data"){
             var data = JSON.parse(data_);
             document.getElementById("rpm").innerHTML= data["rpm"];
+            document.getElementById("water_temp").innerHTML= data["water_temp"];
         }
     }
     catch (error) {

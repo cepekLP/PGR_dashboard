@@ -104,6 +104,7 @@ class DashBoard(QMainWindow):
             self.httpServer = Process(target=httpServer.main, args=(pipe,))
             self.httpServer.start()
 
+        # gcd = Process()
         # if RUNNING_ON_RPI:S
         #   self.led_bar = LED_Bar(
 

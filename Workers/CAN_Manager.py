@@ -73,14 +73,7 @@ class CAN_Manager(QRunnable):
                     self.signals.result.emit(
                         ("gear", parse_gear(int(msg.data[0])))
                     )
-                    if int(msg.data[1]) == 0:
-                        self.signals.warning.emit(("info", "READY"))
-                    elif int(msg.data[1]) == 1:
-                        self.signals.warning.emit(("info", "OK"))
-                    elif int(msg.data[1]) == 2:
-                        self.signals.warning.emit(("error", "NOT CHANGED"))
-                    elif int(msg.data[1]) == 3:
-                        self.signals.warning.emit(("warning", "GEAR UNKNOWN"))
+                    self.signals.result.emit(("gear_status", int(msg.data[1])))
 
             if self.is_killed:
                 return

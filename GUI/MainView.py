@@ -4,6 +4,12 @@ from typing import Dict, List, Union, Any
 from PyQt5 import QtGui, uic
 from PyQt5.QtWidgets import QWidget
 
+READY = 0
+OK = 1
+NOT_CHANGED = 2
+GEAR_UNKNOWN = 3
+DISABLED = 4
+
 
 class MainView(QWidget):
     def __init__(self, width: int = 800, height: int = 480) -> None:
@@ -30,13 +36,10 @@ class MainView(QWidget):
         self.intake_temp_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.voltage_info.setStyleSheet(st.INFO_LABEL_TEXT)
         self.voltage_value.setStyleSheet(st.INFO_LABEL_VALUE)
-        self.info1_info.setStyleSheet(st.INFO_LABEL_TEXT)
-        self.info1_value.setStyleSheet(st.INFO_LABEL_VALUE)
 
         self.verticalLayoutWidget.setStyleSheet(
             "background-color: rgba(0, 0, 0, 0%)"
         )
-        self.layoutWidget.setStyleSheet("background-color: rgba(0, 0, 0, 0%)")
         self.TCS_info.setStyleSheet(st.INFO_LABEL_TEXT)
         self.TCS_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.test_info.setStyleSheet(st.INFO_LABEL_TEXT)
@@ -48,9 +51,9 @@ class MainView(QWidget):
 
     def update(self, display_info: Dict[str, Union[int, float]]) -> None:
         self.gear_value.setText(str(display_info["gear"]))
-
+        self._update_gear_status(display_info["gear_status"])
         self.rpm_value.setText(str(int(display_info["rpm"])))
-        self.update_bar(display_info["rpm"])
+        self._update_bar(display_info["rpm"])
 
         # self.speed_value.setText(str(display_info["speed"]))
         self.water_temp_value.setText(str(display_info["water_temp"]))
@@ -61,7 +64,32 @@ class MainView(QWidget):
         self.voltage_value.setText(str(round(display_info["voltage"], 2)))
         self.TCS_value.setText(str(display_info["TCS"]))
 
-    def update_bar(self, rpm: Any) -> None:
+    def _gear_status(self, gear_status: Any) -> None:
+        if gear_status == READY:
+            self.gear_status.setStyleSheet(st.WARNING_QFRAME_STYLE % (0, 0, 0))
+            self.gear_status.setText("READY")
+        elif gear_status == OK:
+            self.gear_status.setStyleSheet(
+                st.WARNING_QFRAME_STYLE % (0, 192, 0)
+            )
+            self.gear_status.setText("")
+        elif gear_status == NOT_CHANGED:
+            self.gear_status.setStyleSheet(
+                st.WARNING_QFRAME_STYLE % (255, 0, 0)
+            )
+            self.gear_status.setText("NOT CHANGED")
+        elif gear_status == GEAR_UNKNOWN:
+            self.gear_status.setStyleSheet(
+                st.WARNING_QFRAME_STYLE % (74, 74, 74)
+            )
+            self.gear_status.setText("GEAR_UNKNOWN")
+        elif gear_status == DISABLED:
+            self.gear_status.setStyleSheet(
+                st.WARNING_QFRAME_STYLE % (74, 74, 74)
+            )
+            self.gear_status.setText("DISABLED")
+
+    def _update_bar(self, rpm: Any) -> None:
         if rpm <= 7000:
             self.rpm_bar_G.setValue(rpm)
             self.rpm_bar_Y.setValue(0)
