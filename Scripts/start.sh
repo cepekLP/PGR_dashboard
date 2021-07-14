@@ -5,5 +5,6 @@ if [[ -f /log/Points.json ]]; then
 fi
 
 sudo python3 run.py &
+sudo python3 Workers/ gcd.py &
 sleep 0.2
 exec /sbin/init
