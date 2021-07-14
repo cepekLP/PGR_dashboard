@@ -64,7 +64,7 @@ class MainView(QWidget):
         self.voltage_value.setText(str(round(display_info["voltage"], 2)))
         self.TCS_value.setText(str(display_info["TCS"]))
 
-    def _gear_status(self, gear_status: Any) -> None:
+    def _update_gear_status(self, gear_status: Any) -> None:
         if gear_status == READY:
             self.gear_status.setStyleSheet(st.WARNING_QFRAME_STYLE % (0, 0, 0))
             self.gear_status.setText("READY")
@@ -72,7 +72,7 @@ class MainView(QWidget):
             self.gear_status.setStyleSheet(
                 st.WARNING_QFRAME_STYLE % (0, 192, 0)
             )
-            self.gear_status.setText("")
+            self.gear_status.setText("OK")
         elif gear_status == NOT_CHANGED:
             self.gear_status.setStyleSheet(
                 st.WARNING_QFRAME_STYLE % (255, 0, 0)

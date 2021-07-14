@@ -6,5 +6,4 @@ fi
 
 sudo python3 run.py &
 sleep 0.2
-sudo python3 Workers/gcd.py &
 exec /sbin/init

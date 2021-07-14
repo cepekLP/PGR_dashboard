@@ -25,6 +25,7 @@ class CAN_Manager(QRunnable):
         self.can0 = can.interface.Bus(
             channel="can0", bustype="socketcan_ctypes"
         )
+        os.system("sudo python3 " + str(os.getcwd()) + "/Workers/gcd.py &")
 
     @pyqtSlot()
     def run(self) -> None:

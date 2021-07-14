@@ -22,7 +22,7 @@ def main(external_pipe):
     t = Thread(target=get_info, args=(external_pipe, thread_pipe, event))
     t.start()
     handler = partial(RequestHandler, server_pipe, event, current_directory)
-    httpd = HTTPServer(("localhost", 8080), handler)
+    httpd = HTTPServer(("", 8080), handler)
     httpd.serve_forever()
 
 
