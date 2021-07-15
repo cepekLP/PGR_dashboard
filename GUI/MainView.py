@@ -61,7 +61,7 @@ class MainView(QWidget):
         # self.intake_temp_value.setText("
         # {}°C".format(display_info['intake_temp']))
         self.intake_temp_value.setText(str(display_info["air_intake_temp"]))
-        self.voltage_value.setText(str(round(display_info["voltage"], 2)))
+        self.voltage_value.setText(str(display_info["voltage"]))
         self.TCS_value.setText(str(display_info["TCS"]))
 
     def _update_gear_status(self, gear_status: Any) -> None:

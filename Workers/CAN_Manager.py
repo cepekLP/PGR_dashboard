@@ -50,7 +50,7 @@ class CAN_Manager(QRunnable):
                             parse(msg.data[0], msg.data[1]),
                         )
                     )
-                    self.signals.result.emit("TPS", int(msg.data[2]))
+                    self.signals.result.emit("TPS", int(msg.data[2]) * 0.5)
                     self.signals.result.emit(
                         ("air_intake_temp", int(msg.data[3]))
                     )
@@ -59,18 +59,18 @@ class CAN_Manager(QRunnable):
                 elif msg.arbitration_id == 1538:
                     self.signals.result.emit(("water_temp", int(msg.data[6])))
                     self.signals.result.emit(
-                        ("oil_temp", msg.data[4] * 0.0625)
+                        ("oil_temp", round(msg.data[4] * 0.0625, 2))
                     )
                 elif msg.arbitration_id == 1539:
                     self.signals.result.emit(
-                        ("lambda", int(msg.data[3]) * 0.0078125)
+                        ("lambda", round(int(msg.data[3]) * 0.0078125, 2))
                     )
                 elif msg.arbitration_id == 1540:
                     self.signals.result.emit(("ecu_temp", int(msg.data[1])))
                     self.signals.result.emit(
                         (
                             "voltage",
-                            parse(msg.data[2], msg.data[3]) * 0.027,
+                            round(parse(msg.data[2], msg.data[3]) * 0.027, 2),
                         )
                     )
                     self.signals.result.emit("gear_cut", int(msg.data[6]))
