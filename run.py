@@ -41,6 +41,11 @@ bolide_info_: Dict[str, Union[int, float]] = {
     "voltage": 0.0,
     "TCS": 0,
     "break_balance": 0.0,
+    "TPS": 0,
+    "MAP": 0,
+    "lambda": 0.0,
+    "ecu_temp": 0,
+    "gear_cut": 0,
 }
 
 

@@ -36,7 +36,7 @@ class CAN_Manager(QRunnable):
                 return str(msg - 1)
             return "0"
 
-        def parse_little_endian_to_dec(num1, num2):
+        def parse(num1, num2):
             binData = f"{num2:08b}" + f"{num1:08b}"
             return int(binData, 2)
 
@@ -47,29 +47,33 @@ class CAN_Manager(QRunnable):
                     self.signals.result.emit(
                         (
                             "rpm",
-                            parse_little_endian_to_dec(
-                                msg.data[0], msg.data[1]
-                            ),
+                            parse(msg.data[0], msg.data[1]),
                         )
                     )
+                    self.signals.result.emit("TPS", int(msg.data[2]))
                     self.signals.result.emit(
                         ("air_intake_temp", int(msg.data[3]))
                     )
+                    self.signals.result.emit("MAP", int(msg.data[4]))
+
                 elif msg.arbitration_id == 1538:
                     self.signals.result.emit(("water_temp", int(msg.data[6])))
                     self.signals.result.emit(
                         ("oil_temp", msg.data[4] * 0.0625)
                     )
+                elif msg.arbitration_id == 1539:
+                    self.signals.result.emit(
+                        ("lambda", int(msg.data[3]) * 0.0078125)
+                    )
                 elif msg.arbitration_id == 1540:
+                    self.signals.result.emit(("ecu_temp", int(msg.data[1])))
                     self.signals.result.emit(
                         (
                             "voltage",
-                            parse_little_endian_to_dec(
-                                msg.data[2], msg.data[3]
-                            )
-                            * 0.027,
+                            parse(msg.data[2], msg.data[3]) * 0.027,
                         )
                     )
+                    self.signals.result.emit("gear_cut", int(msg.data[6]))
                 elif msg.arbitration_id == 1:
                     self.signals.result.emit(
                         ("gear", parse_gear(int(msg.data[0])))
