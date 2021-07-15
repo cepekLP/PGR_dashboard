@@ -31,7 +31,7 @@ function parse(data_){
             document.getElementById("oil_temp").innerHTML= data["oil_temp"];
             document.getElementById("voltage").innerHTML= data["voltage"];
             document.getElementById("MAP").innerHTML= data["MAP"];
-            document.getElementById("intake_temp").innerHTML= data["intake_temp"];
+            document.getElementById("air_intake_temp").innerHTML= data["air_intake_temp"];
             document.getElementById("lambda").innerHTML= data["lambda"];
             document.getElementById("ecu_temp").innerHTML= data["ecu_temp"];
             document.getElementById("oil_press").innerHTML= data["oil_press"];
