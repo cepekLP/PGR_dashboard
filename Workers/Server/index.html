@@ -1,54 +1,78 @@
 <!DOCTYPE html>
 <html>
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #eeeeee;
-  text-align: left;
-  padding: 8px;
-  width:12.5%;
-}
-
-tr:nth-child(even) {
-  background-color: #eeeeee;
-}
-</style>
-<head>
-    <meta charset="utf-8" />
-    <title>PGR 5</title>
-
-    <script src="/ajax.js"></script>
-</head>
-<body onload="get_info();">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Value</th>
-            <th>Name</th>
-            <th>Value</th>
-            <th>Name</th>
-            <th>Value</th>
-            <th>Name</th>
-            <th>Value</th>
-        </tr>
-        <tr>
-            <td>rpm</td>
-            <td id="rpm">0</td>
-            <td>voltage</td>
-            <td id="voltage">0</td>
-        </tr>
-        <tr>
-            <td>water_temp</td>
-            <td id="water_temp">0</td>
-        </tr>
-    </table>
-</body>
-
-
-
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+        td, th {
+        border: 1px solid #eeeeee;
+        text-align: center;
+        padding: 8px;
+        width:12.5%;
+        }
+        tr:nth-child(even) {
+        background-color: #eeeeee;
+        }
+    </style>
+    <head>
+        <meta charset="utf-8" />
+        <title>PGR 5</title>
+        <script src="/ajax.js"></script>
+    </head>
+    <body onload="get_info();">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>RPM [rpm]</td>
+                <td id="rpm">0</td>
+                <td>Water temp [C]</td>
+                <td id="water_temp">0</td>
+                <td>Gear</td>
+                <td id="gear">0</td>
+                <td>Gear cut [bool]</td>
+                <td id="gear_cut">0</td>
+            </tr>
+            <tr>
+                <td>TPS [%]</td>
+                <td id="TPS">0</td>
+                <td>Oil temp [C]</td>
+                <td id="oil_temp">0</td>
+                <td>Voltage [V]</td>
+                <td id="voltage">0</td>
+            </tr>
+            <tr>
+                <td>MAP [kPa]</td>
+                <td id="MAP">0</td>
+                <td>Intake temp [C]</td>
+                <td id="intake_temp">0</td>
+            </tr>
+            <tr>
+                <td>Lambda</td>
+                <td id="lambda">0</td>
+                <td>Ecu temp [C]</td>
+                <td id="ecu_temp">0</td>
+            </tr>
+            <tr>
+                <td>Oil press [bar]</td>
+                <td id="oil_press">0</td>
+                <td>Rpi temp [C]</td>
+                <td id="rpi_temp">0</td>
+            </tr>
+            <tr>
+                <td>Fuel press [bar]</td>
+                <td id="fuel_press">0</td>
+            </tr>
+        </table>
+    </body>
 </html>
