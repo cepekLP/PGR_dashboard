@@ -49,21 +49,6 @@ class MainView(QWidget):
 
         self.setStyleSheet(st.QFRAME_STYLE)
 
-    def update(self, display_info: Dict[str, Union[int, float]]) -> None:
-        self.gear_value.setText(str(display_info["gear"]))
-        self._update_gear_status(display_info["gear_status"])
-        self.rpm_value.setText(str(int(display_info["rpm"])))
-        self._update_bar(display_info["rpm"])
-
-        # self.speed_value.setText(str(display_info["speed"]))
-        self.water_temp_value.setText(str(display_info["water_temp"]))
-        self.oil_temp_value.setText(str(display_info["oil_temp"]))
-        # self.intake_temp_value.setText("
-        # {}°C".format(display_info['intake_temp']))
-        self.intake_temp_value.setText(str(display_info["air_intake_temp"]))
-        self.voltage_value.setText(str(display_info["voltage"]))
-        self.TCS_value.setText(str(display_info["TCS"]))
-
     def _update_gear_status(self, gear_status: Any) -> None:
         if gear_status == READY:
             self.gear_status.setStyleSheet(st.WARNING_QFRAME_STYLE % (0, 0, 0))
@@ -102,6 +87,21 @@ class MainView(QWidget):
             self.rpm_bar_G.setValue(7000)
             self.rpm_bar_Y.setValue(3250)
             self.rpm_bar_R.setValue(rpm - 10250)
+
+    def update(self, display_info: Dict[str, Union[int, float]]) -> None:
+        self.gear_value.setText(str(display_info["gear"]))
+        self._update_gear_status(display_info["gear_status"])
+        self.rpm_value.setText(str(int(display_info["rpm"])))
+        self._update_bar(display_info["rpm"])
+
+        # self.speed_value.setText(str(display_info["speed"]))
+        self.water_temp_value.setText(str(display_info["water_temp"]))
+        self.oil_temp_value.setText(str(display_info["oil_temp"]))
+        # self.intake_temp_value.setText("
+        # {}°C".format(display_info['intake_temp']))
+        self.intake_temp_value.setText(str(display_info["air_intake_temp"]))
+        self.voltage_value.setText(str(display_info["voltage"]))
+        self.TCS_value.setText(str(display_info["TCS"]))
 
     def update_warning(self, warning: List[str]) -> None:
         if warning[0] == "error":

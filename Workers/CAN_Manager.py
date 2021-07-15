@@ -55,7 +55,6 @@ class CAN_Manager(QRunnable):
                         ("air_intake_temp", int(msg.data[3]))
                     )
                     self.signals.result.emit("MAP", int(msg.data[4]))
-
                 elif msg.arbitration_id == 1538:
                     self.signals.result.emit(("water_temp", int(msg.data[6])))
                     self.signals.result.emit(
