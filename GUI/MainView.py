@@ -96,11 +96,22 @@ class MainView(QWidget):
 
         # self.speed_value.setText(str(display_info["speed"]))
         self.water_temp_value.setText(str(display_info["water_temp"]))
+        if display_info["water_temp"] >= 98:
+            self.water_temp_value.setStyleSheet(st.INFO_LABEL_VALUE_ERROR)
+        else:
+            self.water_temp_value.setStyleSheet(st.INFO_LABEL_VALUE)
+
         self.oil_temp_value.setText(str(display_info["oil_temp"]))
         # self.intake_temp_value.setText("
         # {}°C".format(display_info['intake_temp']))
         self.intake_temp_value.setText(str(display_info["air_intake_temp"]))
         self.voltage_value.setText(str(display_info["voltage"]))
+        if display_info["voltage"] <= 11.0:
+            self.voltage_value.setStyleSheet(st.INFO_LABEL_VALUE_ERROR)
+        elif display_info["voltage"] <= 12.0:
+            self.voltage_value.setStyleSheet(st.INFO_LABEL_VALUE_WARNING)
+        else:
+            self.voltage_value.setStyleSheet(st.INFO_LABEL_VALUE)
         self.TCS_value.setText(str(display_info["TCS"]))
 
     def update_warning(self, warning: List[str]) -> None:

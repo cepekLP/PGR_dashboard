@@ -56,7 +56,21 @@ INFO_LABEL_TEXT = """
 """
 
 INFO_LABEL_VALUE = """
-    color: white;
+    color: rgb(255,255,255);
+    background-color: rgba(0, 0, 0, 0%);
+    border-width: 0;
+    border-radius: 0px;
+"""
+
+INFO_LABEL_VALUE_WARNING = """
+    color: rgb(255,128,0);
+    background-color: rgba(0, 0, 0, 0%);
+    border-width: 0;
+    border-radius: 0px;
+"""
+
+INFO_LABEL_VALUE_ERROR = """
+    color: rgb(255,0,0);
     background-color: rgba(0, 0, 0, 0%);
     border-width: 0;
     border-radius: 0px;
